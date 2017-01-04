@@ -30,6 +30,9 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     private static final String GRANT_TYPE_PASSWORD = "password";
     private static final String GRANT_TYPE_REFRESH_TOKEN = "refresh_token";
 
+    private static final int ACCESS_TOKEN_VALIDITY_SECONDS = 200000;
+    private static final int REFRESH_TOKEN_VALIDITY_SECONDS = 240000;
+
     @Autowired
     @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
@@ -68,8 +71,8 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     public AuthorizationServerTokenServices tokenServices() {
         DefaultTokenServices tokenServices = new DefaultTokenServices();
         tokenServices.setSupportRefreshToken(true);
-        tokenServices.setAccessTokenValiditySeconds(200000);
-        tokenServices.setRefreshTokenValiditySeconds(220000);
+        tokenServices.setAccessTokenValiditySeconds(ACCESS_TOKEN_VALIDITY_SECONDS);
+        tokenServices.setRefreshTokenValiditySeconds(REFRESH_TOKEN_VALIDITY_SECONDS);
         tokenServices.setTokenStore(new JdbcTokenStore(dataSource));
         return tokenServices;
     }

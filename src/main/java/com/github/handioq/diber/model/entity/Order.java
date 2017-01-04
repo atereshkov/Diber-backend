@@ -8,8 +8,8 @@ import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Entity
-@Table(name = "products")
-public class Product extends BaseEntity {
+@Table(name = "orders")
+public class Order extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -29,11 +29,11 @@ public class Product extends BaseEntity {
     @Column(name = "image")
     private String mainImage;
 
-    @OneToMany(mappedBy = "product", cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "order", cascade = {CascadeType.ALL})
     @JsonManagedReference
     private Set<Image> images;
 
-    public Product(String name, String description, Double price, String mainImage, Set<Image> images) {
+    public Order(String name, String description, Double price, String mainImage, Set<Image> images) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -41,14 +41,14 @@ public class Product extends BaseEntity {
         this.images = images;
     }
 
-    public Product(String name, String description, Double price, String mainImage) {
+    public Order(String name, String description, Double price, String mainImage) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.mainImage = mainImage;
     }
 
-    public Product() {
+    public Order() {
     }
 
     public Set<Image> getImages() {
@@ -94,7 +94,7 @@ public class Product extends BaseEntity {
 
     @Override
     public String toString() {
-        return "Product{" +
+        return "Order{" +
                 ", images=" + images +
                 '}';
     }

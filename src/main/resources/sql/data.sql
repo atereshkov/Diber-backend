@@ -23,11 +23,11 @@ INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES (1, 1);
 INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES (2, 2);
 
 INSERT INTO `products` (`id`, `description`, `image`, `name`, `price`)
-VALUES (1, 'Description about product with id 1',
+VALUES (1, 'Description about order with id 1',
   'https://pp.vk.me/c604623/v604623974/bc73/y7RxNusXW8s.jpg', 'Product 1 name', '20.0');
 
 INSERT INTO `products` (`id`, `description`, `image`, `name`, `price`)
-VALUES (2, 'Description about product with id 2',
+VALUES (2, 'Description about order with id 2',
   'https://pp.vk.me/c836736/v836736416/3fbb/Df6ex4KID8k.jpg', 'Product 2 name', '15.0');
 
 INSERT INTO `images` (`id`, `image_url`, `product_id`)

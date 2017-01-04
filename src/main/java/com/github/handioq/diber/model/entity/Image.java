@@ -17,9 +17,9 @@ public class Image extends BaseEntity {
     private String imageUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "order_id")
     @JsonBackReference
-    private Product product;
+    private Order order;
 
     public Image() {
     }
@@ -37,11 +37,11 @@ public class Image extends BaseEntity {
         this.imageUrl = imageUrl;
     }
 
-    public Product getProduct() {
-        return product;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 }

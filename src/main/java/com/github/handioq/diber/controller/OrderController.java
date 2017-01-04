@@ -1,7 +1,7 @@
 package com.github.handioq.diber.controller;
 
-import com.github.handioq.diber.model.entity.Product;
-import com.github.handioq.diber.service.ProductService;
+import com.github.handioq.diber.model.entity.Order;
+import com.github.handioq.diber.service.OrderService;
 import com.github.handioq.diber.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,26 +11,26 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(Constants.API_URL + Constants.URL_CATALOG)
-public class ProductController {
+@RequestMapping(Constants.API_URL + Constants.URL_ORDERS)
+public class OrderController {
 
     @Autowired
-    ProductService productService;
+    OrderService orderService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<?> getProductById(@PathVariable("id") long id) {
-        Product product = productService.getById(id);
+        Order order = orderService.getById(id);
 
-        if (product == null) {
-            return new ResponseEntity<>("Product not found", HttpStatus.NOT_FOUND);
+        if (order == null) {
+            return new ResponseEntity<>("Order not found", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(product, HttpStatus.OK);
+        return new ResponseEntity<>(order, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getProducts(Pageable pageable) {
-        Page<Product> productPage = productService.findAllByPage(pageable);
+        Page<Order> productPage = orderService.findAllByPage(pageable);
 
         return new ResponseEntity<>(productPage, HttpStatus.OK);
     }

@@ -10,13 +10,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "roles")
-public class Role implements Serializable {
+public class Role extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
 
     @NotNull
     @Column(name = "name")
@@ -31,19 +27,11 @@ public class Role implements Serializable {
     }
 
     public Role(long id, String name) {
-        this.id = id;
+        this.setId(id);
         this.name = name;
     }
 
     public Role() {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getName() {

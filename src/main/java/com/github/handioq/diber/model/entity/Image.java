@@ -8,13 +8,9 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "images")
-public class Image {
+public class Image extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
 
     @NotNull
     @Column(name = "image_url")
@@ -30,14 +26,6 @@ public class Image {
 
     public Image(String imageUrl) {
         this.imageUrl = imageUrl;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     @JsonProperty("image_url")

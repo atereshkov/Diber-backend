@@ -1,10 +1,12 @@
 package com.github.handioq.diber.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -14,57 +16,57 @@ public class Order extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     @NotNull
-    @Column(name = "name")
-    private String name;
+    @Column(name = "date")
+    private Date date;
 
     @NotNull
     @Column(name = "description")
     private String description;
 
     @NotNull
-    @Column(name = "price")
+    @Column(name = "delivery_price")
     private Double price;
 
     @NotNull
-    @Column(name = "image")
-    private String mainImage;
+    @Column(name = "status")
+    private String status;
 
+    /*
     @OneToMany(mappedBy = "order", cascade = {CascadeType.ALL})
     @JsonManagedReference
     private Set<Image> images;
+    */
 
-    public Order(String name, String description, Double price, String mainImage, Set<Image> images) {
-        this.name = name;
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "shop_id")
+    private Shop shop;
+
+    public Order(Date date, String description, Double price, String status, Shop shop) {
+        this.date = date;
         this.description = description;
         this.price = price;
-        this.mainImage = mainImage;
-        this.images = images;
-    }
-
-    public Order(String name, String description, Double price, String mainImage) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.mainImage = mainImage;
+        this.status = status;
+        this.shop = shop;
     }
 
     public Order() {
     }
 
-    public Set<Image> getImages() {
-        return images;
+    public Date getDate() {
+        return date;
     }
 
-    public void setImages(Set<Image> images) {
-        this.images = images;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
-    public String getName() {
-        return name;
+    public Shop getShop() {
+        return shop;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setShop(Shop shop) {
+        this.shop = shop;
     }
 
     public String getDescription() {
@@ -83,19 +85,12 @@ public class Order extends BaseEntity {
         this.price = price;
     }
 
-    @JsonProperty("main_image")
-    public String getMainImage() {
-        return mainImage;
+    //@JsonProperty("main_image")
+    public String getStatus() {
+        return status;
     }
 
-    public void setMainImage(String mainImage) {
-        this.mainImage = mainImage;
-    }
-
-    @Override
-    public String toString() {
-        return "Order{" +
-                ", images=" + images +
-                '}';
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

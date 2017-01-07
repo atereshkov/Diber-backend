@@ -1,3 +1,4 @@
+/*
 package com.github.handioq.diber.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -45,3 +46,4 @@ public class Image extends BaseEntity {
         this.order = order;
     }
 }
+*/

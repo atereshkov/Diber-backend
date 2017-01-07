@@ -22,16 +22,23 @@ INSERT INTO `roles` (`id`, `name`) VALUES (2, 'ROLE_ADMIN');
 INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES (1, 1);
 INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES (2, 2);
 
-INSERT INTO `orders` (`id`, `description`, `image`, `name`, `price`)
-VALUES (1, 'Description about order with id 1',
-  'https://pp.vk.me/c604623/v604623974/bc73/y7RxNusXW8s.jpg', 'Product 1 name', '20.0');
 
-INSERT INTO `orders` (`id`, `description`, `image`, `name`, `price`)
-VALUES (2, 'Description about order with id 2',
-  'https://pp.vk.me/c836736/v836736416/3fbb/Df6ex4KID8k.jpg', 'Product 2 name', '15.0');
+INSERT INTO `shops` (`id`, `address`, `name`)
+VALUES  (1, '20 Suvorova str.', 'Shop name 1');
 
-INSERT INTO `images` (`id`, `image_url`, `product_id`)
-VALUES('1', 'https://images-eu.ssl-images-amazon.com/images/G/31/img15/Shoes/CatNav/p._V293117552_.jpg', '1');
+INSERT INTO `shops` (`id`, `address`, `name`)
+VALUES  (2, '10 Suvorova str.', 'Shop name 2');
 
-INSERT INTO `images` (`id`, `image_url`, `product_id`)
-VALUES('2', 'https://images-eu.ssl-images-amazon.com/images/G/31/img15/Shoes/CatNav/k._V293117556_.jpg', '1');
+
+INSERT INTO `orders` (`id`, `description`, `shop_id`, `date`, `delivery_price`, `status`)
+VALUES (1, 'Description about order with id 1', 2, '2017-01-20 12:32:02', '20.0', 'New');
+
+INSERT INTO `orders` (`id`, `description`, `shop_id`, `date`, `delivery_price`, `status`)
+VALUES (2, 'Description about order with id 2', 2, '2017-02-12 02:52:05', '100.0', 'New');
+
+
+INSERT INTO `reviews` (`id`, `review`, `rating`, `user_id`)
+VALUES (1, 'Review 111', 5, 1);
+
+INSERT INTO `reviews` (`id`, `review`, `rating`, `user_id`)
+VALUES (2, 'Review 22222', 3, 2);

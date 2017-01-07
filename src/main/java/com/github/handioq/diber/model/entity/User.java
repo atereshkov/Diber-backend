@@ -31,7 +31,6 @@ public class User extends BaseEntity {
     @Column(name = "enabled")
     private boolean enabled;
 
-    // TODO FetchType = LAZY
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER) // cascade = {CascadeType.ALL}
     @JoinTable(name = "user_roles",

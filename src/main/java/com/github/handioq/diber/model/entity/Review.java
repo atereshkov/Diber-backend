@@ -16,10 +16,6 @@ public class Review extends BaseEntity {
     @Column(name = "review")
     private String review;
 
-    @NotNull
-    @Column(name = "address")
-    private String address;
-
     @Column(name = "rating")
     private int rating;
 
@@ -47,14 +43,6 @@ public class Review extends BaseEntity {
         this.review = review;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public int getRating() {
         return rating;
     }
@@ -67,8 +55,8 @@ public class Review extends BaseEntity {
     public String toString() {
         return "Review{" +
                 "review='" + review + '\'' +
-                ", address='" + address + '\'' +
                 ", rating=" + rating +
+                ", user=" + user +
                 '}';
     }
 }

@@ -23,7 +23,7 @@ public class Shop extends BaseEntity {
     private String address;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @JsonBackReference
+    //@JsonBackReference
     //@JsonManagedReference
     @OneToMany(mappedBy = "shop", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Set<Order> orders;

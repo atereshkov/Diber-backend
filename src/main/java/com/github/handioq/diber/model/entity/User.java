@@ -1,6 +1,7 @@
 package com.github.handioq.diber.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -38,9 +39,15 @@ public class User extends BaseEntity {
     )
     private List<Role> roles;
 
-    @JsonManagedReference
+    //@JsonManagedReference
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Set<Review> reviews;
+
+    //@JsonManagedReference
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private Set<Order> orders;
 
     public User() {
     }
@@ -71,6 +78,16 @@ public class User extends BaseEntity {
         this.enabled = enabled;
     }
 
+    @JsonIgnore
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
+    }
+
+    @JsonIgnore
     public Set<Review> getReviews() {
         return reviews;
     }

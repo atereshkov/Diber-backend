@@ -1,7 +1,9 @@
 package com.github.handioq.diber.controller;
 
+import com.github.handioq.diber.model.entity.Order;
 import com.github.handioq.diber.model.entity.Review;
 import com.github.handioq.diber.model.entity.User;
+import com.github.handioq.diber.service.OrderService;
 import com.github.handioq.diber.service.ReviewService;
 import com.github.handioq.diber.service.UserService;
 import com.github.handioq.diber.utils.Constants;
@@ -20,7 +22,10 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    ReviewService reviewService;
+    private ReviewService reviewService;
+
+    @Autowired
+    private OrderService orderService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
@@ -65,6 +70,17 @@ public class UserController {
         }
 
         return new ResponseEntity<>(reviews, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{id}/orders", method = RequestMethod.GET)
+    public ResponseEntity<?> getOrders(@PathVariable("id") long userId) {
+        List<Order> orders = orderService.findByUserId(userId);
+
+        if (orders.isEmpty()) {
+            return new ResponseEntity<>("Empty", HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
 }

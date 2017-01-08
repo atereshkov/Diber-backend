@@ -19,7 +19,7 @@ public class OrderController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<?> getProductById(@PathVariable("id") long id) {
+    public ResponseEntity<?> getOrderById(@PathVariable("id") long id) {
         Order order = orderService.getById(id);
 
         if (order == null) {
@@ -29,10 +29,10 @@ public class OrderController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> getProducts(Pageable pageable) {
-        Page<Order> productPage = orderService.findAllByPage(pageable);
+    public ResponseEntity<?> getOrders(Pageable pageable) {
+        Page<Order> orderPage = orderService.findAllByPage(pageable);
 
-        return new ResponseEntity<>(productPage, HttpStatus.OK);
+        return new ResponseEntity<>(orderPage, HttpStatus.OK);
     }
 
 }

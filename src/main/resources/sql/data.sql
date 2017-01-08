@@ -30,11 +30,11 @@ INSERT INTO `shops` (`id`, `address`, `name`)
 VALUES  (2, '10 Suvorova str.', 'Shop name 2');
 
 
-INSERT INTO `orders` (`id`, `description`, `shop_id`, `date`, `delivery_price`, `status`)
-VALUES (1, 'Description about order with id 1', 2, '2017-01-20 12:32:02', '20.0', 'New');
+INSERT INTO `orders` (`id`, `description`, `shop_id`,`date`, `user_id`, `delivery_price`, `status`)
+VALUES (1, 'Description about order with id 1', 2, '2017-01-20 12:32:02', 1, '20.0', 'New');
 
-INSERT INTO `orders` (`id`, `description`, `shop_id`, `date`, `delivery_price`, `status`)
-VALUES (2, 'Description about order with id 2', 2, '2017-02-12 02:52:05', '100.0', 'New');
+INSERT INTO `orders` (`id`, `description`, `shop_id`,`date`, `user_id`, `delivery_price`, `status`)
+VALUES (2, 'Description about order with id 2', 2, '2017-02-12 02:52:05', 1, '100.0', 'New');
 
 
 INSERT INTO `reviews` (`id`, `review`, `rating`, `user_id`)

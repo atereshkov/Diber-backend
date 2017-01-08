@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class OrderServiceImpl implements OrderService {
@@ -24,5 +26,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Page<Order> findAllByPage(Pageable pageable) {
         return orderRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<Order> findByUserId(long userId) {
+        return orderRepository.findByUserId(userId);
     }
 }

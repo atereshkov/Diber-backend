@@ -1,6 +1,8 @@
 package com.github.handioq.diber.controller;
 
+import com.github.handioq.diber.model.entity.Review;
 import com.github.handioq.diber.model.entity.User;
+import com.github.handioq.diber.service.ReviewService;
 import com.github.handioq.diber.service.UserService;
 import com.github.handioq.diber.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    ReviewService reviewService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
@@ -49,6 +54,17 @@ public class UserController {
         }
 
         return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{id}/reviews", method = RequestMethod.GET)
+    public ResponseEntity<?> getReviews(@PathVariable("id") long userId) {
+        List<Review> reviews = reviewService.findByUserId(userId);
+
+        if (reviews.isEmpty()) {
+            return new ResponseEntity<>("Empty", HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
 
 }

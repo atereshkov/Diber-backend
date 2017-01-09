@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "orders")
@@ -55,6 +56,10 @@ public class Order extends BaseEntity {
     @JoinColumn(name = "courier_id")
     private User courier;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private Set<Request> requests;
+
     public Order(Date date, String description, Double price, String status, Shop shop) {
         this.date = date;
         this.description = description;
@@ -64,6 +69,15 @@ public class Order extends BaseEntity {
     }
 
     public Order() {
+    }
+
+    @JsonIgnore
+    public Set<Request> getRequests() {
+        return requests;
+    }
+
+    public void setRequests(Set<Request> requests) {
+        this.requests = requests;
     }
 
     @JsonIgnore

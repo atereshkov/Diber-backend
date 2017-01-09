@@ -42,3 +42,10 @@ VALUES (1, 'Review 111', 5, 1);
 
 INSERT INTO `reviews` (`id`, `review`, `rating`, `user_id`)
 VALUES (2, 'Review 22222', 3, 2);
+
+
+INSERT INTO `requests` (`id`, `courier_id`, `order_id`)
+VALUES (1, 1, 1);
+
+INSERT INTO `requests` (`id`, `courier_id`, `order_id`)
+VALUES (2, 2, 2);

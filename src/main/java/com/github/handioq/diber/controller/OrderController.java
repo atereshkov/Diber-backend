@@ -1,7 +1,9 @@
 package com.github.handioq.diber.controller;
 
 import com.github.handioq.diber.model.entity.Order;
+import com.github.handioq.diber.model.entity.Request;
 import com.github.handioq.diber.service.OrderService;
+import com.github.handioq.diber.service.RequestService;
 import com.github.handioq.diber.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,12 +12,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(Constants.API_URL + Constants.URL_ORDERS)
 public class OrderController {
 
     @Autowired
     OrderService orderService;
+
+    @Autowired
+    RequestService requestService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
@@ -33,6 +40,18 @@ public class OrderController {
         Page<Order> orderPage = orderService.findAllByPage(pageable);
 
         return new ResponseEntity<>(orderPage, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{id}/requests", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<?> getOrderRequests(@PathVariable("id") long id) {
+        List<Request> requests = requestService.findByOrderId(id);
+
+        if (requests.isEmpty()) {
+            return new ResponseEntity<>("Requests are empty", HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(requests, HttpStatus.OK);
     }
 
 }

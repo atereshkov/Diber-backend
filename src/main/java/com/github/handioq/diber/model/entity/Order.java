@@ -47,8 +47,13 @@ public class Order extends BaseEntity {
     //@JsonBackReference
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "customer_id")
     private User user;
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "courier_id")
+    private User courier;
 
     public Order(Date date, String description, Double price, String status, Shop shop) {
         this.date = date;
@@ -59,6 +64,15 @@ public class Order extends BaseEntity {
     }
 
     public Order() {
+    }
+
+    @JsonIgnore
+    public User getCourier() {
+        return courier;
+    }
+
+    public void setCourier(User courier) {
+        this.courier = courier;
     }
 
     @JsonIgnore

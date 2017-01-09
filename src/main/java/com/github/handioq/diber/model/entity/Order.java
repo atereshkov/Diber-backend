@@ -1,9 +1,6 @@
 package com.github.handioq.diber.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -31,6 +28,14 @@ public class Order extends BaseEntity {
     @NotNull
     @Column(name = "status")
     private String status;
+
+    @NotNull
+    @Column(name = "address_from")
+    private String addressFrom;
+
+    @NotNull
+    @Column(name = "address_to")
+    private String addressTo;
 
     /*
     @OneToMany(mappedBy = "order", cascade = {CascadeType.ALL})
@@ -69,6 +74,24 @@ public class Order extends BaseEntity {
     }
 
     public Order() {
+    }
+
+    @JsonProperty("address_from")
+    public String getAddressFrom() {
+        return addressFrom;
+    }
+
+    public void setAddressFrom(String addressFrom) {
+        this.addressFrom = addressFrom;
+    }
+
+    @JsonProperty("address_to")
+    public String getAddressTo() {
+        return addressTo;
+    }
+
+    public void setAddressTo(String addressTo) {
+        this.addressTo = addressTo;
     }
 
     @JsonIgnore

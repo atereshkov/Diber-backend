@@ -1,6 +1,7 @@
 package com.github.handioq.diber.controller;
 
 import com.github.handioq.diber.model.dto.OrderDto;
+import com.github.handioq.diber.model.dto.RequestDto;
 import com.github.handioq.diber.model.entity.Order;
 import com.github.handioq.diber.model.entity.Request;
 import com.github.handioq.diber.service.OrderService;
@@ -56,12 +57,28 @@ public class OrderController {
         return new ResponseEntity<>(requests, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/{id}/requests", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<?> addOrderRequest(@PathVariable("id") long id, @RequestBody RequestDto requestDto) {
+        Order order = orderService.getById(id);
+
+        if (order == null) {
+            return new ResponseEntity<>("Order not found", HttpStatus.NOT_FOUND);
+        }
+
+        Request request = Converter.toRequestEntity(requestDto);
+        order.getRequests().add(request);
+        orderService.saveOrUpdate(order);
+
+        return new ResponseEntity<>(request, HttpStatus.OK);
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<?> addOrder(@RequestBody OrderDto orderDto) {
         Order order = Converter.toOrderEntity(orderDto);
 
-        orderService.addOrder(order);
+        orderService.saveOrUpdate(order);
         return new ResponseEntity<>(order, HttpStatus.CREATED);
     }
 

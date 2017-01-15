@@ -162,4 +162,40 @@ public class Order extends BaseEntity {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Order order = (Order) o;
+
+        if (date != null ? !date.equals(order.date) : order.date != null) return false;
+        if (description != null ? !description.equals(order.description) : order.description != null) return false;
+        if (price != null ? !price.equals(order.price) : order.price != null) return false;
+        if (status != null ? !status.equals(order.status) : order.status != null) return false;
+        if (addressFrom != null ? !addressFrom.equals(order.addressFrom) : order.addressFrom != null) return false;
+        if (addressTo != null ? !addressTo.equals(order.addressTo) : order.addressTo != null) return false;
+        if (shop != null ? !shop.equals(order.shop) : order.shop != null) return false;
+        if (user != null ? !user.equals(order.user) : order.user != null) return false;
+        if (courier != null ? !courier.equals(order.courier) : order.courier != null) return false;
+        return requests != null ? requests.equals(order.requests) : order.requests == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + (addressFrom != null ? addressFrom.hashCode() : 0);
+        result = 31 * result + (addressTo != null ? addressTo.hashCode() : 0);
+        result = 31 * result + (shop != null ? shop.hashCode() : 0);
+        result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (courier != null ? courier.hashCode() : 0);
+        result = 31 * result + (requests != null ? requests.hashCode() : 0);
+        return result;
+    }
 }

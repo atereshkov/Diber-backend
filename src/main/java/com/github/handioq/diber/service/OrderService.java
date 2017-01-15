@@ -16,6 +16,6 @@ public interface OrderService {
 
     List<Order> findByUserId(long userId);
 
-    void addOrder(Order order);
+    void saveOrUpdate(Order order);
 
 }

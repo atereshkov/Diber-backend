@@ -21,4 +21,8 @@ public class RequestServiceImpl implements RequestService {
         return requestRepository.findByOrderId(userId);
     }
 
+    @Override
+    public void addRequest(Request request) {
+        requestRepository.save(request);
+    }
 }

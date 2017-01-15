@@ -8,4 +8,6 @@ public interface RequestService {
 
     List<Request> findByOrderId(long userId);
 
+    void addRequest(Request request);
+
 }

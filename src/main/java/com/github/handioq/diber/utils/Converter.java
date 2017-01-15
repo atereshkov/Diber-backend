@@ -1,13 +1,13 @@
 package com.github.handioq.diber.utils;
 
 import com.github.handioq.diber.model.dto.OrderDto;
-import com.github.handioq.diber.model.dto.UserDTO;
+import com.github.handioq.diber.model.dto.UserDto;
 import com.github.handioq.diber.model.entity.Order;
 import com.github.handioq.diber.model.entity.User;
 
 public class Converter {
 
-    public static User toUserEntity(UserDTO userDto) {
+    public static User toUserEntity(UserDto userDto) {
         return new User(userDto.getEmail(), userDto.getUsername(),
                 userDto.getPassword(), userDto.isEnabled());
     }

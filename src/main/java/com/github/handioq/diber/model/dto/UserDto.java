@@ -1,6 +1,6 @@
 package com.github.handioq.diber.model.dto;
 
-public class UserDTO {
+public class UserDto {
 
     private long id;
     private String email;
@@ -8,10 +8,10 @@ public class UserDTO {
     private String password;
     private boolean enabled;
 
-    public UserDTO() {
+    public UserDto() {
     }
 
-    public UserDTO(long id, String email, String username, String password, boolean enabled) {
+    public UserDto(long id, String email, String username, String password, boolean enabled) {
         this.id = id;
         this.email = email;
         this.username = username;

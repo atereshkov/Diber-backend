@@ -1,6 +1,6 @@
 package com.github.handioq.diber.controller;
 
-import com.github.handioq.diber.model.dto.UserDTO;
+import com.github.handioq.diber.model.dto.UserDto;
 import com.github.handioq.diber.model.entity.Role;
 import com.github.handioq.diber.model.entity.User;
 import com.github.handioq.diber.service.AuthService;
@@ -30,7 +30,7 @@ public class AuthController {
 
     @RequestMapping("/register")
     @ResponseBody
-    public ResponseEntity<?> register(@RequestBody UserDTO userDto) {
+    public ResponseEntity<?> register(@RequestBody UserDto userDto) {
         User user = Converter.toUserEntity(userDto);
 
         List<Role> roles = new ArrayList<>();

@@ -32,4 +32,9 @@ public class OrderServiceImpl implements OrderService {
     public List<Order> findByUserId(long userId) {
         return orderRepository.findByUserId(userId);
     }
+
+    @Override
+    public void addOrder(Order order) {
+        orderRepository.save(order);
+    }
 }

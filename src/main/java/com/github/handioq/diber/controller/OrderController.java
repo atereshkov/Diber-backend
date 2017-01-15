@@ -1,10 +1,12 @@
 package com.github.handioq.diber.controller;
 
+import com.github.handioq.diber.model.dto.OrderDto;
 import com.github.handioq.diber.model.entity.Order;
 import com.github.handioq.diber.model.entity.Request;
 import com.github.handioq.diber.service.OrderService;
 import com.github.handioq.diber.service.RequestService;
 import com.github.handioq.diber.utils.Constants;
+import com.github.handioq.diber.utils.Converter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -52,6 +54,15 @@ public class OrderController {
         }
 
         return new ResponseEntity<>(requests, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<?> addOrder(@RequestBody OrderDto orderDto) {
+        Order order = Converter.toOrderEntity(orderDto);
+
+        orderService.addOrder(order);
+        return new ResponseEntity<>(order, HttpStatus.CREATED);
     }
 
 }

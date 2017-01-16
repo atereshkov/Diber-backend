@@ -16,8 +16,9 @@ VALUES (
   1
 );
 
-INSERT INTO `roles` (`id`, `name`) VALUES (1, 'ROLE_USER');
-INSERT INTO `roles` (`id`, `name`) VALUES (2, 'ROLE_ADMIN');
+INSERT INTO `roles` (`id`, `name`) VALUES (1, 'ROLE_CUSTOMER');
+INSERT INTO `roles` (`id`, `name`) VALUES (2, 'ROLE_COURIER');
+INSERT INTO `roles` (`id`, `name`) VALUES (3, 'ROLE_ADMIN');
 
 INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES (1, 1);
 INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES (2, 2);

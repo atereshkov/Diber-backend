@@ -7,6 +7,8 @@ public class UserDto {
     private String username;
     private String password;
     private boolean enabled;
+    private boolean isCustomer;
+    private boolean isCourier;
 
     public UserDto() {
     }
@@ -17,6 +19,22 @@ public class UserDto {
         this.username = username;
         this.password = password;
         this.enabled = enabled;
+    }
+
+    public boolean isCustomer() {
+        return isCustomer;
+    }
+
+    public void setCustomer(boolean customer) {
+        isCustomer = customer;
+    }
+
+    public boolean isCourier() {
+        return isCourier;
+    }
+
+    public void setCourier(boolean courier) {
+        isCourier = courier;
     }
 
     public long getId() {

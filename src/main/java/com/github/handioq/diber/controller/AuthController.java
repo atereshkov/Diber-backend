@@ -34,7 +34,14 @@ public class AuthController {
         User user = Converter.toUserEntity(userDto);
 
         List<Role> roles = new ArrayList<>();
-        roles.add(roleService.findRole(1));
+
+        if (userDto.isCustomer()) {
+            roles.add(roleService.findRole(1));
+        }
+        if (userDto.isCourier()) {
+            roles.add(roleService.findRole(2));
+        }
+
         user.setRoles(roles);
 
         authService.register(user);

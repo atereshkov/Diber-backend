@@ -50,3 +50,13 @@ VALUES (1, 1, 1);
 
 INSERT INTO `requests` (`id`, `courier_id`, `order_id`)
 VALUES (2, 2, 2);
+
+
+INSERT INTO `addresses` (`id`, `address`, `city`, `country`, `phone`, `postal_code`, `region`, `user_id`, `name`)
+VALUES (1, '5 Green Avenue, Apt. 3', 'London', 'Великобритания', '+324861461545', '123456', 'WRS', 1, 'Работа');
+
+INSERT INTO `addresses` (`id`, `address`, `city`, `country`, `phone`, `postal_code`, `region`, `user_id`, `name`)
+VALUES (2, '20 Lombard Str.', 'Minsk', 'Belarus', '+375292223312', '123456', 'Minsk', 2, 'Home');
+
+INSERT INTO `addresses` (`id`, `address`, `city`, `country`, `phone`, `postal_code`, `region`, `user_id`, `name`)
+VALUES (3, '32 Lombard Str.', 'Grodno', 'Belarus', '+375291121312', '654321', 'Grodno', 1, 'Home');

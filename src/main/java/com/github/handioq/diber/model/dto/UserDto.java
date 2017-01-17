@@ -9,6 +9,7 @@ public class UserDto {
     private boolean enabled;
     private boolean isCustomer;
     private boolean isCourier;
+    private String fullname;
 
     public UserDto() {
     }
@@ -19,6 +20,14 @@ public class UserDto {
         this.username = username;
         this.password = password;
         this.enabled = enabled;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public boolean isCustomer() {

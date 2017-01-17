@@ -31,6 +31,9 @@ public class User extends BaseEntity {
     @Column(name = "enabled")
     private boolean enabled;
 
+    @Column(name = "fullname")
+    private String fullname;
+
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER) // cascade = {CascadeType.ALL}
     @JoinTable(name = "user_roles",
@@ -52,6 +55,10 @@ public class User extends BaseEntity {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToMany(mappedBy = "courier", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Set<Request> requests;
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private Set<Address> addresses;
 
     public User() {
     }
@@ -80,6 +87,23 @@ public class User extends BaseEntity {
         this.username = username;
         this.password = new BCryptPasswordEncoder().encode(password);
         this.enabled = enabled;
+    }
+
+    @JsonIgnore
+    public Set<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(Set<Address> addresses) {
+        this.addresses = addresses;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     @JsonIgnore

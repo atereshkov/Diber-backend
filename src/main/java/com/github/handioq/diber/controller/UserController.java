@@ -1,8 +1,10 @@
 package com.github.handioq.diber.controller;
 
+import com.github.handioq.diber.model.entity.Address;
 import com.github.handioq.diber.model.entity.Order;
 import com.github.handioq.diber.model.entity.Review;
 import com.github.handioq.diber.model.entity.User;
+import com.github.handioq.diber.service.AddressService;
 import com.github.handioq.diber.service.OrderService;
 import com.github.handioq.diber.service.ReviewService;
 import com.github.handioq.diber.service.UserService;
@@ -26,6 +28,9 @@ public class UserController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private AddressService addressService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
@@ -81,6 +86,17 @@ public class UserController {
         }
 
         return new ResponseEntity<>(orders, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{id}/addresses", method = RequestMethod.GET)
+    public ResponseEntity<?> getAddresses(@PathVariable("id") long userId) {
+        List<Address> addresses = addressService.findByUserId(userId);
+
+        if (addresses.isEmpty()) {
+            return new ResponseEntity<>("Empty", HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(addresses, HttpStatus.OK);
     }
 
 }

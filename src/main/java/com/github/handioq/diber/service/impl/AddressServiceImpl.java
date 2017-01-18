@@ -20,4 +20,9 @@ public class AddressServiceImpl implements AddressService {
     public List<Address> findByUserId(long userId) {
         return addressRepository.findByUserId(userId);
     }
+
+    @Override
+    public void saveOrUpdate(Address address) {
+        addressRepository.save(address);
+    }
 }

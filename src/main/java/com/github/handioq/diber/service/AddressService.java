@@ -8,4 +8,6 @@ public interface AddressService {
 
     List<Address> findByUserId(long userId);
 
+    void saveOrUpdate(Address address);
+
 }

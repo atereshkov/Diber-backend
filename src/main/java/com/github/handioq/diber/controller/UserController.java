@@ -1,5 +1,6 @@
 package com.github.handioq.diber.controller;
 
+import com.github.handioq.diber.model.dto.AddressDto;
 import com.github.handioq.diber.model.entity.Address;
 import com.github.handioq.diber.model.entity.Order;
 import com.github.handioq.diber.model.entity.Review;
@@ -9,6 +10,7 @@ import com.github.handioq.diber.service.OrderService;
 import com.github.handioq.diber.service.ReviewService;
 import com.github.handioq.diber.service.UserService;
 import com.github.handioq.diber.utils.Constants;
+import com.github.handioq.diber.utils.Converter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -97,6 +99,17 @@ public class UserController {
         }
 
         return new ResponseEntity<>(addresses, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{id}/addresses", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<?> addOrder(@PathVariable("id") long userId, @RequestBody AddressDto addressDto) {
+        Address address = Converter.toAddressEntity(addressDto);
+
+        // todo get user...
+
+        addressService.saveOrUpdate(address);
+        return new ResponseEntity<>(address, HttpStatus.CREATED);
     }
 
 }

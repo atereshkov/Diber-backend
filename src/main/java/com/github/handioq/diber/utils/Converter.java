@@ -1,8 +1,10 @@
 package com.github.handioq.diber.utils;
 
+import com.github.handioq.diber.model.dto.AddressDto;
 import com.github.handioq.diber.model.dto.OrderDto;
 import com.github.handioq.diber.model.dto.RequestDto;
 import com.github.handioq.diber.model.dto.UserDto;
+import com.github.handioq.diber.model.entity.Address;
 import com.github.handioq.diber.model.entity.Order;
 import com.github.handioq.diber.model.entity.Request;
 import com.github.handioq.diber.model.entity.User;
@@ -20,6 +22,10 @@ public class Converter {
 
     public static Request toRequestEntity(RequestDto requestDto) {
         return new Request(); // todo implement
+    }
+
+    public static Address toAddressEntity(AddressDto addressDto) {
+        return new Address(); // todo implement
     }
 
 }

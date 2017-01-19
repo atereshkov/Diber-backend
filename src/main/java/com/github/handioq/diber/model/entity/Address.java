@@ -40,6 +40,16 @@ public class Address extends BaseEntity {
     public Address() {
     }
 
+    public Address(String name, int postalCode, String country, String city, String region, String address, String phone) {
+        this.name = name;
+        this.postalCode = postalCode;
+        this.country = country;
+        this.city = city;
+        this.region = region;
+        this.address = address;
+        this.phone = phone;
+    }
+
     public String getName() {
         return name;
     }

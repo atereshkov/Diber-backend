@@ -40,4 +40,9 @@ public class UserServiceImpl implements UserService {
     public List<User> findAll() {
         return userRepository.findAll();
     }
+
+    @Override
+    public void saveOrUpdate(User user) {
+        userRepository.save(user);
+    }
 }

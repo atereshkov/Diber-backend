@@ -25,7 +25,9 @@ public class Converter {
     }
 
     public static Address toAddressEntity(AddressDto addressDto) {
-        return new Address(); // todo implement
+        return new Address(addressDto.getName(), addressDto.getPostalCode(), addressDto.getCountry(),
+                addressDto.getCity(), addressDto.getRegion(), addressDto.getAddress(),
+                addressDto.getPhone());
     }
 
 }

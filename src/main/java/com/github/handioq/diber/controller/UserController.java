@@ -103,12 +103,18 @@ public class UserController {
 
     @RequestMapping(value = "/{id}/addresses", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<?> addOrder(@PathVariable("id") long userId, @RequestBody AddressDto addressDto) {
+    public ResponseEntity<?> addAddress(@PathVariable("id") long userId, @RequestBody AddressDto addressDto) {
+        User user = userService.findOne(userId);
+
+        if (user == null) {
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        }
+
         Address address = Converter.toAddressEntity(addressDto);
+        address.setUser(user);
+        user.getAddresses().add(address);
 
-        // todo get user...
-
-        addressService.saveOrUpdate(address);
+        userService.saveOrUpdate(user);
         return new ResponseEntity<>(address, HttpStatus.CREATED);
     }
 

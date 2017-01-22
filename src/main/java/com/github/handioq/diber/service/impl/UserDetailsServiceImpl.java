@@ -78,5 +78,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             return user.isEnabled();
         }
 
+        @Override
+        public long getId() {
+            return user.getId();
+        }
+
+        @Override
+        public String getFullname() {
+            return user.getFullname();
+        }
     }
 }

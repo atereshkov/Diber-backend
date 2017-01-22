@@ -14,6 +14,7 @@ public class Converter {
     public static User toUserEntity(UserDto userDto) {
         return new User(userDto.getEmail(), userDto.getUsername(),
                 userDto.getPassword(), userDto.isEnabled());
+        // todo complete this
     }
 
     public static Order toOrderEntity(OrderDto orderDto) {

@@ -80,12 +80,12 @@ public class UserController {
         return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}/orders", method = RequestMethod.GET)
-    public ResponseEntity<?> getOrders(@PathVariable("id") long userId) {
+    @RequestMapping(value = "/{user_id}/orders", method = RequestMethod.GET)
+    public ResponseEntity<?> getOrders(@PathVariable("user_id") long userId) {
         List<Order> orders = orderService.findByUserId(userId);
 
         if (orders.isEmpty()) {
-            return new ResponseEntity<>("Empty", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Empty", HttpStatus.NO_CONTENT);
         }
 
         return new ResponseEntity<>(orders, HttpStatus.OK);

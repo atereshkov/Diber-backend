@@ -55,13 +55,15 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients
-                .jdbc(dataSource)
+                .jdbc(dataSource);
+                /*
                 .withClient(CLIENT) // uncomment this if we want to create new client with name and secret
                 .authorizedGrantTypes(GRANT_TYPE_PASSWORD, GRANT_TYPE_REFRESH_TOKEN)
                 .authorities(AUTHORITY_USER)
                 .scopes(SCOPE_READ, SCOPE_WRITE)
                 .resourceIds(RESOURCE_ID)
                 .secret(SECRET);
+                */
     }
 
     @Bean

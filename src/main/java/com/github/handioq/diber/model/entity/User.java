@@ -44,7 +44,7 @@ public class User extends BaseEntity {
 
     //@JsonManagedReference
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Review> reviews;
 
     //@JsonManagedReference

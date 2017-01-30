@@ -62,7 +62,7 @@ public class Order extends BaseEntity {
     private User courier;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Request> requests;
 
     public Order(Date date, String description, Double price, String status, Shop shop) {

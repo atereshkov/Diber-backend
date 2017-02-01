@@ -13,7 +13,7 @@ public class Converter {
 
     public static User toUserEntity(UserDto userDto) {
         return new User(userDto.getEmail(), userDto.getUsername(),
-                userDto.getPassword(), userDto.isEnabled());
+                userDto.getPassword(), userDto.isEnabled(), userDto.getFullname());
         // todo complete this
     }
 

@@ -83,11 +83,12 @@ public class User extends BaseEntity {
         this.roles = roles;
     }
 
-    public User(String email, String username, String password, boolean enabled) {
+    public User(String email, String username, String password, boolean enabled, String fullname) {
         this.email = email;
         this.username = username;
         this.password = new BCryptPasswordEncoder().encode(password);
         this.enabled = enabled;
+        this.fullname = fullname;
     }
 
     @JsonIgnore

@@ -1,19 +1,21 @@
-INSERT INTO  users  (id, username, email, password, enabled)
+INSERT INTO  users  (id, username, email, password, enabled, fullname)
 VALUES (
   1,
   'John',
   'user@handioq.ru',
   '$2a$08$u4eRExB5CAPAGD3CX83Ld.n16SfecMsw5xJOK9Jy676PnPynpiifG',
-  TRUE
+  TRUE,
+  'John fullnamevoich'
 );
 
-INSERT INTO  users  (id, username, email, password, enabled)
+INSERT INTO  users  (id, username, email, password, enabled, fullname)
 VALUES (
   2,
   'Andrew',
   'admin@handioq.ru',
   '$2a$08$u4eRExB5CAPAGD3CX83Ld.n16SfecMsw5xJOK9Jy676PnPynpiifG',
-  TRUE
+  TRUE,
+  'Andrew Balalakhanov'
 );
 
 INSERT INTO roles (id, name) VALUES (1, 'ROLE_CUSTOMER');

@@ -1,20 +1,121 @@
-CREATE TABLE IF NOT EXISTS users (
-  id       INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  username VARCHAR(255),
-  email    VARCHAR(255),
-  password VARCHAR(255),
-  enabled INT DEFAULT 1
+CREATE TABLE "users" (
+	"id" serial NOT NULL,
+	"username" VARCHAR(255) NOT NULL,
+	"email" VARCHAR(255) NOT NULL,
+	"password" VARCHAR(255) NOT NULL,
+	"enabled" BOOLEAN NOT NULL,
+	"fullname" VARCHAR(255) NOT NULL,
+	CONSTRAINT users_pk PRIMARY KEY ("id")
+) WITH (
+  OIDS=FALSE
 );
 
-CREATE TABLE IF NOT EXISTS roles (
-  id   INT PRIMARY KEY,
-  name VARCHAR(255)
+
+
+CREATE TABLE "roles" (
+	"id" serial NOT NULL,
+	"name" VARCHAR(255) NOT NULL,
+	CONSTRAINT roles_pk PRIMARY KEY ("id")
+) WITH (
+  OIDS=FALSE
 );
 
-CREATE TABLE IF NOT EXISTS user_roles (
-  user_id INT,
-  role_id INT
+
+
+CREATE TABLE "user_roles" (
+	"user_id" integer NOT NULL,
+	"role_id" integer NOT NULL
+) WITH (
+  OIDS=FALSE
 );
+
+
+
+CREATE TABLE "orders" (
+	"id" serial NOT NULL,
+	"shop_id" integer NOT NULL,
+	"date" DATE NOT NULL,
+	"status" TEXT NOT NULL,
+	"courier_id" integer NOT NULL,
+	"description" VARCHAR(255) NOT NULL,
+	"delivery_price" FLOAT NOT NULL,
+	"customer_id" integer NOT NULL,
+	"address_from" VARCHAR(255) NOT NULL,
+	"address_to" VARCHAR(255) NOT NULL,
+	CONSTRAINT orders_pk PRIMARY KEY ("id")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "shops" (
+	"id" serial NOT NULL,
+	"name" TEXT NOT NULL,
+	"address" TEXT NOT NULL,
+	CONSTRAINT shops_pk PRIMARY KEY ("id")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "reviews" (
+	"id" serial NOT NULL,
+	"review" VARCHAR(255) NOT NULL,
+	"rating" integer NOT NULL,
+	"user_id" integer NOT NULL,
+	CONSTRAINT reviews_pk PRIMARY KEY ("id")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "requests" (
+	"id" serial NOT NULL,
+	"courier_id" integer NOT NULL,
+	"order_id" integer NOT NULL
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "addresses" (
+	"id" serial NOT NULL,
+	"country" VARCHAR(255) NOT NULL,
+	"city" VARCHAR(255) NOT NULL,
+	"address" VARCHAR(255) NOT NULL,
+	"region" VARCHAR(255) NOT NULL,
+	"postal_code" integer NOT NULL,
+	"phone" VARCHAR(255) NOT NULL,
+	"user_id" integer NOT NULL,
+	"name" VARCHAR(255) NOT NULL,
+	CONSTRAINT addresses_pk PRIMARY KEY ("id")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+
+ALTER TABLE "user_roles" ADD CONSTRAINT "user_roles_fk0" FOREIGN KEY ("user_id") REFERENCES "users"("id");
+ALTER TABLE "user_roles" ADD CONSTRAINT "user_roles_fk1" FOREIGN KEY ("role_id") REFERENCES "roles"("id");
+
+ALTER TABLE "orders" ADD CONSTRAINT "orders_fk0" FOREIGN KEY ("shop_id") REFERENCES "shops"("id");
+ALTER TABLE "orders" ADD CONSTRAINT "orders_fk1" FOREIGN KEY ("courier_id") REFERENCES "users"("id");
+ALTER TABLE "orders" ADD CONSTRAINT "orders_fk2" FOREIGN KEY ("customer_id") REFERENCES "users"("id");
+
+
+ALTER TABLE "reviews" ADD CONSTRAINT "reviews_fk0" FOREIGN KEY ("user_id") REFERENCES "users"("id");
+
+ALTER TABLE "requests" ADD CONSTRAINT "requests_fk0" FOREIGN KEY ("courier_id") REFERENCES "users"("id");
+ALTER TABLE "requests" ADD CONSTRAINT "requests_fk1" FOREIGN KEY ("order_id") REFERENCES "orders"("id");
+
+ALTER TABLE "addresses" ADD CONSTRAINT "addresses_fk0" FOREIGN KEY ("user_id") REFERENCES "users"("id");
+
+
 
 -- for oauth data
 CREATE TABLE IF NOT EXISTS oauth_client_details (

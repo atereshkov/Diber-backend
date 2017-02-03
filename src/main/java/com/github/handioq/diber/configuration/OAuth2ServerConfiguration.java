@@ -42,7 +42,7 @@ public class OAuth2ServerConfiguration {
         public void configure(HttpSecurity http) throws Exception {
             http
                     .authorizeRequests()
-                    .antMatchers("/api/v1/users/**").hasRole("ADMIN")
+                    .antMatchers("/api/v1/users/**").hasAnyRole("ADMIN", "CUSTOMER", "COURIER")
                     //.antMatchers("/greeting").authenticated();
                     .antMatchers("/greeting").hasRole("ADMIN");
         }

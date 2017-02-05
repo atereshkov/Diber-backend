@@ -10,6 +10,9 @@ public class ShopDto {
         this.address = address;
     }
 
+    public ShopDto() {
+    }
+
     public String getName() {
         return name;
     }

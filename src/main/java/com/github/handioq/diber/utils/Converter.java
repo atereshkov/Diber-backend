@@ -14,11 +14,11 @@ public class Converter {
     }
 
     public static Order toOrderEntity(OrderDto orderDto) {
-        Shop shop = toShopEntity(orderDto.getShop());
+        //Shop shop = toShopEntity(orderDto.getShop());
         Date date = DateUtil.getFromString(orderDto.getDate(), "yyyy-MM-dd HH:mm:ss");
 
         return new Order(date, orderDto.getDescription(), orderDto.getPrice(), orderDto.getStatus(),
-                orderDto.getAddressFrom(), orderDto.getAddressTo(), shop);
+                orderDto.getAddressFrom(), orderDto.getAddressTo(), null);
     }
 
     public static Request toRequestEntity(RequestDto requestDto) {

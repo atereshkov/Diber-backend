@@ -132,7 +132,7 @@ public class UserController {
         Order order = Converter.toOrderEntity(orderDto);
         order.setShop(shop);
         order.setUser(user);
-        order.setCourier(null);
+        order.setCourier(user); // FIXME
         orderService.saveOrUpdate(order);
 
         user.getOrders().add(order);

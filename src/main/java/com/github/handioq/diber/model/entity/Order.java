@@ -65,11 +65,13 @@ public class Order extends BaseEntity {
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Request> requests;
 
-    public Order(Date date, String description, Double price, String status, Shop shop) {
+    public Order(Date date, String description, Double price, String status, String addressFrom, String addressTo, Shop shop) {
         this.date = date;
         this.description = description;
         this.price = price;
         this.status = status;
+        this.addressFrom = addressFrom;
+        this.addressTo = addressTo;
         this.shop = shop;
     }
 

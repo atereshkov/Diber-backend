@@ -1,6 +1,7 @@
 package com.github.handioq.diber.controller;
 
 import com.github.handioq.diber.model.dto.AddressDto;
+import com.github.handioq.diber.model.dto.OrderDto;
 import com.github.handioq.diber.model.entity.Address;
 import com.github.handioq.diber.model.entity.Order;
 import com.github.handioq.diber.model.entity.Review;
@@ -117,6 +118,23 @@ public class UserController {
 
         userService.saveOrUpdate(user);
         return new ResponseEntity<>(address, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/{id}/orders", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<?> addOrder(@PathVariable("id") long userId, @RequestBody OrderDto OrderDto) {
+        User user = userService.findOne(userId);
+
+        if (user == null) {
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        }
+
+        Order order = Converter.toOrderEntity(OrderDto);
+        order.setUser(user);
+        user.getOrders().add(order);
+
+        userService.saveOrUpdate(user);
+        return new ResponseEntity<>(order, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/info", method = RequestMethod.GET)

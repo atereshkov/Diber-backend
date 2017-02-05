@@ -131,9 +131,11 @@ public class UserController {
 
         Order order = Converter.toOrderEntity(OrderDto);
         order.setUser(user);
-        user.getOrders().add(order);
+        orderService.saveOrUpdate(order);
 
+        user.getOrders().add(order);
         userService.saveOrUpdate(user);
+
         return new ResponseEntity<>(order, HttpStatus.CREATED);
     }
 

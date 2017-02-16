@@ -40,8 +40,6 @@ CREATE TABLE "orders" (
 	"description" VARCHAR(255) NOT NULL,
 	"delivery_price" FLOAT NOT NULL,
 	"customer_id" integer NOT NULL,
-	"address_from" VARCHAR(255) NOT NULL,
-	"address_to" VARCHAR(255) NOT NULL,
 	CONSTRAINT orders_pk PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE

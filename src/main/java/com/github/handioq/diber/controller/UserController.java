@@ -126,6 +126,8 @@ public class UserController {
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
 
+        // TODO add all checks for duplicates of shops and addresses
+
         Shop shop = Converter.toShopEntity(orderDto.getShop());
         shopService.saveOrUpdate(shop);
 

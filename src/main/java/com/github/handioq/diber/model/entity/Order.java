@@ -73,6 +73,7 @@ public class Order extends BaseEntity {
     public Order() {
     }
 
+    @JsonIgnore
     public Address getAddress() {
         return address;
     }

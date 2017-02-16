@@ -33,11 +33,11 @@ INSERT INTO shops (id, address, name)
 VALUES  (2, '10 Suvorova str.', 'Shop name 2');
 
 
-INSERT INTO orders (id, description, shop_id, date, customer_id, courier_id, delivery_price, status, address_from, address_to)
-VALUES (1, 'Description about order with id 1', 2,'2017-01-20 12:32:02', 1, 2, '20.0', 'New', 'Addr from 1', 'Addr to 2');
+INSERT INTO orders (id, description, shop_id, date, customer_id, courier_id, delivery_price, status)
+VALUES (1, 'Description about order with id 1', 2,'2017-01-20 12:32:02', 1, 2, '20.0', 'New');
 
-INSERT INTO orders (id, description, shop_id, date, customer_id, courier_id, delivery_price, status, address_from, address_to)
-VALUES (2, 'Description about order with id 2', 2,'2017-02-12 02:52:05', 1, 2, '100.0', 'New', 'Addr from 21', 'Addr to 123');
+INSERT INTO orders (id, description, shop_id, date, customer_id, courier_id, delivery_price, status)
+VALUES (2, 'Description about order with id 2', 2,'2017-02-12 02:52:05', 1, 2, '100.0', 'New');
 
 
 INSERT INTO reviews (id, review, rating, user_id)

@@ -130,10 +130,8 @@ public class UserController {
         shopService.saveOrUpdate(shop);
 
         Address address = Converter.toAddressEntity(orderDto.getAddress());
+        address.setUser(user);
         addressService.saveOrUpdate(address);
-
-        user.getAddresses().add(address);
-        userService.saveOrUpdate(user);
 
         Order order = Converter.toOrderEntity(orderDto);
         order.setShop(shop);
@@ -143,6 +141,7 @@ public class UserController {
         orderService.saveOrUpdate(order);
 
         user.getOrders().add(order);
+        user.getAddresses().add(address);
         userService.saveOrUpdate(user);
 
         return new ResponseEntity<>(order, HttpStatus.CREATED);

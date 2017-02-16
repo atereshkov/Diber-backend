@@ -129,6 +129,7 @@ public class UserController {
         // TODO add all checks for duplicates of shops and addresses
 
         Shop shop = Converter.toShopEntity(orderDto.getShop());
+        shop.setUser(user);
         shopService.saveOrUpdate(shop);
 
         Address address = Converter.toAddressEntity(orderDto.getAddress());

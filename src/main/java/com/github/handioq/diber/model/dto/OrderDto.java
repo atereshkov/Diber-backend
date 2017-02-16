@@ -6,21 +6,27 @@ public class OrderDto {
     private String description;
     private Double price;
     private String status;
-    private String addressFrom;
-    private String addressTo;
     private ShopDto shop;
+    private AddressDto address;
 
     public OrderDto() {
     }
 
-    public OrderDto(String date, String description, Double price, String status, String addressFrom, String addressTo, ShopDto shop) {
+    public OrderDto(String date, String description, Double price, String status, ShopDto shop, AddressDto address) {
         this.date = date;
         this.description = description;
         this.price = price;
         this.status = status;
-        this.addressFrom = addressFrom;
-        this.addressTo = addressTo;
         this.shop = shop;
+        this.address = address;
+    }
+
+    public AddressDto getAddress() {
+        return address;
+    }
+
+    public void setAddress(AddressDto address) {
+        this.address = address;
     }
 
     public String getDate() {
@@ -53,22 +59,6 @@ public class OrderDto {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public String getAddressFrom() {
-        return addressFrom;
-    }
-
-    public void setAddressFrom(String addressFrom) {
-        this.addressFrom = addressFrom;
-    }
-
-    public String getAddressTo() {
-        return addressTo;
-    }
-
-    public void setAddressTo(String addressTo) {
-        this.addressTo = addressTo;
     }
 
     public ShopDto getShop() {

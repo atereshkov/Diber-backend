@@ -17,8 +17,7 @@ public class Converter {
         //Shop shop = toShopEntity(orderDto.getShop());
         Date date = DateUtil.getFromString(orderDto.getDate(), "yyyy-MM-dd HH:mm:ss");
 
-        return new Order(date, orderDto.getDescription(), orderDto.getPrice(), orderDto.getStatus(),
-                orderDto.getAddressFrom(), orderDto.getAddressTo(), null);
+        return new Order(date, orderDto.getDescription(), orderDto.getPrice(), orderDto.getStatus(), null, null);
     }
 
     public static Request toRequestEntity(RequestDto requestDto) {

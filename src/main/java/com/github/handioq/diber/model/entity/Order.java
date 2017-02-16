@@ -29,14 +29,6 @@ public class Order extends BaseEntity {
     @Column(name = "status")
     private String status;
 
-    @NotNull
-    @Column(name = "address_from")
-    private String addressFrom;
-
-    @NotNull
-    @Column(name = "address_to")
-    private String addressTo;
-
     /*
     @OneToMany(mappedBy = "order", cascade = {CascadeType.ALL})
     @JsonManagedReference
@@ -50,7 +42,6 @@ public class Order extends BaseEntity {
     @JoinColumn(name = "shop_id")
     private Shop shop;
 
-    //@JsonBackReference
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
@@ -62,38 +53,32 @@ public class Order extends BaseEntity {
     private User courier;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id")
+    private Address address;
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Request> requests;
 
-    public Order(Date date, String description, Double price, String status, String addressFrom, String addressTo, Shop shop) {
+    public Order(Date date, String description, Double price, String status, Shop shop, Address address) {
         this.date = date;
         this.description = description;
         this.price = price;
         this.status = status;
-        this.addressFrom = addressFrom;
-        this.addressTo = addressTo;
         this.shop = shop;
+        this.address = address;
     }
 
     public Order() {
     }
 
-    @JsonProperty("address_from")
-    public String getAddressFrom() {
-        return addressFrom;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setAddressFrom(String addressFrom) {
-        this.addressFrom = addressFrom;
-    }
-
-    @JsonProperty("address_to")
-    public String getAddressTo() {
-        return addressTo;
-    }
-
-    public void setAddressTo(String addressTo) {
-        this.addressTo = addressTo;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     @JsonIgnore
@@ -177,11 +162,10 @@ public class Order extends BaseEntity {
         if (description != null ? !description.equals(order.description) : order.description != null) return false;
         if (price != null ? !price.equals(order.price) : order.price != null) return false;
         if (status != null ? !status.equals(order.status) : order.status != null) return false;
-        if (addressFrom != null ? !addressFrom.equals(order.addressFrom) : order.addressFrom != null) return false;
-        if (addressTo != null ? !addressTo.equals(order.addressTo) : order.addressTo != null) return false;
         if (shop != null ? !shop.equals(order.shop) : order.shop != null) return false;
         if (user != null ? !user.equals(order.user) : order.user != null) return false;
         if (courier != null ? !courier.equals(order.courier) : order.courier != null) return false;
+        if (address != null ? !address.equals(order.address) : order.address != null) return false;
         return requests != null ? requests.equals(order.requests) : order.requests == null;
     }
 
@@ -192,11 +176,10 @@ public class Order extends BaseEntity {
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
-        result = 31 * result + (addressFrom != null ? addressFrom.hashCode() : 0);
-        result = 31 * result + (addressTo != null ? addressTo.hashCode() : 0);
         result = 31 * result + (shop != null ? shop.hashCode() : 0);
         result = 31 * result + (user != null ? user.hashCode() : 0);
         result = 31 * result + (courier != null ? courier.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
         result = 31 * result + (requests != null ? requests.hashCode() : 0);
         return result;
     }

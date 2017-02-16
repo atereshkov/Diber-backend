@@ -129,8 +129,15 @@ public class UserController {
         Shop shop = Converter.toShopEntity(orderDto.getShop());
         shopService.saveOrUpdate(shop);
 
+        Address address = Converter.toAddressEntity(orderDto.getAddress());
+        addressService.saveOrUpdate(address);
+
+        user.getAddresses().add(address);
+        userService.saveOrUpdate(user);
+
         Order order = Converter.toOrderEntity(orderDto);
         order.setShop(shop);
+        order.setAddress(address);
         order.setUser(user);
         order.setCourier(user); // FIXME
         orderService.saveOrUpdate(order);

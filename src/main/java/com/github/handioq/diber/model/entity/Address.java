@@ -1,9 +1,11 @@
 package com.github.handioq.diber.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @Entity
 @Table(name = "addresses")
@@ -36,6 +38,10 @@ public class Address extends BaseEntity {
     @JoinColumn(name = "user_id")
     @JsonBackReference
     private User user;
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private Set<Order> orders;
 
     public Address() {
     }
@@ -112,5 +118,13 @@ public class Address extends BaseEntity {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
     }
 }

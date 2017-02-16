@@ -60,6 +60,10 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Address> addresses;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Shop> shops;
+
     public User() {
     }
 
@@ -89,6 +93,15 @@ public class User extends BaseEntity {
         this.password = new BCryptPasswordEncoder().encode(password);
         this.enabled = enabled;
         this.fullname = fullname;
+    }
+
+    @JsonIgnore
+    public Set<Shop> getShops() {
+        return shops;
+    }
+
+    public void setShops(Set<Shop> shops) {
+        this.shops = shops;
     }
 
     @JsonIgnore

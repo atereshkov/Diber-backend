@@ -144,6 +144,7 @@ public class UserController {
 
         user.getOrders().add(order);
         user.getAddresses().add(address);
+        user.getShops().add(shop);
         userService.saveOrUpdate(user);
 
         return new ResponseEntity<>(order, HttpStatus.CREATED);

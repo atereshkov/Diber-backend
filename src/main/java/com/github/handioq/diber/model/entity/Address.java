@@ -120,6 +120,7 @@ public class Address extends BaseEntity {
         this.user = user;
     }
 
+    // todo add jsonIgnore
     public Set<Order> getOrders() {
         return orders;
     }

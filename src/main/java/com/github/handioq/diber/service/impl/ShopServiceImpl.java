@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class ShopServiceImpl implements ShopService {
@@ -22,5 +24,10 @@ public class ShopServiceImpl implements ShopService {
     @Override
     public void saveOrUpdate(Shop shop) {
         shopRepository.save(shop);
+    }
+
+    @Override
+    public List<Shop> findByUserId(long userId) {
+        return shopRepository.findByUserId(userId);
     }
 }

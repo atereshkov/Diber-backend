@@ -1,6 +1,7 @@
 package com.github.handioq.diber.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -120,7 +121,7 @@ public class Address extends BaseEntity {
         this.user = user;
     }
 
-    // todo add jsonIgnore
+    @JsonIgnore
     public Set<Order> getOrders() {
         return orders;
     }

@@ -100,6 +100,17 @@ public class UserController {
         return new ResponseEntity<>(addresses, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/{id}/shops", method = RequestMethod.GET)
+    public ResponseEntity<?> getShops(@PathVariable("id") long userId) {
+        List<Shop> shops = shopService.findByUserId(userId);
+
+        if (shops.isEmpty()) {
+            return new ResponseEntity<>("Empty", HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(shops, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/{id}/addresses", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<?> addAddress(@PathVariable("id") long userId, @RequestBody AddressDto addressDto) {

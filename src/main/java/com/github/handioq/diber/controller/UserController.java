@@ -122,25 +122,18 @@ public class UserController {
         }
 
         List<Address> userAddresses = addressService.findByUserId(userId);
-        boolean addressAlreadyExists = false;
+        boolean addressAlreadyExists = isAddressAlreadyExists(userAddresses, addressDto.getName());
 
-        for (Address address : userAddresses) {
-            if (address.getName().equalsIgnoreCase(addressDto.getName())) {
-                addressAlreadyExists = true;
-                break;
-            }
-        }
-
-        if(!addressAlreadyExists) {
+        if (addressAlreadyExists) {
+            return new ResponseEntity<>(new ErrorResponseDto("internal", "Address with this name is already exists"),
+                    HttpStatus.BAD_REQUEST);
+        } else {
             Address address = Converter.toAddressEntity(addressDto);
             address.setUser(user);
             user.getAddresses().add(address);
 
             userService.saveOrUpdate(user);
             return new ResponseEntity<>(address, HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>(new ErrorResponseDto("internal", "Address already exists"),
-                    HttpStatus.BAD_REQUEST);
         }
 
 
@@ -162,8 +155,16 @@ public class UserController {
         shopService.saveOrUpdate(shop);
 
         Address address = Converter.toAddressEntity(orderDto.getAddress());
-        address.setUser(user);
-        addressService.saveOrUpdate(address);
+        List<Address> userAddresses = addressService.findByUserId(userId);
+        boolean addressAlreadyExists = isAddressAlreadyExists(userAddresses, address.getName());
+
+        if (addressAlreadyExists) {
+            address = addressService.findByNameAndUser(address.getName(), user);
+        } else {
+            address.setUser(user);
+            addressService.saveOrUpdate(address);
+            user.getAddresses().add(address);
+        }
 
         Order order = Converter.toOrderEntity(orderDto);
         order.setShop(shop);
@@ -173,7 +174,6 @@ public class UserController {
         orderService.saveOrUpdate(order);
 
         user.getOrders().add(order);
-        user.getAddresses().add(address);
         user.getShops().add(shop);
         userService.saveOrUpdate(user);
 
@@ -190,6 +190,16 @@ public class UserController {
         //}
 
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    private boolean isAddressAlreadyExists(List<Address> userAddresses, String strAddress) {
+        for (Address address : userAddresses) {
+            if (address.getName().equalsIgnoreCase(strAddress)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

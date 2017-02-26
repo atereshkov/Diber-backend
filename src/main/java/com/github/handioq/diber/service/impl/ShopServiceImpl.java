@@ -1,6 +1,7 @@
 package com.github.handioq.diber.service.impl;
 
 import com.github.handioq.diber.model.entity.Shop;
+import com.github.handioq.diber.model.entity.User;
 import com.github.handioq.diber.repository.ShopRepository;
 import com.github.handioq.diber.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +30,10 @@ public class ShopServiceImpl implements ShopService {
     @Override
     public List<Shop> findByUserId(long userId) {
         return shopRepository.findByUserId(userId);
+    }
+
+    @Override
+    public Shop findByNameAndUser(String name, User user) {
+        return shopRepository.findByNameAndUser(name, user);
     }
 }

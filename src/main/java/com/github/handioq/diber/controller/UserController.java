@@ -121,10 +121,12 @@ public class UserController {
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
 
-        List<Address> userAddresses = addressService.findByUserId(userId);
-        boolean addressAlreadyExists = isAddressAlreadyExists(userAddresses, addressDto.getName());
+        //List<Address> userAddresses = addressService.findByUserId(userId);
+        //boolean addressAlreadyExists = isAddressAlreadyExists(userAddresses, addressDto.getName());
 
-        if (addressAlreadyExists) {
+        Address existingAddress = addressService.findByNameAndUser(addressDto.getName(), user);
+
+        if (existingAddress != null) {
             return new ResponseEntity<>(new ErrorResponseDto("internal", "Address with this name is already exists"),
                     HttpStatus.BAD_REQUEST);
         } else {
@@ -155,11 +157,13 @@ public class UserController {
         shopService.saveOrUpdate(shop);
 
         Address address = Converter.toAddressEntity(orderDto.getAddress());
-        List<Address> userAddresses = addressService.findByUserId(userId);
-        boolean addressAlreadyExists = isAddressAlreadyExists(userAddresses, address.getName());
+        //List<Address> userAddresses = addressService.findByUserId(userId);
+        //boolean addressAlreadyExists = isAddressAlreadyExists(userAddresses, address.getName());
 
-        if (addressAlreadyExists) {
-            address = addressService.findByNameAndUser(address.getName(), user);
+        Address existingAddress = addressService.findByNameAndUser(address.getName(), user);
+
+        if (existingAddress != null) {
+            address = existingAddress;
         } else {
             address.setUser(user);
             addressService.saveOrUpdate(address);

@@ -1,6 +1,7 @@
 package com.github.handioq.diber.controller;
 
 import com.github.handioq.diber.model.dto.AddressDto;
+import com.github.handioq.diber.model.dto.ErrorResponseDto;
 import com.github.handioq.diber.model.dto.OrderDto;
 import com.github.handioq.diber.model.entity.*;
 import com.github.handioq.diber.service.*;
@@ -138,7 +139,8 @@ public class UserController {
             userService.saveOrUpdate(user);
             return new ResponseEntity<>(address, HttpStatus.CREATED);
         } else {
-            return new ResponseEntity<>("Address already exists", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ErrorResponseDto("internal", "Address already exists"),
+                    HttpStatus.BAD_REQUEST);
         }
 
 

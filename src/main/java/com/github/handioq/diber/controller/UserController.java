@@ -120,12 +120,28 @@ public class UserController {
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
 
-        Address address = Converter.toAddressEntity(addressDto);
-        address.setUser(user);
-        user.getAddresses().add(address);
+        List<Address> userAddresses = addressService.findByUserId(userId);
+        boolean addressAlreadyExists = false;
 
-        userService.saveOrUpdate(user);
-        return new ResponseEntity<>(address, HttpStatus.CREATED);
+        for (Address address : userAddresses) {
+            if (address.getName().equalsIgnoreCase(addressDto.getName())) {
+                addressAlreadyExists = true;
+                break;
+            }
+        }
+
+        if(!addressAlreadyExists) {
+            Address address = Converter.toAddressEntity(addressDto);
+            address.setUser(user);
+            user.getAddresses().add(address);
+
+            userService.saveOrUpdate(user);
+            return new ResponseEntity<>(address, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>("Address already exists", HttpStatus.BAD_REQUEST);
+        }
+
+
     }
 
     @RequestMapping(value = "/{id}/orders", method = RequestMethod.POST)

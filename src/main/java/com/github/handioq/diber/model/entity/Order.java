@@ -14,6 +14,7 @@ public class Order extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date")
     private Date date;
 

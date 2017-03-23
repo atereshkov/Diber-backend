@@ -12,8 +12,8 @@ public class DateUtil {
 
         try {
             date = formatter.parse(dateInString);
-            //System.out.println(date);
-            //System.out.println(formatter.format(date));
+            System.out.println("[DateUtil] date: " + date);
+            System.out.println("[DateUtil] formattedDate: " + formatter.format(date));
 
         } catch (ParseException e) {
             e.printStackTrace();

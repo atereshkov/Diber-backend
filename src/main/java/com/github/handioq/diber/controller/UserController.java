@@ -3,6 +3,7 @@ package com.github.handioq.diber.controller;
 import com.github.handioq.diber.model.dto.AddressDto;
 import com.github.handioq.diber.model.dto.ErrorResponseDto;
 import com.github.handioq.diber.model.dto.OrderDto;
+import com.github.handioq.diber.model.dto.ShopDto;
 import com.github.handioq.diber.model.entity.*;
 import com.github.handioq.diber.service.*;
 import com.github.handioq.diber.utils.Constants;
@@ -87,7 +88,9 @@ public class UserController {
             return new ResponseEntity<>("Empty", HttpStatus.NO_CONTENT);
         }
 
-        return new ResponseEntity<>(orders, HttpStatus.OK);
+        List<OrderDto> ordersDtos = Converter.toOrdersDto(orders);
+
+        return new ResponseEntity<>(ordersDtos, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}/addresses", method = RequestMethod.GET)
@@ -98,7 +101,9 @@ public class UserController {
             return new ResponseEntity<>("Empty", HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(addresses, HttpStatus.OK);
+        List<AddressDto> addressesDtos = Converter.toAddressesDto(addresses);
+
+        return new ResponseEntity<>(addressesDtos, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}/shops", method = RequestMethod.GET)
@@ -109,7 +114,9 @@ public class UserController {
             return new ResponseEntity<>("Empty", HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(shops, HttpStatus.OK);
+        List<ShopDto> shopsDtos = Converter.toShopsDto(shops);
+
+        return new ResponseEntity<>(shopsDtos, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}/addresses", method = RequestMethod.POST)

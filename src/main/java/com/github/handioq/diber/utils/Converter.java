@@ -3,7 +3,9 @@ package com.github.handioq.diber.utils;
 import com.github.handioq.diber.model.dto.*;
 import com.github.handioq.diber.model.entity.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Converter {
 
@@ -62,6 +64,41 @@ public class Converter {
     public static UserDto toUserDto(User user) {
         return new UserDto(user.getId(), user.getEmail(), user.getUsername(), user.getPassword(),
                 user.isEnabled(), user.getFullname());
+    }
+
+    //public static ReviewDto toReviewDto(Review review) {
+
+    //}
+
+    public static List<ShopDto> toShopsDto(List<Shop> shops) {
+        List<ShopDto> shopDtos = new ArrayList<>();
+
+        for (Shop shop : shops) {
+            shopDtos.add(toShopDto(shop));
+        }
+
+        return shopDtos;
+    }
+
+    public static List<AddressDto> toAddressesDto(List<Address> addresses) {
+        List<AddressDto> addressDtos = new ArrayList<>();
+
+        for (Address address : addresses) {
+            addressDtos.add(toAddressDto(address));
+        }
+
+        return addressDtos;
+    }
+
+
+    public static List<OrderDto> toOrdersDto(List<Order> orders) {
+        List<OrderDto> ordersDtos = new ArrayList<>();
+
+        for (Order order : orders) {
+            ordersDtos.add(toOrderDto(order));
+        }
+
+        return ordersDtos;
     }
 
 }

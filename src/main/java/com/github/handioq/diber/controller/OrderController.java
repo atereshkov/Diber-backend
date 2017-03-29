@@ -35,6 +35,7 @@ public class OrderController {
         if (order == null) {
             return new ResponseEntity<>("Order not found", HttpStatus.NOT_FOUND);
         }
+        // TODO return DTO instead of entity
         return new ResponseEntity<>(order, HttpStatus.OK);
     }
 

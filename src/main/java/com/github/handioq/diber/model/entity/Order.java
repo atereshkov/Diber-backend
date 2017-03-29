@@ -74,7 +74,7 @@ public class Order extends BaseEntity {
     public Order() {
     }
 
-    @JsonIgnore
+    //@JsonIgnore
     public Address getAddress() {
         return address;
     }
@@ -83,7 +83,7 @@ public class Order extends BaseEntity {
         this.address = address;
     }
 
-    @JsonIgnore
+    //@JsonIgnore
     public Set<Request> getRequests() {
         return requests;
     }
@@ -92,7 +92,7 @@ public class Order extends BaseEntity {
         this.requests = requests;
     }
 
-    @JsonIgnore
+    //@JsonIgnore
     public User getCourier() {
         return courier;
     }
@@ -101,7 +101,7 @@ public class Order extends BaseEntity {
         this.courier = courier;
     }
 
-    @JsonIgnore
+    //@JsonIgnore
     public User getUser() {
         return user;
     }
@@ -118,7 +118,7 @@ public class Order extends BaseEntity {
         this.date = date;
     }
 
-    @JsonIgnore
+    //@JsonIgnore
     public Shop getShop() {
         return shop;
     }

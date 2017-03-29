@@ -8,6 +8,9 @@ public class OrderDto {
     private String status;
     private ShopDto shop;
     private AddressDto address;
+    private UserDto courier;
+    private UserDto customer;
+    // todo add array of requestDto
 
     public OrderDto() {
     }
@@ -19,6 +22,22 @@ public class OrderDto {
         this.status = status;
         this.shop = shop;
         this.address = address;
+    }
+
+    public UserDto getCourier() {
+        return courier;
+    }
+
+    public void setCourier(UserDto courier) {
+        this.courier = courier;
+    }
+
+    public UserDto getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(UserDto customer) {
+        this.customer = customer;
     }
 
     public AddressDto getAddress() {

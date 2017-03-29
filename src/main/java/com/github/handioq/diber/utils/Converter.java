@@ -34,4 +34,34 @@ public class Converter {
         return new Shop(shopDto.getName(), shopDto.getAddress());
     }
 
+    public static OrderDto toOrderDto(Order order) {
+        OrderDto orderDto = new OrderDto();
+
+        orderDto.setAddress(toAddressDto(order.getAddress()));
+        orderDto.setShop(toShopDto(order.getShop()));
+
+        orderDto.setDate(order.getDate().toString());
+        orderDto.setDescription(order.getDescription());
+        orderDto.setPrice(order.getPrice());
+        orderDto.setStatus(order.getStatus());
+        orderDto.setCourier(toUserDto(order.getCourier()));
+        orderDto.setCustomer(toUserDto(order.getUser()));
+
+        return orderDto;
+    }
+
+    public static AddressDto toAddressDto(Address address) {
+        return new AddressDto(address.getName(), address.getPostalCode(), address.getCountry(),
+                address.getCity(), address.getRegion(), address.getAddress(), address.getPhone());
+    }
+
+    public static ShopDto toShopDto(Shop shop) {
+        return new ShopDto(shop.getName(), shop.getAddress());
+    }
+
+    public static UserDto toUserDto(User user) {
+        return new UserDto(user.getId(), user.getEmail(), user.getUsername(), user.getPassword(),
+                user.isEnabled(), user.getFullname());
+    }
+
 }

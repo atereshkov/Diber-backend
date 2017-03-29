@@ -22,6 +22,15 @@ public class UserDto {
         this.enabled = enabled;
     }
 
+    public UserDto(long id, String email, String username, String password, boolean enabled, String fullname) {
+        this.id = id;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.enabled = enabled;
+        this.fullname = fullname;
+    }
+
     public String getFullname() {
         return fullname;
     }

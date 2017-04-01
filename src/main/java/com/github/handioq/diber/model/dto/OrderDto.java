@@ -2,6 +2,7 @@ package com.github.handioq.diber.model.dto;
 
 public class OrderDto {
 
+    private long id;
     private String date;
     private String description;
     private Double price;
@@ -15,13 +16,22 @@ public class OrderDto {
     public OrderDto() {
     }
 
-    public OrderDto(String date, String description, Double price, String status, ShopDto shop, AddressDto address) {
+    public OrderDto(long id, String date, String description, Double price, String status, ShopDto shop, AddressDto address) {
+        this.id = id;
         this.date = date;
         this.description = description;
         this.price = price;
         this.status = status;
         this.shop = shop;
         this.address = address;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public UserDto getCourier() {

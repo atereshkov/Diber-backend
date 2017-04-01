@@ -42,6 +42,7 @@ public class Converter {
         orderDto.setAddress(toAddressDto(order.getAddress()));
         orderDto.setShop(toShopDto(order.getShop()));
 
+        orderDto.setId(order.getId());
         orderDto.setDate(order.getDate().toString());
         orderDto.setDescription(order.getDescription());
         orderDto.setPrice(order.getPrice());

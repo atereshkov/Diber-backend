@@ -8,6 +8,8 @@ public interface RequestService {
 
     List<Request> findByOrderId(long userId);
 
+    Request findByOrderIdAndCourierId(long orderId, long courierId);
+
     void addRequest(Request request);
 
 }

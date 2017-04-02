@@ -82,6 +82,12 @@ public class OrderController {
             return new ResponseEntity<>("Courier not found", HttpStatus.NOT_FOUND);
         }
 
+        Request existingRequest = requestService.findByOrderIdAndCourierId(id, requestDto.getCourier().getId());
+
+        if (existingRequest != null) {
+            return new ResponseEntity<>("Request with this order id and courier id already exists.", HttpStatus.BAD_REQUEST);
+        }
+
         Request request = new Request(order, courier);
 
         order.getRequests().add(request);

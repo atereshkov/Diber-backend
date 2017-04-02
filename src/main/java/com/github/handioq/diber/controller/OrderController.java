@@ -1,5 +1,6 @@
 package com.github.handioq.diber.controller;
 
+import com.github.handioq.diber.model.dto.ErrorResponseDto;
 import com.github.handioq.diber.model.dto.OrderDto;
 import com.github.handioq.diber.model.dto.RequestDto;
 import com.github.handioq.diber.model.entity.Order;
@@ -73,19 +74,22 @@ public class OrderController {
         Order order = orderService.getById(id);
 
         if (order == null) {
-            return new ResponseEntity<>("Order not found", HttpStatus.NOT_FOUND);
+            ErrorResponseDto error = new ErrorResponseDto("Not found", "Order not found");
+            return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
         }
 
         User courier = userService.findOne(requestDto.getCourier().getId());
 
         if (courier == null) {
-            return new ResponseEntity<>("Courier not found", HttpStatus.NOT_FOUND);
+            ErrorResponseDto error = new ErrorResponseDto("Not found", "Courier not found");
+            return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
         }
 
         Request existingRequest = requestService.findByOrderIdAndCourierId(id, requestDto.getCourier().getId());
 
         if (existingRequest != null) {
-            return new ResponseEntity<>("Request with this order id and courier id already exists.", HttpStatus.BAD_REQUEST);
+            ErrorResponseDto error = new ErrorResponseDto("Already exists", "Request with this order id and courier id already exists.");
+            return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
         }
 
         Request request = new Request(order, courier);

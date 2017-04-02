@@ -23,6 +23,11 @@ public class Request extends BaseEntity {
     public Request() {
     }
 
+    public Request(Order order, User courier) {
+        this.order = order;
+        this.courier = courier;
+    }
+
     //@JsonIgnore
     public Order getOrder() {
         return order;

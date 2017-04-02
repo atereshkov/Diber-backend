@@ -4,8 +4,10 @@ import com.github.handioq.diber.model.dto.OrderDto;
 import com.github.handioq.diber.model.dto.RequestDto;
 import com.github.handioq.diber.model.entity.Order;
 import com.github.handioq.diber.model.entity.Request;
+import com.github.handioq.diber.model.entity.User;
 import com.github.handioq.diber.service.OrderService;
 import com.github.handioq.diber.service.RequestService;
+import com.github.handioq.diber.service.UserService;
 import com.github.handioq.diber.utils.Constants;
 import com.github.handioq.diber.utils.Converter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,9 @@ public class OrderController {
 
     @Autowired
     RequestService requestService;
+
+    @Autowired
+    UserService userService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
@@ -71,11 +76,18 @@ public class OrderController {
             return new ResponseEntity<>("Order not found", HttpStatus.NOT_FOUND);
         }
 
-        Request request = Converter.toRequestEntity(requestDto);
+        User courier = userService.findOne(requestDto.getCourier().getId());
+
+        if (courier == null) {
+            return new ResponseEntity<>("Courier not found", HttpStatus.NOT_FOUND);
+        }
+
+        Request request = new Request(order, courier);
+
         order.getRequests().add(request);
         orderService.saveOrUpdate(order);
 
-        return new ResponseEntity<>(request, HttpStatus.OK);
+        return new ResponseEntity<>(request, HttpStatus.OK); // todo request dto
     }
 
     @RequestMapping(method = RequestMethod.POST)

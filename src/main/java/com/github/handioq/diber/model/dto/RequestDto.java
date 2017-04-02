@@ -10,6 +10,9 @@ public class RequestDto {
     @JsonProperty("courier")
     private UserDto courier;
 
+    public RequestDto() {
+    }
+
     public RequestDto(OrderDto order, UserDto courier) {
         this.order = order;
         this.courier = courier;

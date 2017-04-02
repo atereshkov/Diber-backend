@@ -102,4 +102,18 @@ public class Converter {
         return ordersDtos;
     }
 
+    private static RequestDto toRequestDto(Request request) {
+        return new RequestDto(toOrderDto(request.getOrder()), toUserDto(request.getCourier()));
+    }
+
+    public static List<RequestDto> toRequestsDto(List<Request> requests) {
+        List<RequestDto> requestsDtos = new ArrayList<>();
+
+        for (Request request : requests) {
+            requestsDtos.add(toRequestDto(request));
+        }
+
+        return requestsDtos;
+    }
+
 }

@@ -57,7 +57,9 @@ public class OrderController {
             return new ResponseEntity<>("Requests are empty", HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(requests, HttpStatus.OK);
+        List<RequestDto> requestsDtos = Converter.toRequestsDto(requests);
+
+        return new ResponseEntity<>(requestsDtos, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}/requests", method = RequestMethod.POST)

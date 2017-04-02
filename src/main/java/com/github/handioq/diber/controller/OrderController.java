@@ -87,7 +87,7 @@ public class OrderController {
         order.getRequests().add(request);
         orderService.saveOrUpdate(order);
 
-        return new ResponseEntity<>(request, HttpStatus.OK); // todo request dto
+        return new ResponseEntity<>(requestDto, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST)

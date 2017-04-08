@@ -128,6 +128,10 @@ public class UserController {
             return new ResponseEntity<>("Shop not found", HttpStatus.NOT_FOUND);
         }
 
+        for (Order order : shop.getOrders()) {
+            order.setShop(null);
+        }
+
         shopService.delete(shopId);
         return new ResponseEntity<>(shopId, HttpStatus.NO_CONTENT);
     }

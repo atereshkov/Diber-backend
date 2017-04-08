@@ -139,7 +139,7 @@ public class UserController {
             user.getAddresses().add(address);
 
             userService.saveOrUpdate(user);
-            return new ResponseEntity<>(address, HttpStatus.CREATED);
+            return new ResponseEntity<>(addressDto, HttpStatus.CREATED);
         }
     }
 
@@ -186,7 +186,7 @@ public class UserController {
         user.getOrders().add(order);
         userService.saveOrUpdate(user);
 
-        return new ResponseEntity<>(order, HttpStatus.CREATED);
+        return new ResponseEntity<>(orderDto, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/info", method = RequestMethod.GET)

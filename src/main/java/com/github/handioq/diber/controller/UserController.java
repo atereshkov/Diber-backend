@@ -119,6 +119,19 @@ public class UserController {
         return new ResponseEntity<>(shopsDtos, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/{user_id}/shops/{shop_id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteShop(@PathVariable("user_id") long userId,
+                                        @PathVariable("shop_id") long shopId) {
+        Shop shop = shopService.findOne(shopId);
+
+        if (shop == null) {
+            return new ResponseEntity<>("Shop not found", HttpStatus.NOT_FOUND);
+        }
+
+        shopService.delete(shopId);
+        return new ResponseEntity<>(shopId, HttpStatus.NO_CONTENT);
+    }
+
     @RequestMapping(value = "/{id}/addresses", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<?> addAddress(@PathVariable("id") long userId, @RequestBody AddressDto addressDto) {
@@ -141,6 +154,19 @@ public class UserController {
             userService.saveOrUpdate(user);
             return new ResponseEntity<>(addressDto, HttpStatus.CREATED);
         }
+    }
+
+    @RequestMapping(value = "/{user_id}/addresses/{address_id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteAddress(@PathVariable("user_id") long userId,
+                                           @PathVariable("address_id") long addressId) {
+        Address address = addressService.findOne(addressId);
+
+        if (address == null) {
+            return new ResponseEntity<>("Address not found", HttpStatus.NOT_FOUND);
+        }
+
+        addressService.delete(addressId);
+        return new ResponseEntity<>(addressId, HttpStatus.NO_CONTENT);
     }
 
     @RequestMapping(value = "/{id}/orders", method = RequestMethod.POST)

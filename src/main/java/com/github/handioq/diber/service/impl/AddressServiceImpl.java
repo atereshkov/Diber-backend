@@ -36,4 +36,14 @@ public class AddressServiceImpl implements AddressService {
     public Address findByNameAndUser(String name, User user) {
         return addressRepository.findByNameAndUser(name, user);
     }
+
+    @Override
+    public Address findOne(long addressId) {
+        return addressRepository.findOne(addressId);
+    }
+
+    @Override
+    public void delete(long addressId) {
+        addressRepository.delete(addressId);
+    }
 }

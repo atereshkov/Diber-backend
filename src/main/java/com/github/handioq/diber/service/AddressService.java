@@ -15,4 +15,8 @@ public interface AddressService {
 
     Address findByNameAndUser(String name, User user);
 
+    Address findOne(long addressId);
+
+    void delete(long addressId);
+
 }

@@ -15,4 +15,6 @@ public interface ShopService {
 
     Shop findByNameAndUser(String name, User user);
 
+    void delete(long shopId);
+
 }

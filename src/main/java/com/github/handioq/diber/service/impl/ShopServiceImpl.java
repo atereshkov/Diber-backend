@@ -36,4 +36,9 @@ public class ShopServiceImpl implements ShopService {
     public Shop findByNameAndUser(String name, User user) {
         return shopRepository.findByNameAndUser(name, user);
     }
+
+    @Override
+    public void delete(long shopId) {
+        shopRepository.delete(shopId);
+    }
 }

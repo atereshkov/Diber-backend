@@ -39,8 +39,13 @@ public class Converter {
     public static OrderDto toOrderDto(Order order) {
         OrderDto orderDto = new OrderDto();
 
-        orderDto.setAddress(toAddressDto(order.getAddress()));
-        orderDto.setShop(toShopDto(order.getShop()));
+        if (order.getShop() != null) {
+            orderDto.setShop(toShopDto(order.getShop()));
+        }
+
+        if (order.getAddress() != null) {
+            orderDto.setAddress(toAddressDto(order.getAddress()));
+        }
 
         orderDto.setId(order.getId());
         orderDto.setDate(order.getDate().toString());

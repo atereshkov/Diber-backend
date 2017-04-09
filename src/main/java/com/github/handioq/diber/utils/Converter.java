@@ -47,12 +47,15 @@ public class Converter {
             orderDto.setAddress(toAddressDto(order.getAddress()));
         }
 
+        if (order.getCourier() != null) {
+            orderDto.setCourier(toUserDto(order.getCourier()));
+        }
+
         orderDto.setId(order.getId());
         orderDto.setDate(order.getDate().toString());
         orderDto.setDescription(order.getDescription());
         orderDto.setPrice(order.getPrice());
         orderDto.setStatus(order.getStatus());
-        orderDto.setCourier(toUserDto(order.getCourier()));
         orderDto.setCustomer(toUserDto(order.getUser()));
 
         return orderDto;

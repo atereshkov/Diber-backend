@@ -218,7 +218,7 @@ public class UserController {
         order.setShop(shop);
         order.setAddress(address);
         order.setUser(user);
-        order.setCourier(user); // FIXME (todo add null)
+        order.setCourier(null); // add order without courier as initial
         orderService.saveOrUpdate(order);
 
         user.getOrders().add(order);

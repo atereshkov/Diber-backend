@@ -128,6 +128,8 @@ public class UserController {
             return new ResponseEntity<>("Shop not found", HttpStatus.NOT_FOUND);
         }
 
+        // todo add check for order status and if one of the orders has "In progress" status then don't delete shop
+
         for (Order order : shop.getOrders()) {
             order.setShop(null);
         }
@@ -167,6 +169,12 @@ public class UserController {
 
         if (address == null) {
             return new ResponseEntity<>("Address not found", HttpStatus.NOT_FOUND);
+        }
+
+        // todo add check for order status and if one of the orders has "In progress" status then don't delete address
+
+        for (Order order : address.getOrders()) {
+            order.setAddress(null);
         }
 
         addressService.delete(addressId);

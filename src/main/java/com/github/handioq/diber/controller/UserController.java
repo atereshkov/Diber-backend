@@ -8,6 +8,8 @@ import com.github.handioq.diber.model.entity.*;
 import com.github.handioq.diber.service.*;
 import com.github.handioq.diber.utils.Constants;
 import com.github.handioq.diber.utils.Converter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,8 @@ import java.util.List;
 @RestController
 @RequestMapping(Constants.API_URL + Constants.URL_USERS)
 public class UserController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private UserService userService;
@@ -184,6 +188,8 @@ public class UserController {
     @RequestMapping(value = "/{id}/orders", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<?> addOrder(@PathVariable("id") long userId, @RequestBody OrderDto orderDto) {
+        LOGGER.info("Starting of addOrder");
+
         User user = userService.findOne(userId);
 
         if (user == null) {

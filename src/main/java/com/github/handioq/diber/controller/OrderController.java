@@ -11,6 +11,8 @@ import com.github.handioq.diber.service.RequestService;
 import com.github.handioq.diber.service.UserService;
 import com.github.handioq.diber.utils.Constants;
 import com.github.handioq.diber.utils.Converter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +25,8 @@ import java.util.List;
 @RestController
 @RequestMapping(Constants.API_URL + Constants.URL_ORDERS)
 public class OrderController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrderController.class);
 
     @Autowired
     OrderService orderService;

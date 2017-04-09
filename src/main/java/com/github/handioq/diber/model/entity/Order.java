@@ -37,7 +37,6 @@ public class Order extends BaseEntity {
     private Set<Image> images;
     */
 
-    @Nullable
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     //@JsonManagedReference
     //@JsonBackReference // todo fix?

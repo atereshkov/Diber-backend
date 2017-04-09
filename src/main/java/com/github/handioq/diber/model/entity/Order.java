@@ -1,6 +1,7 @@
 package com.github.handioq.diber.model.entity;
 
 import com.fasterxml.jackson.annotation.*;
+import com.sun.istack.internal.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -36,6 +37,7 @@ public class Order extends BaseEntity {
     private Set<Image> images;
     */
 
+    @Nullable
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     //@JsonManagedReference
     //@JsonBackReference // todo fix?

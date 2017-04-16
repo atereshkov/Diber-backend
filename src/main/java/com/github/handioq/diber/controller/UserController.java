@@ -166,6 +166,31 @@ public class UserController {
         }
     }
 
+    @RequestMapping(value = "/{id}/shops", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<?> addShop(@PathVariable("id") long userId, @RequestBody ShopDto shopDto) {
+        User user = userService.findOne(userId);
+
+        if (user == null) {
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        }
+
+        Shop existingShop = shopService.findByNameAndUser(shopDto.getName(), user);
+
+        if (existingShop != null) {
+            ErrorResponseDto error = new ErrorResponseDto("internal",
+                    "Shop with this name is already exists");
+            return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        } else {
+            Shop shop = Converter.toShopEntity(shopDto);
+            shop.setUser(user);
+            user.getShops().add(shop);
+
+            userService.saveOrUpdate(user);
+            return new ResponseEntity<>(shopDto, HttpStatus.CREATED);
+        }
+    }
+
     @RequestMapping(value = "/{user_id}/addresses/{address_id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteAddress(@PathVariable("user_id") long userId,
                                            @PathVariable("address_id") long addressId) {

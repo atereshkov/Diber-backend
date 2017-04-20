@@ -8,7 +8,7 @@ The system provide many features, here are the most important ones:
 
 Customer:
 
-* Sumbit an order (order management)
+* Submit an order (order management)
 * Viewing a single order and its status
 * Appointment of the courier to your order (choose from the list of suggestions)
 * Look at profiles couriers (search, filter, etc.)

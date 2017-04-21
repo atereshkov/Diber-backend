@@ -67,7 +67,7 @@ public class Converter {
     }
 
     public static ShopDto toShopDto(Shop shop) {
-        return new ShopDto(shop.getName(), shop.getAddress());
+        return new ShopDto(shop.getId(), shop.getName(), shop.getAddress());
     }
 
     public static UserDto toUserDto(User user) {

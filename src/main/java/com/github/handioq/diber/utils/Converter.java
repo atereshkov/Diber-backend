@@ -62,7 +62,7 @@ public class Converter {
     }
 
     public static AddressDto toAddressDto(Address address) {
-        return new AddressDto(address.getName(), address.getPostalCode(), address.getCountry(),
+        return new AddressDto(address.getId(), address.getName(), address.getPostalCode(), address.getCountry(),
                 address.getCity(), address.getRegion(), address.getAddress(), address.getPhone());
     }
 

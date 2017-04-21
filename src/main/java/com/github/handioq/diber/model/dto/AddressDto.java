@@ -2,6 +2,7 @@ package com.github.handioq.diber.model.dto;
 
 public class AddressDto {
 
+    private long id;
     private String name;
     private int postalCode;
     private String country;
@@ -13,7 +14,8 @@ public class AddressDto {
     public AddressDto() {
     }
 
-    public AddressDto(String name, int postalCode, String country, String city, String region, String address, String phone) {
+    public AddressDto(long id, String name, int postalCode, String country, String city, String region, String address, String phone) {
+        this.id = id;
         this.name = name;
         this.postalCode = postalCode;
         this.country = country;
@@ -21,6 +23,14 @@ public class AddressDto {
         this.region = region;
         this.address = address;
         this.phone = phone;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {

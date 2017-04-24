@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ReviewDto {
 
-    @JsonProperty("courier")
+    @JsonProperty("review")
     private String review;
 
-    @JsonProperty("courier")
+    @JsonProperty("rating")
     private int rating;
 
     @JsonProperty("user")

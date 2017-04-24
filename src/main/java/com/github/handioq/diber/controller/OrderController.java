@@ -120,6 +120,7 @@ public class OrderController {
         }
 
         order.setStatus(orderDto.getStatus());
+        orderService.saveOrUpdate(order);
 
         return new ResponseEntity<>(Converter.toOrderDto(order),HttpStatus.OK);
     }

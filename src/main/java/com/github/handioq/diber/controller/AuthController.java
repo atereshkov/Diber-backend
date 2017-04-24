@@ -45,7 +45,7 @@ public class AuthController {
         user.setRoles(roles);
 
         authService.register(user);
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+        return new ResponseEntity<>(Converter.toUserDto(user), HttpStatus.CREATED);
     }
 
 }

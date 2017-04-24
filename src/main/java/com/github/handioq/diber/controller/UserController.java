@@ -47,7 +47,7 @@ public class UserController {
         if (user == null) {
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(Converter.toUserDto(user), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
@@ -70,7 +70,7 @@ public class UserController {
             return new ResponseEntity<>("Empty", HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(users, HttpStatus.OK);
+        return new ResponseEntity<>(users, HttpStatus.OK); //todo usersDto
     }
 
     @RequestMapping(value = "/{id}/reviews", method = RequestMethod.GET)
@@ -81,7 +81,7 @@ public class UserController {
             return new ResponseEntity<>("Empty", HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(reviews, HttpStatus.OK);
+        return new ResponseEntity<>(Converter.toReviewsDto(reviews), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{user_id}/orders", method = RequestMethod.GET)
@@ -267,7 +267,7 @@ public class UserController {
         //    return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         //}
 
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(Converter.toUserDto(user), HttpStatus.OK);
     }
 
 }

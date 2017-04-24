@@ -1,7 +1,6 @@
 package com.github.handioq.diber.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -26,9 +25,6 @@ public class Shop extends BaseEntity {
     @JsonBackReference
     private User user;
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    //@JsonBackReference
-    //@JsonManagedReference
     @OneToMany(mappedBy = "shop", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Set<Order> orders;
 

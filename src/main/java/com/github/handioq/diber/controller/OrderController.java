@@ -131,7 +131,7 @@ public class OrderController {
         Order order = Converter.toOrderEntity(orderDto);
 
         orderService.saveOrUpdate(order);
-        return new ResponseEntity<>(order, HttpStatus.CREATED);
+        return new ResponseEntity<>(Converter.toOrderDto(order), HttpStatus.CREATED);
     }
 
 }

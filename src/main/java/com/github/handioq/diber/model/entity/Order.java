@@ -1,7 +1,5 @@
 package com.github.handioq.diber.model.entity;
 
-import com.fasterxml.jackson.annotation.*;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -36,29 +34,22 @@ public class Order extends BaseEntity {
     private Set<Image> images;
     */
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    //@JsonManagedReference
-    //@JsonBackReference // todo fix?
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shop_id")
     private Shop shop;
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     private User user;
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "courier_id")
     private User courier;
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")
     private Address address;
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Request> requests;
 

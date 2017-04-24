@@ -1,7 +1,5 @@
 package com.github.handioq.diber.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import javax.persistence.*;
 
 @Entity
@@ -10,12 +8,10 @@ public class Request extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "courier_id")
     private User courier;

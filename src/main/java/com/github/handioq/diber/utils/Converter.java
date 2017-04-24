@@ -75,9 +75,19 @@ public class Converter {
                 user.isEnabled(), user.getFullname());
     }
 
-    //public static ReviewDto toReviewDto(Review review) {
+    public static ReviewDto toReviewDto(Review review) {
+        return new ReviewDto(review.getReview(), review.getRating(), toUserDto(review.getUser()));
+    }
 
-    //}
+    public static List<ReviewDto> toReviewsDto(List<Review> reviews) {
+        List<ReviewDto> reviewsDto = new ArrayList<>();
+
+        for (Review review : reviews) {
+            reviewsDto.add(toReviewDto(review));
+        }
+
+        return reviewsDto;
+    }
 
     public static List<ShopDto> toShopsDto(List<Shop> shops) {
         List<ShopDto> shopDtos = new ArrayList<>();

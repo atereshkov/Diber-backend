@@ -104,6 +104,26 @@ public class OrderController {
         return new ResponseEntity<>(requestDto, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/{id}/status", method = RequestMethod.PUT)
+    @ResponseBody
+    public ResponseEntity<?> changeStatus(@PathVariable("id") long id, @RequestBody OrderDto orderDto) {
+        Order order = orderService.getById(id);
+
+        if (order == null) {
+            ErrorResponseDto error = new ErrorResponseDto("Not found", "Order not found");
+            return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        }
+
+        if (orderDto.getStatus() == null || orderDto.getStatus().isEmpty()) {
+            ErrorResponseDto error = new ErrorResponseDto("Empty", "Status is empty");
+            return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        }
+
+        order.setStatus(orderDto.getStatus());
+
+        return new ResponseEntity<>(Converter.toOrderDto(order),HttpStatus.OK);
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<?> addOrder(@RequestBody OrderDto orderDto) {

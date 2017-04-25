@@ -120,7 +120,7 @@ public class Converter {
         return ordersDtos;
     }
 
-    private static RequestDto toRequestDto(Request request) {
+    public static RequestDto toRequestDto(Request request) {
         return new RequestDto(request.getId(), toOrderDto(request.getOrder()), toUserDto(request.getCourier()));
     }
 

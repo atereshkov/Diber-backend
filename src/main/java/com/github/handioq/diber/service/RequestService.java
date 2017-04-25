@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface RequestService {
 
+    Request getById(long id);
+
     List<Request> findByOrderId(long userId);
 
     Request findByOrderIdAndCourierId(long orderId, long courierId);

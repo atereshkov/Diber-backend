@@ -30,4 +30,9 @@ public class RequestServiceImpl implements RequestService {
     public Request findByOrderIdAndCourierId(long orderId, long courierId) {
         return requestRepository.findByOrderIdAndCourierId(orderId, courierId);
     }
+
+    @Override
+    public Request getById(long id) {
+        return requestRepository.findOne(id);
+    }
 }

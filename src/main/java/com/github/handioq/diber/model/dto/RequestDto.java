@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class RequestDto {
 
+    @JsonProperty("id")
+    private long id;
+
     @JsonProperty("order")
     private OrderDto order;
 
@@ -13,9 +16,18 @@ public class RequestDto {
     public RequestDto() {
     }
 
-    public RequestDto(OrderDto order, UserDto courier) {
+    public RequestDto(long id, OrderDto order, UserDto courier) {
+        this.id = id;
         this.order = order;
         this.courier = courier;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public OrderDto getOrder() {

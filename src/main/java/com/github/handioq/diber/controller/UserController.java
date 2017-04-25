@@ -75,7 +75,8 @@ public class UserController {
 
     @RequestMapping(value = "/{id}/reviews", method = RequestMethod.GET)
     public ResponseEntity<?> getReviews(@PathVariable("id") long userId) {
-        List<Review> reviews = reviewService.findByUserId(userId);
+        //List<Review> reviews = reviewService.findByUserId(userId); // todo separate this
+        List<Review> reviews = reviewService.findByCourierId(userId);
 
         if (reviews.isEmpty()) {
             return new ResponseEntity<>("Empty", HttpStatus.NOT_FOUND);

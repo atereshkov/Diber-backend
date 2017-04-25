@@ -20,4 +20,9 @@ public class ReviewServiceImpl implements ReviewService {
     public List<Review> findByUserId(long userId) {
         return reviewRepository.findByUserId(userId);
     }
+
+    @Override
+    public List<Review> findByCourierId(long courierId) {
+        return reviewRepository.findByCourierId(courierId);
+    }
 }

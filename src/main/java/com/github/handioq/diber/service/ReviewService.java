@@ -8,4 +8,6 @@ public interface ReviewService {
 
     List<Review> findByUserId(long userId);
 
+    List<Review> findByCourierId(long courierId);
+
 }

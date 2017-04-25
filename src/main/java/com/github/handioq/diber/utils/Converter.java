@@ -76,7 +76,8 @@ public class Converter {
     }
 
     public static ReviewDto toReviewDto(Review review) {
-        return new ReviewDto(review.getReview(), review.getRating(), toUserDto(review.getUser()));
+        return new ReviewDto(review.getReview(), review.getRating(),
+                toUserDto(review.getUser()), toUserDto(review.getCourier()));
     }
 
     public static List<ReviewDto> toReviewsDto(List<Review> reviews) {

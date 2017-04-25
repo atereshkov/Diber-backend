@@ -13,12 +13,24 @@ public class ReviewDto {
     @JsonProperty("user")
     private UserDto user;
 
+    @JsonProperty("courier")
+    private UserDto courier;
+
     public ReviewDto() { }
 
-    public ReviewDto(String review, int rating, UserDto user) {
+    public ReviewDto(String review, int rating, UserDto user, UserDto courier) {
         this.review = review;
         this.rating = rating;
         this.user = user;
+        this.courier = courier;
+    }
+
+    public UserDto getCourier() {
+        return courier;
+    }
+
+    public void setCourier(UserDto courier) {
+        this.courier = courier;
     }
 
     public String getReview() {

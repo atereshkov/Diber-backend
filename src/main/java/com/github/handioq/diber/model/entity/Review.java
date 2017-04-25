@@ -20,10 +20,21 @@ public class Review extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    @JsonBackReference
     private User user;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "courier_id")
+    private User courier;
+
     public Review() {
+    }
+
+    public User getCourier() {
+        return courier;
+    }
+
+    public void setCourier(User courier) {
+        this.courier = courier;
     }
 
     public User getUser() {

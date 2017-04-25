@@ -86,7 +86,7 @@ public class User extends BaseEntity {
         this.fullname = fullname;
     }
 
-    @JsonIgnore
+    //@JsonIgnore
     public Set<Shop> getShops() {
         return shops;
     }
@@ -95,7 +95,7 @@ public class User extends BaseEntity {
         this.shops = shops;
     }
 
-    @JsonIgnore
+    //@JsonIgnore
     public Set<Address> getAddresses() {
         return addresses;
     }
@@ -112,7 +112,7 @@ public class User extends BaseEntity {
         this.fullname = fullname;
     }
 
-    @JsonIgnore
+    //@JsonIgnore
     public Set<Request> getRequests() {
         return requests;
     }
@@ -121,7 +121,7 @@ public class User extends BaseEntity {
         this.requests = requests;
     }
 
-    @JsonIgnore
+    //@JsonIgnore
     public Set<Order> getOrders() {
         return orders;
     }
@@ -130,7 +130,7 @@ public class User extends BaseEntity {
         this.orders = orders;
     }
 
-    @JsonIgnore
+    //@JsonIgnore
     public Set<Review> getReviews() {
         return reviews;
     }
@@ -163,7 +163,7 @@ public class User extends BaseEntity {
         this.username = username;
     }
 
-    @JsonIgnore
+    //@JsonIgnore
     public String getPassword() {
         return password;
     }

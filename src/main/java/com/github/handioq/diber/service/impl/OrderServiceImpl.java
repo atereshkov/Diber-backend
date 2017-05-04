@@ -37,4 +37,9 @@ public class OrderServiceImpl implements OrderService {
     public void saveOrUpdate(Order order) {
         orderRepository.save(order);
     }
+
+    @Override
+    public void delete(long orderId) {
+        orderRepository.delete(orderId);
+    }
 }

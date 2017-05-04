@@ -18,4 +18,6 @@ public interface OrderService {
 
     void saveOrUpdate(Order order);
 
+    void delete(long orderId);
+
 }

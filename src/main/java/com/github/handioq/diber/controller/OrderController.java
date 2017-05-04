@@ -122,7 +122,7 @@ public class OrderController {
         order.setStatus(orderDto.getStatus());
         orderService.saveOrUpdate(order);
 
-        return new ResponseEntity<>(Converter.toOrderDto(order),HttpStatus.OK);
+        return new ResponseEntity<>(Converter.toOrderDto(order), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -132,6 +132,22 @@ public class OrderController {
 
         orderService.saveOrUpdate(order);
         return new ResponseEntity<>(Converter.toOrderDto(order), HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteOrder(@PathVariable("id") long id) {
+        Order order = orderService.getById(id);
+
+        if (order == null) {
+            return new ResponseEntity<>("Order not found", HttpStatus.NOT_FOUND);
+        }
+
+        for (Request request : order.getRequests()) {
+            request.setOrder(null);
+        }
+
+        orderService.delete(id);
+        return new ResponseEntity<>(id, HttpStatus.NO_CONTENT);
     }
 
 }

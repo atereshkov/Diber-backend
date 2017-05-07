@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -211,8 +212,10 @@ public class UserController {
         return new ResponseEntity<>(addressId, HttpStatus.NO_CONTENT);
     }
 
+    @PreAuthorize("@securityServiceImpl.hasPermissions(#user, #userId)")
     @RequestMapping(value = "/{id}/requests", method = RequestMethod.GET)
-    public ResponseEntity<?> getRequests(@PathVariable("id") long userId) {
+    public ResponseEntity<?> getRequests(@AuthenticationPrincipal User user,
+                                         @PathVariable("id") long userId) {
         List<Request> requests = requestService.findByCourierId(userId);
 
         if (requests.isEmpty()) {

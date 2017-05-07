@@ -8,6 +8,9 @@ public class Request extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
+    @Column(name = "status")
+    private String status;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
@@ -22,6 +25,14 @@ public class Request extends BaseEntity {
     public Request(Order order, User courier) {
         this.order = order;
         this.courier = courier;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     //@JsonIgnore

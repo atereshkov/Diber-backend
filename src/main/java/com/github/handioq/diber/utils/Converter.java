@@ -122,7 +122,8 @@ public class Converter {
     }
 
     public static RequestDto toRequestDto(Request request) {
-        return new RequestDto(request.getId(), toOrderDto(request.getOrder()), toUserDto(request.getCourier()));
+        return new RequestDto(request.getId(), toOrderDto(request.getOrder()),
+                toUserDto(request.getCourier()), request.getStatus());
     }
 
     public static List<RequestDto> toRequestsDto(List<Request> requests) {

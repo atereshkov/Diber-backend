@@ -7,6 +7,9 @@ public class RequestDto {
     @JsonProperty("id")
     private long id;
 
+    @JsonProperty("status")
+    private String status;
+
     @JsonProperty("order")
     private OrderDto order;
 
@@ -16,10 +19,19 @@ public class RequestDto {
     public RequestDto() {
     }
 
-    public RequestDto(long id, OrderDto order, UserDto courier) {
+    public RequestDto(long id, OrderDto order, UserDto courier, String status) {
         this.id = id;
         this.order = order;
         this.courier = courier;
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public long getId() {

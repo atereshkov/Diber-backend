@@ -14,4 +14,6 @@ public interface RequestService {
 
     void addRequest(Request request);
 
+    void saveOrUpdate(Request request);
+
 }

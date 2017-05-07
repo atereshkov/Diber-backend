@@ -1,5 +1,6 @@
 package com.github.handioq.diber.controller;
 
+import com.github.handioq.diber.model.dto.ErrorResponseDto;
 import com.github.handioq.diber.model.dto.RequestDto;
 import com.github.handioq.diber.model.entity.Request;
 import com.github.handioq.diber.service.RequestService;
@@ -33,6 +34,27 @@ public class RequestController {
         RequestDto requestDto = Converter.toRequestDto(request);
 
         return new ResponseEntity<>(requestDto, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{id}/status", method = RequestMethod.PUT)
+    @ResponseBody
+    public ResponseEntity<?> changeStatus(@PathVariable("id") long id, @RequestBody RequestDto requestDto) {
+        Request request = requestService.getById(id);
+
+        if (request == null) {
+            ErrorResponseDto error = new ErrorResponseDto("Not found", "Request not found");
+            return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        }
+
+        if (requestDto.getStatus() == null || requestDto.getStatus().isEmpty()) {
+            ErrorResponseDto error = new ErrorResponseDto("Empty", "Status is empty");
+            return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        }
+
+        request.setStatus(requestDto.getStatus());
+        requestService.saveOrUpdate(request);
+
+        return new ResponseEntity<>(Converter.toRequestDto(request), HttpStatus.OK);
     }
 
 }

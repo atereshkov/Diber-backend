@@ -16,4 +16,6 @@ public interface RequestService {
 
     void saveOrUpdate(Request request);
 
+    List<Request> findByUserId(long userId);
+
 }

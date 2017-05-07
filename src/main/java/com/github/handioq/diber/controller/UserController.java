@@ -1,9 +1,6 @@
 package com.github.handioq.diber.controller;
 
-import com.github.handioq.diber.model.dto.AddressDto;
-import com.github.handioq.diber.model.dto.ErrorResponseDto;
-import com.github.handioq.diber.model.dto.OrderDto;
-import com.github.handioq.diber.model.dto.ShopDto;
+import com.github.handioq.diber.model.dto.*;
 import com.github.handioq.diber.model.entity.*;
 import com.github.handioq.diber.service.*;
 import com.github.handioq.diber.utils.Constants;
@@ -38,6 +35,9 @@ public class UserController {
 
     @Autowired
     private ShopService shopService;
+
+    @Autowired
+    private RequestService requestService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
@@ -209,6 +209,19 @@ public class UserController {
 
         addressService.delete(addressId);
         return new ResponseEntity<>(addressId, HttpStatus.NO_CONTENT);
+    }
+
+    @RequestMapping(value = "/{id}/requests", method = RequestMethod.GET)
+    public ResponseEntity<?> getRequests(@PathVariable("id") long userId) {
+        List<Request> requests = requestService.findByUserId(userId);
+
+        if (requests.isEmpty()) {
+            return new ResponseEntity<>("Empty", HttpStatus.NOT_FOUND);
+        }
+
+        List<RequestDto> requestsDtos = Converter.toRequestsDto(requests);
+
+        return new ResponseEntity<>(requestsDtos, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}/orders", method = RequestMethod.POST)

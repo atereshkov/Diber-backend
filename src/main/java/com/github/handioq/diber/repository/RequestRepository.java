@@ -13,4 +13,6 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
 
     Request findByOrderIdAndCourierId(long orderId, long courierId);
 
+    List<Request> findByUserId(long id);
+
 }

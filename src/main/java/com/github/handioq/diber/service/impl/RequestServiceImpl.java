@@ -40,4 +40,9 @@ public class RequestServiceImpl implements RequestService {
     public void saveOrUpdate(Request request) {
         requestRepository.save(request);
     }
+
+    @Override
+    public List<Request> findByUserId(long userId) {
+        return requestRepository.findByUserId(userId);
+    }
 }

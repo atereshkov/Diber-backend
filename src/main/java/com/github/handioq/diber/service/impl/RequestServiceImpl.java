@@ -42,7 +42,7 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public List<Request> findByUserId(long userId) {
-        return requestRepository.findByUserId(userId);
+    public List<Request> findByCourierId(long userId) {
+        return requestRepository.findByCourierId(userId);
     }
 }

@@ -213,7 +213,7 @@ public class UserController {
 
     @RequestMapping(value = "/{id}/requests", method = RequestMethod.GET)
     public ResponseEntity<?> getRequests(@PathVariable("id") long userId) {
-        List<Request> requests = requestService.findByUserId(userId);
+        List<Request> requests = requestService.findByCourierId(userId);
 
         if (requests.isEmpty()) {
             return new ResponseEntity<>("Empty", HttpStatus.NOT_FOUND);

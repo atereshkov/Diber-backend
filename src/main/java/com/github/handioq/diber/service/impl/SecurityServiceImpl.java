@@ -2,8 +2,8 @@ package com.github.handioq.diber.service.impl;
 
 import com.github.handioq.diber.model.entity.User;
 import com.github.handioq.diber.service.SecurityService;
-import com.github.handioq.diber.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,12 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class SecurityServiceImpl implements SecurityService {
 
-    @Autowired
-    UserService userService;
+    private static final Logger LOGGER = LoggerFactory.getLogger(SecurityServiceImpl.class);
 
     @Override
     public boolean hasPermissions(User user, long userId) {
         // if user from @AuthenticationPrincipal id is equal to userId from @PathVariable
+        LOGGER.info("hasPermissions: " + user.getId() + " : " + userId);
+
         return user.getId() == userId;
     }
 }

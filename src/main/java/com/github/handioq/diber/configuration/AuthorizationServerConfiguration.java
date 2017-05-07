@@ -30,8 +30,8 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     private static final String GRANT_TYPE_PASSWORD = "password";
     private static final String GRANT_TYPE_REFRESH_TOKEN = "refresh_token";
 
-    private static final int ACCESS_TOKEN_VALIDITY_SECONDS = 200000;
-    private static final int REFRESH_TOKEN_VALIDITY_SECONDS = 240000;
+    private static final int ACCESS_TOKEN_VALIDITY_SECONDS = 350000;
+    private static final int REFRESH_TOKEN_VALIDITY_SECONDS = 400000;
 
     @Autowired
     @Qualifier("authenticationManagerBean")

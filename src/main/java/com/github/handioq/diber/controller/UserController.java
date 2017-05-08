@@ -40,6 +40,7 @@ public class UserController {
     @Autowired
     private RequestService requestService;
 
+    // todo preAuth
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<?> getById(@PathVariable("id") long id) {
@@ -51,8 +52,9 @@ public class UserController {
         return new ResponseEntity<>(Converter.toUserDto(user), HttpStatus.OK);
     }
 
+    // todo required role_admin
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteBytId(@PathVariable("id") long id) {
+    public ResponseEntity<?> deleteById(@PathVariable("id") long id) {
         User user = userService.findOne(id);
 
         if (user == null) {
@@ -63,6 +65,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    // todo required role_admin
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getUsers() {
         List<User> users = userService.findAll();
@@ -71,11 +74,13 @@ public class UserController {
             return new ResponseEntity<>("Empty", HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(users, HttpStatus.OK); //todo usersDto
+        return new ResponseEntity<>("TODO: provide users DTO", HttpStatus.OK); //todo usersDto
     }
 
+    @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
     @RequestMapping(value = "/{id}/reviews", method = RequestMethod.GET)
-    public ResponseEntity<?> getReviews(@PathVariable("id") long userId) {
+    public ResponseEntity<?> getReviews(@AuthenticationPrincipal User userPrincipal,
+                                        @PathVariable("id") long userId) {
         //List<Review> reviews = reviewService.findByUserId(userId); // todo separate this
         List<Review> reviews = reviewService.findByCourierId(userId);
 
@@ -86,8 +91,10 @@ public class UserController {
         return new ResponseEntity<>(Converter.toReviewsDto(reviews), HttpStatus.OK);
     }
 
+    @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
     @RequestMapping(value = "/{user_id}/orders", method = RequestMethod.GET)
-    public ResponseEntity<?> getOrders(@PathVariable("user_id") long userId) {
+    public ResponseEntity<?> getOrders(@AuthenticationPrincipal User userPrincipal,
+                                       @PathVariable("user_id") long userId) {
         List<Order> orders = orderService.findByUserId(userId);
 
         if (orders.isEmpty()) {
@@ -99,8 +106,10 @@ public class UserController {
         return new ResponseEntity<>(ordersDtos, HttpStatus.OK);
     }
 
+    @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
     @RequestMapping(value = "/{id}/addresses", method = RequestMethod.GET)
-    public ResponseEntity<?> getAddresses(@PathVariable("id") long userId) {
+    public ResponseEntity<?> getAddresses(@AuthenticationPrincipal User userPrincipal,
+                                          @PathVariable("id") long userId) {
         List<Address> addresses = addressService.findByUserId(userId);
 
         if (addresses.isEmpty()) {
@@ -112,8 +121,10 @@ public class UserController {
         return new ResponseEntity<>(addressesDtos, HttpStatus.OK);
     }
 
+    @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
     @RequestMapping(value = "/{id}/shops", method = RequestMethod.GET)
-    public ResponseEntity<?> getShops(@PathVariable("id") long userId) {
+    public ResponseEntity<?> getShops(@AuthenticationPrincipal User userPrincipal,
+                                      @PathVariable("id") long userId) {
         List<Shop> shops = shopService.findByUserId(userId);
 
         if (shops.isEmpty()) {
@@ -125,8 +136,10 @@ public class UserController {
         return new ResponseEntity<>(shopsDtos, HttpStatus.OK);
     }
 
+    @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
     @RequestMapping(value = "/{user_id}/shops/{shop_id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteShop(@PathVariable("user_id") long userId,
+    public ResponseEntity<?> deleteShop(@AuthenticationPrincipal User userPrincipal,
+                                        @PathVariable("user_id") long userId,
                                         @PathVariable("shop_id") long shopId) {
         Shop shop = shopService.findOne(shopId);
 
@@ -144,9 +157,11 @@ public class UserController {
         return new ResponseEntity<>(shopId, HttpStatus.NO_CONTENT);
     }
 
+    @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
     @RequestMapping(value = "/{id}/addresses", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<?> addAddress(@PathVariable("id") long userId, @RequestBody AddressDto addressDto) {
+    public ResponseEntity<?> addAddress(@AuthenticationPrincipal User userPrincipal,
+                                        @PathVariable("id") long userId, @RequestBody AddressDto addressDto) {
         User user = userService.findOne(userId);
 
         if (user == null) {
@@ -168,9 +183,11 @@ public class UserController {
         }
     }
 
+    @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
     @RequestMapping(value = "/{id}/shops", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<?> addShop(@PathVariable("id") long userId, @RequestBody ShopDto shopDto) {
+    public ResponseEntity<?> addShop(@AuthenticationPrincipal User userPrincipal,
+                                     @PathVariable("id") long userId, @RequestBody ShopDto shopDto) {
         User user = userService.findOne(userId);
 
         if (user == null) {
@@ -193,8 +210,10 @@ public class UserController {
         }
     }
 
+    @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
     @RequestMapping(value = "/{user_id}/addresses/{address_id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteAddress(@PathVariable("user_id") long userId,
+    public ResponseEntity<?> deleteAddress(@AuthenticationPrincipal User userPrincipal,
+                                           @PathVariable("user_id") long userId,
                                            @PathVariable("address_id") long addressId) {
         Address address = addressService.findOne(addressId);
 
@@ -227,9 +246,12 @@ public class UserController {
         return new ResponseEntity<>(requestsDtos, HttpStatus.OK);
     }
 
+    @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
     @RequestMapping(value = "/{id}/orders", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<?> addOrder(@PathVariable("id") long userId, @RequestBody OrderDto orderDto) {
+    public ResponseEntity<?> addOrder(@AuthenticationPrincipal User userPrincipal,
+                                      @PathVariable("id") long userId,
+                                      @RequestBody OrderDto orderDto) {
         LOGGER.info("Starting of addOrder");
 
         User user = userService.findOne(userId);

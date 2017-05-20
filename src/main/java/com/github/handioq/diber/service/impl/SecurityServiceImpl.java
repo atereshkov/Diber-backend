@@ -17,11 +17,12 @@ public class SecurityServiceImpl implements SecurityService {
     @Override
     public boolean hasPermissions(User user, long userId) {
         // if user from @AuthenticationPrincipal id is equal to userId from @PathVariable
-        LOGGER.info("hasPermissions: " + user.getId() + " : " + userId);
+        LOGGER.info("hasPermissions with @AuthPrincipal user id" + user.getId() + " : userId from @PathVariable: " + userId);
 
         // todo refactor this some small shit and extract "ROLE_ADMIN"!!!
         for (Role role : user.getRoles()) {
             if (role.getName().equalsIgnoreCase("ROLE_ADMIN")) {
+                LOGGER.info("detected admin permissions (ROLE_ADMIN)");
                 return true;
             }
         }

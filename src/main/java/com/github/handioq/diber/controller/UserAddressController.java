@@ -36,6 +36,7 @@ public class UserAddressController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getAddresses(@AuthenticationPrincipal User userPrincipal,
                                           @PathVariable("user_id") long userId) {
+        LOGGER.info("Start getAddresses");
         List<Address> addresses = addressService.findByUserId(userId);
 
         if (addresses.isEmpty()) {
@@ -52,6 +53,7 @@ public class UserAddressController {
     @ResponseBody
     public ResponseEntity<?> addAddress(@AuthenticationPrincipal User userPrincipal,
                                         @PathVariable("user_id") long userId, @RequestBody AddressDto addressDto) {
+        LOGGER.info("Start addAddress");
         User user = userService.findOne(userId);
 
         if (user == null) {
@@ -60,16 +62,18 @@ public class UserAddressController {
 
         Address existingAddress = addressService.findByNameAndUser(addressDto.getName(), user);
 
-        if (existingAddress != null) {
-            return new ResponseEntity<>(new ErrorResponseDto("internal", "Address with this name is already exists"),
-                    HttpStatus.BAD_REQUEST);
-        } else {
+        if (existingAddress == null) {
             Address address = Converter.toAddressEntity(addressDto);
             address.setUser(user);
             user.getAddresses().add(address);
 
             userService.saveOrUpdate(user);
+            LOGGER.info("new address with name " + address.getName() + " and user id " + user.getId() + " is successfully created");
             return new ResponseEntity<>(addressDto, HttpStatus.CREATED);
+        } else {
+            LOGGER.info("Address with name " + existingAddress.getName() + " is already exists");
+            ErrorResponseDto error = new ErrorResponseDto("internal", "Address with this name is already exists");
+            return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -78,6 +82,7 @@ public class UserAddressController {
     public ResponseEntity<?> deleteAddress(@AuthenticationPrincipal User userPrincipal,
                                            @PathVariable("user_id") long userId,
                                            @PathVariable("address_id") long addressId) {
+        LOGGER.info("Start deleteAddress");
         Address address = addressService.findOne(addressId);
 
         if (address == null) {

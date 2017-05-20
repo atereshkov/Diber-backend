@@ -36,6 +36,7 @@ public class UserShopController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getShops(@AuthenticationPrincipal User userPrincipal,
                                       @PathVariable("user_id") long userId) {
+        LOGGER.info("Start getShops");
         List<Shop> shops = shopService.findByUserId(userId);
 
         if (shops.isEmpty()) {
@@ -52,6 +53,7 @@ public class UserShopController {
     @ResponseBody
     public ResponseEntity<?> addShop(@AuthenticationPrincipal User userPrincipal,
                                      @PathVariable("user_id") long userId, @RequestBody ShopDto shopDto) {
+        LOGGER.info("Start addShop");
         User user = userService.findOne(userId);
 
         if (user == null) {
@@ -60,17 +62,20 @@ public class UserShopController {
 
         Shop existingShop = shopService.findByNameAndUser(shopDto.getName(), user);
 
-        if (existingShop != null) {
-            ErrorResponseDto error = new ErrorResponseDto("internal",
-                    "Shop with this name is already exists");
-            return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-        } else {
+        if (existingShop == null) {
+            LOGGER.info("shop with name " + shopDto.getName() + " is not found, create new...");
             Shop shop = Converter.toShopEntity(shopDto);
             shop.setUser(user);
             user.getShops().add(shop);
 
             userService.saveOrUpdate(user);
+            LOGGER.info("new shop with id " + shop.getId() + " is saved in database");
             return new ResponseEntity<>(shopDto, HttpStatus.CREATED);
+        } else {
+            LOGGER.info("shop with name " + shopDto.getName() + " is already exists");
+            ErrorResponseDto error = new ErrorResponseDto("internal",
+                    "Shop with this name is already exists");
+            return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -79,6 +84,7 @@ public class UserShopController {
     public ResponseEntity<?> deleteShop(@AuthenticationPrincipal User userPrincipal,
                                         @PathVariable("user_id") long userId,
                                         @PathVariable("shop_id") long shopId) {
+        LOGGER.info("Start deleteShop");
         Shop shop = shopService.findOne(shopId);
 
         if (shop == null) {

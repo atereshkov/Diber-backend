@@ -32,6 +32,7 @@ public class UserReviewController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getReviews(@AuthenticationPrincipal User userPrincipal,
                                         @PathVariable("user_id") long userId) {
+        LOGGER.info("Start getReviews");
         //List<Review> reviews = reviewService.findByUserId(userId); // todo separate this
         List<Review> reviews = reviewService.findByCourierId(userId);
 

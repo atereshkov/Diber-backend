@@ -74,8 +74,10 @@ public class UserOrderController {
 
         // if shop already exists, then we don't create new shop entity in database
         if (existingShop != null) {
+            LOGGER.info("shop is already exists");
             shop = existingShop;
         } else {
+            LOGGER.info("create new shop entity for order");
             shop.setUser(user);
             shopService.saveOrUpdate(shop);
             user.getShops().add(shop);
@@ -86,8 +88,10 @@ public class UserOrderController {
 
         // the same: if address already exists, then don't create new entity in database
         if (existingAddress != null) {
+            LOGGER.info("address is already exists");
             address = existingAddress;
         } else {
+            LOGGER.info("create new address entity for order");
             address.setUser(user);
             addressService.saveOrUpdate(address);
             user.getAddresses().add(address);
@@ -102,6 +106,7 @@ public class UserOrderController {
 
         user.getOrders().add(order);
         userService.saveOrUpdate(user);
+        LOGGER.info("new order saved to database");
 
         return new ResponseEntity<>(orderDto, HttpStatus.CREATED);
     }

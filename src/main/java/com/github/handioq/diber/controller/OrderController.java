@@ -40,13 +40,16 @@ public class OrderController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<?> getOrderById(@PathVariable("id") long id) {
+        LOGGER.info("Start getOrderById");
         Order order = orderService.getById(id);
 
         if (order == null) {
+            LOGGER.info("order with id: " + id + " is NULL");
             return new ResponseEntity<>("Order not found", HttpStatus.NOT_FOUND);
         }
 
         OrderDto orderDto = Converter.toOrderDto(order);
+        LOGGER.info("made orderDto with id " + orderDto.getId());
 
         return new ResponseEntity<>(orderDto, HttpStatus.OK);
     }
@@ -55,15 +58,17 @@ public class OrderController {
     public ResponseEntity<?> getOrders(Pageable pageable) {
         Page<Order> orderPage = orderService.findAllByPage(pageable);
 
-        return new ResponseEntity<>(orderPage, HttpStatus.OK);
+        return new ResponseEntity<>(orderPage, HttpStatus.OK); // todo orderDto
     }
 
     @RequestMapping(value = "/{id}/requests", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<?> getOrderRequests(@PathVariable("id") long id) {
+        LOGGER.info("Start getOrderRequests");
         List<Request> requests = requestService.findByOrderId(id);
 
         if (requests.isEmpty()) {
+            LOGGER.info("requests are empty");
             return new ResponseEntity<>("Requests are empty", HttpStatus.NOT_FOUND);
         }
 
@@ -75,6 +80,7 @@ public class OrderController {
     @RequestMapping(value = "/{id}/requests", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<?> addOrderRequest(@PathVariable("id") long id, @RequestBody RequestDto requestDto) {
+        LOGGER.info("Start addOrderRequest");
         Order order = orderService.getById(id);
 
         if (order == null) {
@@ -107,6 +113,7 @@ public class OrderController {
     @RequestMapping(value = "/{id}/status", method = RequestMethod.PUT)
     @ResponseBody
     public ResponseEntity<?> changeStatus(@PathVariable("id") long id, @RequestBody OrderDto orderDto) {
+        LOGGER.info("Start changeStatus");
         Order order = orderService.getById(id);
 
         if (order == null) {
@@ -115,12 +122,14 @@ public class OrderController {
         }
 
         if (orderDto.getStatus() == null || orderDto.getStatus().isEmpty()) {
+            LOGGER.info("orderDto status is null or empty");
             ErrorResponseDto error = new ErrorResponseDto("Empty", "Status is empty");
             return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
         }
 
         order.setStatus(orderDto.getStatus());
         orderService.saveOrUpdate(order);
+        LOGGER.info("order status changed to " + orderDto.getStatus() + ", order savedOrUpdated successfully");
 
         return new ResponseEntity<>(Converter.toOrderDto(order), HttpStatus.OK);
     }
@@ -136,6 +145,7 @@ public class OrderController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteOrder(@PathVariable("id") long id) {
+        LOGGER.info("Start deleteOrder");
         Order order = orderService.getById(id);
 
         if (order == null) {
@@ -143,6 +153,7 @@ public class OrderController {
         }
 
         for (Request request : order.getRequests()) {
+            LOGGER.info("set order to null of request with id: " + request.getId());
             request.setOrder(null);
         }
 

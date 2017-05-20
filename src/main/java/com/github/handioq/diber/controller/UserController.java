@@ -30,6 +30,7 @@ public class UserController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<?> getById(@PathVariable("id") long id) {
+        LOGGER.info("Start getById");
         User user = userService.findOne(id);
 
         if (user == null) {
@@ -41,6 +42,7 @@ public class UserController {
     // todo required role_admin
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getUsers() {
+        LOGGER.info("Start getUsers");
         List<User> users = userService.findAll();
 
         if (users.isEmpty()) {
@@ -53,6 +55,7 @@ public class UserController {
     @RequestMapping(value = "/info", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<?> getById(@AuthenticationPrincipal User user) {
+        LOGGER.info("Start getById with AuthenticationPrincipal: " + user);
         //User foundUser = userService.findOne(user.getId());
 
         //if (foundUser == null) {
@@ -65,6 +68,7 @@ public class UserController {
     // todo required role_admin
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteById(@PathVariable("id") long id) {
+        LOGGER.info("Start deleteById");
         User user = userService.findOne(id);
 
         if (user == null) {

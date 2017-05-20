@@ -33,6 +33,7 @@ public class UserRequestController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getRequests(@AuthenticationPrincipal User user,
                                          @PathVariable("user_id") long userId) {
+        LOGGER.info("Start getRequests");
         List<Request> requests = requestService.findByCourierId(userId);
 
         if (requests.isEmpty()) {

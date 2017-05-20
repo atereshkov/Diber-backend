@@ -1,8 +1,10 @@
 package com.github.handioq.diber.controller;
 
-import com.github.handioq.diber.model.dto.*;
-import com.github.handioq.diber.model.entity.*;
-import com.github.handioq.diber.service.*;
+import com.github.handioq.diber.model.entity.User;
+import com.github.handioq.diber.service.AddressService;
+import com.github.handioq.diber.service.OrderService;
+import com.github.handioq.diber.service.ShopService;
+import com.github.handioq.diber.service.UserService;
 import com.github.handioq.diber.utils.Constants;
 import com.github.handioq.diber.utils.Converter;
 import org.slf4j.Logger;
@@ -10,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,21 +26,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private ReviewService reviewService;
-
-    @Autowired
-    private OrderService orderService;
-
-    @Autowired
-    private AddressService addressService;
-
-    @Autowired
-    private ShopService shopService;
-
-    @Autowired
-    private RequestService requestService;
-
     // todo preAuth
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
@@ -50,19 +36,6 @@ public class UserController {
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(Converter.toUserDto(user), HttpStatus.OK);
-    }
-
-    // todo required role_admin
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteById(@PathVariable("id") long id) {
-        User user = userService.findOne(id);
-
-        if (user == null) {
-            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
-        }
-
-        userService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     // todo required role_admin
@@ -77,226 +50,6 @@ public class UserController {
         return new ResponseEntity<>("TODO: provide users DTO", HttpStatus.OK); //todo usersDto
     }
 
-    @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
-    @RequestMapping(value = "/{id}/reviews", method = RequestMethod.GET)
-    public ResponseEntity<?> getReviews(@AuthenticationPrincipal User userPrincipal,
-                                        @PathVariable("id") long userId) {
-        //List<Review> reviews = reviewService.findByUserId(userId); // todo separate this
-        List<Review> reviews = reviewService.findByCourierId(userId);
-
-        if (reviews.isEmpty()) {
-            return new ResponseEntity<>("Empty", HttpStatus.NOT_FOUND);
-        }
-
-        return new ResponseEntity<>(Converter.toReviewsDto(reviews), HttpStatus.OK);
-    }
-
-    @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
-    @RequestMapping(value = "/{user_id}/orders", method = RequestMethod.GET)
-    public ResponseEntity<?> getOrders(@AuthenticationPrincipal User userPrincipal,
-                                       @PathVariable("user_id") long userId) {
-        List<Order> orders = orderService.findByUserId(userId);
-
-        if (orders.isEmpty()) {
-            return new ResponseEntity<>("Empty", HttpStatus.NO_CONTENT);
-        }
-
-        List<OrderDto> ordersDtos = Converter.toOrdersDto(orders);
-
-        return new ResponseEntity<>(ordersDtos, HttpStatus.OK);
-    }
-
-    @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
-    @RequestMapping(value = "/{id}/addresses", method = RequestMethod.GET)
-    public ResponseEntity<?> getAddresses(@AuthenticationPrincipal User userPrincipal,
-                                          @PathVariable("id") long userId) {
-        List<Address> addresses = addressService.findByUserId(userId);
-
-        if (addresses.isEmpty()) {
-            return new ResponseEntity<>("Empty", HttpStatus.NOT_FOUND);
-        }
-
-        List<AddressDto> addressesDtos = Converter.toAddressesDto(addresses);
-
-        return new ResponseEntity<>(addressesDtos, HttpStatus.OK);
-    }
-
-    @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
-    @RequestMapping(value = "/{id}/shops", method = RequestMethod.GET)
-    public ResponseEntity<?> getShops(@AuthenticationPrincipal User userPrincipal,
-                                      @PathVariable("id") long userId) {
-        List<Shop> shops = shopService.findByUserId(userId);
-
-        if (shops.isEmpty()) {
-            return new ResponseEntity<>("Empty", HttpStatus.NOT_FOUND);
-        }
-
-        List<ShopDto> shopsDtos = Converter.toShopsDto(shops);
-
-        return new ResponseEntity<>(shopsDtos, HttpStatus.OK);
-    }
-
-    @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
-    @RequestMapping(value = "/{user_id}/shops/{shop_id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteShop(@AuthenticationPrincipal User userPrincipal,
-                                        @PathVariable("user_id") long userId,
-                                        @PathVariable("shop_id") long shopId) {
-        Shop shop = shopService.findOne(shopId);
-
-        if (shop == null) {
-            return new ResponseEntity<>("Shop not found", HttpStatus.NOT_FOUND);
-        }
-
-        // todo add check for order status and if one of the orders has "In progress" status then don't delete shop
-
-        for (Order order : shop.getOrders()) {
-            order.setShop(null);
-        }
-
-        shopService.delete(shopId);
-        return new ResponseEntity<>(shopId, HttpStatus.NO_CONTENT);
-    }
-
-    @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
-    @RequestMapping(value = "/{id}/addresses", method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseEntity<?> addAddress(@AuthenticationPrincipal User userPrincipal,
-                                        @PathVariable("id") long userId, @RequestBody AddressDto addressDto) {
-        User user = userService.findOne(userId);
-
-        if (user == null) {
-            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
-        }
-
-        Address existingAddress = addressService.findByNameAndUser(addressDto.getName(), user);
-
-        if (existingAddress != null) {
-            return new ResponseEntity<>(new ErrorResponseDto("internal", "Address with this name is already exists"),
-                    HttpStatus.BAD_REQUEST);
-        } else {
-            Address address = Converter.toAddressEntity(addressDto);
-            address.setUser(user);
-            user.getAddresses().add(address);
-
-            userService.saveOrUpdate(user);
-            return new ResponseEntity<>(addressDto, HttpStatus.CREATED);
-        }
-    }
-
-    @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
-    @RequestMapping(value = "/{id}/shops", method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseEntity<?> addShop(@AuthenticationPrincipal User userPrincipal,
-                                     @PathVariable("id") long userId, @RequestBody ShopDto shopDto) {
-        User user = userService.findOne(userId);
-
-        if (user == null) {
-            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
-        }
-
-        Shop existingShop = shopService.findByNameAndUser(shopDto.getName(), user);
-
-        if (existingShop != null) {
-            ErrorResponseDto error = new ErrorResponseDto("internal",
-                    "Shop with this name is already exists");
-            return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-        } else {
-            Shop shop = Converter.toShopEntity(shopDto);
-            shop.setUser(user);
-            user.getShops().add(shop);
-
-            userService.saveOrUpdate(user);
-            return new ResponseEntity<>(shopDto, HttpStatus.CREATED);
-        }
-    }
-
-    @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
-    @RequestMapping(value = "/{user_id}/addresses/{address_id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteAddress(@AuthenticationPrincipal User userPrincipal,
-                                           @PathVariable("user_id") long userId,
-                                           @PathVariable("address_id") long addressId) {
-        Address address = addressService.findOne(addressId);
-
-        if (address == null) {
-            return new ResponseEntity<>("Address not found", HttpStatus.NOT_FOUND);
-        }
-
-        // todo add check for order status and if one of the orders has "In progress" status then don't delete address
-
-        for (Order order : address.getOrders()) {
-            order.setAddress(null);
-        }
-
-        addressService.delete(addressId);
-        return new ResponseEntity<>(addressId, HttpStatus.NO_CONTENT);
-    }
-
-    @PreAuthorize("@securityServiceImpl.hasPermissions(#user, #userId)")
-    @RequestMapping(value = "/{id}/requests", method = RequestMethod.GET)
-    public ResponseEntity<?> getRequests(@AuthenticationPrincipal User user,
-                                         @PathVariable("id") long userId) {
-        List<Request> requests = requestService.findByCourierId(userId);
-
-        if (requests.isEmpty()) {
-            return new ResponseEntity<>("Empty", HttpStatus.NOT_FOUND);
-        }
-
-        List<RequestDto> requestsDtos = Converter.toRequestsDto(requests);
-
-        return new ResponseEntity<>(requestsDtos, HttpStatus.OK);
-    }
-
-    @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
-    @RequestMapping(value = "/{id}/orders", method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseEntity<?> addOrder(@AuthenticationPrincipal User userPrincipal,
-                                      @PathVariable("id") long userId,
-                                      @RequestBody OrderDto orderDto) {
-        LOGGER.info("Starting of addOrder");
-
-        User user = userService.findOne(userId);
-
-        if (user == null) {
-            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
-        }
-
-        Shop shop = Converter.toShopEntity(orderDto.getShop());
-        Shop existingShop = shopService.findByNameAndUser(shop.getName(), user);
-
-        // if shop already exists, then we don't create new shop entity in database
-        if (existingShop != null) {
-            shop = existingShop;
-        } else {
-            shop.setUser(user);
-            shopService.saveOrUpdate(shop);
-            user.getShops().add(shop);
-        }
-
-        Address address = Converter.toAddressEntity(orderDto.getAddress());
-        Address existingAddress = addressService.findByNameAndUser(address.getName(), user);
-
-        // the same: if address already exists, then don't create new entity in database
-        if (existingAddress != null) {
-            address = existingAddress;
-        } else {
-            address.setUser(user);
-            addressService.saveOrUpdate(address);
-            user.getAddresses().add(address);
-        }
-
-        Order order = Converter.toOrderEntity(orderDto);
-        order.setShop(shop);
-        order.setAddress(address);
-        order.setUser(user);
-        order.setCourier(null); // add order without courier as initial
-        orderService.saveOrUpdate(order);
-
-        user.getOrders().add(order);
-        userService.saveOrUpdate(user);
-
-        return new ResponseEntity<>(orderDto, HttpStatus.CREATED);
-    }
-
     @RequestMapping(value = "/info", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<?> getById(@AuthenticationPrincipal User user) {
@@ -307,6 +60,19 @@ public class UserController {
         //}
 
         return new ResponseEntity<>(Converter.toUserDto(user), HttpStatus.OK);
+    }
+
+    // todo required role_admin
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteById(@PathVariable("id") long id) {
+        User user = userService.findOne(id);
+
+        if (user == null) {
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        }
+
+        userService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }

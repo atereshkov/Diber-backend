@@ -18,6 +18,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -143,8 +145,10 @@ public class OrderController {
         return new ResponseEntity<>(Converter.toOrderDto(order), HttpStatus.CREATED);
     }
 
+    @PreAuthorize("@securityServiceImpl.hasAdminPermissions(#userPrincipal)")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteOrder(@PathVariable("id") long id) {
+    public ResponseEntity<?> deleteOrder(@AuthenticationPrincipal User userPrincipal,
+                                         @PathVariable("id") long id) {
         LOGGER.info("Start deleteOrder");
         Order order = orderService.getById(id);
 

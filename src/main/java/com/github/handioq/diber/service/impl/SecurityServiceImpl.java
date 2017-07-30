@@ -29,4 +29,16 @@ public class SecurityServiceImpl implements SecurityService {
 
         return user.getId() == userId;
     }
+
+    @Override
+    public boolean hasAdminPermissions(User user) {
+        for (Role role : user.getRoles()) {
+            if (role.getName().equalsIgnoreCase("ROLE_ADMIN")) {
+                LOGGER.info("detected admin permissions (ROLE_ADMIN)");
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

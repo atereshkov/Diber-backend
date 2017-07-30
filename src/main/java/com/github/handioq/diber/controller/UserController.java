@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,10 +27,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // todo preAuth
+    @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #id)")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<?> getById(@PathVariable("id") long id) {
+    public ResponseEntity<?> getById(@AuthenticationPrincipal User userPrincipal,
+                                     @PathVariable("id") long id) {
         LOGGER.info("Start getById");
         User user = userService.findOne(id);
 
@@ -39,9 +41,9 @@ public class UserController {
         return new ResponseEntity<>(Converter.toUserDto(user), HttpStatus.OK);
     }
 
-    // todo required role_admin
+    @PreAuthorize("@securityServiceImpl.hasAdminPermissions(#userPrincipal)")
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> getUsers() {
+    public ResponseEntity<?> getUsers(@AuthenticationPrincipal User userPrincipal) {
         LOGGER.info("Start getUsers");
         List<User> users = userService.findAll();
 
@@ -56,18 +58,13 @@ public class UserController {
     @ResponseBody
     public ResponseEntity<?> getById(@AuthenticationPrincipal User user) {
         LOGGER.info("Start getById with AuthenticationPrincipal: " + user);
-        //User foundUser = userService.findOne(user.getId());
-
-        //if (foundUser == null) {
-        //    return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
-        //}
-
         return new ResponseEntity<>(Converter.toUserDto(user), HttpStatus.OK);
     }
 
-    // todo required role_admin
+    @PreAuthorize("@securityServiceImpl.hasAdminPermissions(#userPrincipal)")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteById(@PathVariable("id") long id) {
+    public ResponseEntity<?> deleteById(@AuthenticationPrincipal User userPrincipal,
+                                        @PathVariable("id") long id) {
         LOGGER.info("Start deleteById");
         User user = userService.findOne(id);
 

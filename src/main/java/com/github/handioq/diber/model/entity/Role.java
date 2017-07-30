@@ -21,6 +21,9 @@ public class Role extends BaseEntity {
     @JsonIgnore
     private Set<User> users = new HashSet<User>();
 
+    public Role() {
+    }
+
     public Role(String name) {
         this.name = name;
     }
@@ -28,9 +31,6 @@ public class Role extends BaseEntity {
     public Role(long id, String name) {
         this.setId(id);
         this.name = name;
-    }
-
-    public Role() {
     }
 
     public String getName() {

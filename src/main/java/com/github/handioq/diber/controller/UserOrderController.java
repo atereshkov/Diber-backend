@@ -46,9 +46,9 @@ public class UserOrderController {
                                        @PathVariable("user_id") long userId) {
         List<Order> orders = orderService.findByUserId(userId);
 
-        if (orders.isEmpty()) {
-            return new ResponseEntity<>("Empty", HttpStatus.NO_CONTENT);
-        }
+        //if (orders.isEmpty()) {
+        //    return new ResponseEntity<>("Empty", HttpStatus.NO_CONTENT);
+        //}
 
         List<OrderDto> ordersDtos = Converter.toOrdersDto(orders);
 

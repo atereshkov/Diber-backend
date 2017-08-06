@@ -56,8 +56,9 @@ public class OrderController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getOrders(Pageable pageable) {
-        Page<Order> orderPage = orderService.findAllByPage(pageable);
-        return new ResponseEntity<>("No DTO provided... I'm lazy bitch!", HttpStatus.OK); // todo orderDto
+        List<Order> orders = orderService.findAllByPage(pageable);
+        List<OrderDto> ordersDtos = Converter.toOrdersDto(orders);
+        return new ResponseEntity<>(ordersDtos, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}/requests", method = RequestMethod.GET)

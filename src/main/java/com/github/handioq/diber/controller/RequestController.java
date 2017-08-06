@@ -29,11 +29,11 @@ public class RequestController {
         Request request = requestService.getById(id);
 
         if (request == null) {
+            LOGGER.error("Request with id {} is not found", id);
             return new ResponseEntity<>("Request not found", HttpStatus.NOT_FOUND);
         }
 
         RequestDto requestDto = Converter.toRequestDto(request);
-
         return new ResponseEntity<>(requestDto, HttpStatus.OK);
     }
 

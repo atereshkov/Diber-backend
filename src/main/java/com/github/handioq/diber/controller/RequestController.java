@@ -25,7 +25,7 @@ public class RequestController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<?> getRequestById(@PathVariable("id") long id) {
-        LOGGER.info("Start getRequestById");
+        LOGGER.info("Start getRequestById id: {}", id);
         Request request = requestService.getById(id);
 
         if (request == null) {
@@ -40,7 +40,7 @@ public class RequestController {
     @RequestMapping(value = "/{id}/status", method = RequestMethod.PUT)
     @ResponseBody
     public ResponseEntity<?> changeStatus(@PathVariable("id") long id, @RequestBody RequestDto requestDto) {
-        LOGGER.info("Start changeStatus");
+        LOGGER.info("Start changeStatus id: {}", id);
         Request request = requestService.getById(id);
 
         if (request == null) {
@@ -49,15 +49,14 @@ public class RequestController {
         }
 
         if (requestDto.getStatus() == null || requestDto.getStatus().isEmpty()) {
-            LOGGER.info("requestDto status is null or empty");
+            LOGGER.error("requestDto status is null or empty");
             ErrorResponseDto error = new ErrorResponseDto("Empty", "Status is empty");
             return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
         }
 
         request.setStatus(requestDto.getStatus());
         requestService.saveOrUpdate(request);
-        LOGGER.info("request status changed to " + requestDto.getStatus() + ", request saved to database");
-
+        LOGGER.info("request status changed to {}, request saved to database", requestDto.getStatus());
         return new ResponseEntity<>(Converter.toRequestDto(request), HttpStatus.OK);
     }
 

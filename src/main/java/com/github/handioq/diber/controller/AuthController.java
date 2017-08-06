@@ -7,6 +7,8 @@ import com.github.handioq.diber.service.AuthService;
 import com.github.handioq.diber.service.RoleService;
 import com.github.handioq.diber.utils.Constants;
 import com.github.handioq.diber.utils.Converter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,8 @@ import java.util.List;
 @RequestMapping(Constants.API_URL + Constants.URL_AUTH)
 public class AuthController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
+
     @Autowired
     AuthService authService;
 
@@ -31,14 +35,17 @@ public class AuthController {
     @RequestMapping("/register")
     @ResponseBody
     public ResponseEntity<?> register(@RequestBody UserDto userDto) {
+        LOGGER.info("Start register user: {}", userDto);
         User user = Converter.toUserEntity(userDto);
 
         List<Role> roles = new ArrayList<>();
 
         if (userDto.isCustomer()) {
+            LOGGER.info("Register user with ROLE_CUSTOMER");
             roles.add(roleService.findRole(1));
         }
         if (userDto.isCourier()) {
+            LOGGER.info("Register user with ROLE_COURIER");
             roles.add(roleService.findRole(2));
         }
 

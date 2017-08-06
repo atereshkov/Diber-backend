@@ -32,17 +32,10 @@ public class UserReviewController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getReviews(@AuthenticationPrincipal User userPrincipal,
                                         @PathVariable("user_id") long userId) {
-        LOGGER.info("Start getReviews");
+        LOGGER.info("Start getReviews userId: {}", userId);
         //List<Review> reviews = reviewService.findByUserId(userId); // todo separate this
         List<Review> reviews = reviewService.findByCourierId(userId);
-
-        if (reviews.isEmpty()) {
-            return new ResponseEntity<>("Empty", HttpStatus.NOT_FOUND);
-        }
-
         return new ResponseEntity<>(Converter.toReviewsDto(reviews), HttpStatus.OK);
     }
-
-
 
 }

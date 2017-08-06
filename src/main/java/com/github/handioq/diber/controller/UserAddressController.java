@@ -36,15 +36,10 @@ public class UserAddressController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getAddresses(@AuthenticationPrincipal User userPrincipal,
                                           @PathVariable("user_id") long userId) {
-        LOGGER.info("Start getAddresses");
+
+        LOGGER.info("Start getAddresses user_id: {}", userId);
         List<Address> addresses = addressService.findByUserId(userId);
-
-        if (addresses.isEmpty()) {
-            return new ResponseEntity<>("Empty", HttpStatus.NOT_FOUND);
-        }
-
         List<AddressDto> addressesDtos = Converter.toAddressesDto(addresses);
-
         return new ResponseEntity<>(addressesDtos, HttpStatus.OK);
     }
 
@@ -53,10 +48,11 @@ public class UserAddressController {
     @ResponseBody
     public ResponseEntity<?> addAddress(@AuthenticationPrincipal User userPrincipal,
                                         @PathVariable("user_id") long userId, @RequestBody AddressDto addressDto) {
-        LOGGER.info("Start addAddress");
+        LOGGER.info("Start addAddress user_id: {}", userId);
         User user = userService.findOne(userId);
 
         if (user == null) {
+            LOGGER.error("User with id {} is not found", userId);
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
 
@@ -68,10 +64,10 @@ public class UserAddressController {
             user.getAddresses().add(address);
 
             userService.saveOrUpdate(user);
-            LOGGER.info("new address with name " + address.getName() + " and user id " + user.getId() + " is successfully created");
+            LOGGER.info("new address with name {} and user id {} is successfully created", address.getName(), user.getId());
             return new ResponseEntity<>(addressDto, HttpStatus.CREATED);
         } else {
-            LOGGER.info("Address with name " + existingAddress.getName() + " is already exists");
+            LOGGER.info("Address with name {} is already exists", existingAddress.getName());
             ErrorResponseDto error = new ErrorResponseDto("internal", "Address with this name is already exists");
             return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
         }
@@ -82,10 +78,11 @@ public class UserAddressController {
     public ResponseEntity<?> deleteAddress(@AuthenticationPrincipal User userPrincipal,
                                            @PathVariable("user_id") long userId,
                                            @PathVariable("address_id") long addressId) {
-        LOGGER.info("Start deleteAddress");
+        LOGGER.info("Start deleteAddress addressId: {}", addressId);
         Address address = addressService.findOne(addressId);
 
         if (address == null) {
+            LOGGER.error("Address with id {} is not found", addressId);
             return new ResponseEntity<>("Address not found", HttpStatus.NOT_FOUND);
         }
 

@@ -36,15 +36,9 @@ public class UserShopController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getShops(@AuthenticationPrincipal User userPrincipal,
                                       @PathVariable("user_id") long userId) {
-        LOGGER.info("Start getShops");
+        LOGGER.info("Start getShops for userId: {}", userId);
         List<Shop> shops = shopService.findByUserId(userId);
-
-        if (shops.isEmpty()) {
-            return new ResponseEntity<>("Empty", HttpStatus.NOT_FOUND);
-        }
-
         List<ShopDto> shopsDtos = Converter.toShopsDto(shops);
-
         return new ResponseEntity<>(shopsDtos, HttpStatus.OK);
     }
 
@@ -57,22 +51,23 @@ public class UserShopController {
         User user = userService.findOne(userId);
 
         if (user == null) {
+            LOGGER.error("User with id {} is not found", userId);
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
 
         Shop existingShop = shopService.findByNameAndUser(shopDto.getName(), user);
 
         if (existingShop == null) {
-            LOGGER.info("shop with name " + shopDto.getName() + " is not found, create new...");
+            LOGGER.info("shop with name {} is not found, create a new one.", shopDto.getName());
             Shop shop = Converter.toShopEntity(shopDto);
             shop.setUser(user);
             user.getShops().add(shop);
 
             userService.saveOrUpdate(user);
-            LOGGER.info("new shop with id " + shop.getId() + " is saved in database");
+            LOGGER.info("new shop with id {} is saved in database", shop.getId());
             return new ResponseEntity<>(shopDto, HttpStatus.CREATED);
         } else {
-            LOGGER.info("shop with name " + shopDto.getName() + " is already exists");
+            LOGGER.info("shop with name {} is already exists", shopDto.getName());
             ErrorResponseDto error = new ErrorResponseDto("internal",
                     "Shop with this name is already exists");
             return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
@@ -84,10 +79,11 @@ public class UserShopController {
     public ResponseEntity<?> deleteShop(@AuthenticationPrincipal User userPrincipal,
                                         @PathVariable("user_id") long userId,
                                         @PathVariable("shop_id") long shopId) {
-        LOGGER.info("Start deleteShop");
+        LOGGER.info("Start deleteShop with id: {}", shopId);
         Shop shop = shopService.findOne(shopId);
 
         if (shop == null) {
+            LOGGER.error("Shop ith id {} is not found", shopId);
             return new ResponseEntity<>("Shop not found", HttpStatus.NOT_FOUND);
         }
 

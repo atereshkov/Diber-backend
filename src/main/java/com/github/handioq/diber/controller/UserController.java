@@ -32,10 +32,11 @@ public class UserController {
     @ResponseBody
     public ResponseEntity<?> getById(@AuthenticationPrincipal User userPrincipal,
                                      @PathVariable("id") long id) {
-        LOGGER.info("Start getById");
+        LOGGER.info("Start getById id: {}", id);
         User user = userService.findOne(id);
 
         if (user == null) {
+            LOGGER.error("User with id {} is not found", id);
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(Converter.toUserDto(user), HttpStatus.OK);
@@ -46,18 +47,13 @@ public class UserController {
     public ResponseEntity<?> getUsers(@AuthenticationPrincipal User userPrincipal) {
         LOGGER.info("Start getUsers");
         List<User> users = userService.findAll();
-
-        if (users.isEmpty()) {
-            return new ResponseEntity<>("Empty", HttpStatus.NOT_FOUND);
-        }
-
         return new ResponseEntity<>("TODO: provide users DTO", HttpStatus.OK); //todo usersDto
     }
 
     @RequestMapping(value = "/info", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<?> getById(@AuthenticationPrincipal User user) {
-        LOGGER.info("Start getById with AuthenticationPrincipal: " + user);
+        LOGGER.info("Start getById with AuthenticationPrincipal: {}", user);
         return new ResponseEntity<>(Converter.toUserDto(user), HttpStatus.OK);
     }
 
@@ -65,10 +61,11 @@ public class UserController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteById(@AuthenticationPrincipal User userPrincipal,
                                         @PathVariable("id") long id) {
-        LOGGER.info("Start deleteById");
+        LOGGER.info("Start deleteById id: {}", id);
         User user = userService.findOne(id);
 
         if (user == null) {
+            LOGGER.error("User with id {} is not found", id);
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
 

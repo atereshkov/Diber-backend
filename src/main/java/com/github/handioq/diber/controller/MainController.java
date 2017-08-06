@@ -10,6 +10,6 @@ public class MainController {
     @RequestMapping("/")
     @ResponseBody
     public String index() {
-        return "Hello..";
+        return "Hey. What's up? What do you want?";
     }
 }

@@ -44,14 +44,9 @@ public class UserOrderController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getOrders(@AuthenticationPrincipal User userPrincipal,
                                        @PathVariable("user_id") long userId) {
+        LOGGER.info("getOrders for userId: {}", userId);
         List<Order> orders = orderService.findByUserId(userId);
-
-        //if (orders.isEmpty()) {
-        //    return new ResponseEntity<>("Empty", HttpStatus.NO_CONTENT);
-        //}
-
         List<OrderDto> ordersDtos = Converter.toOrdersDto(orders);
-
         return new ResponseEntity<>(ordersDtos, HttpStatus.OK);
     }
 
@@ -66,6 +61,7 @@ public class UserOrderController {
         User user = userService.findOne(userId);
 
         if (user == null) {
+            LOGGER.error("User with id {} is not found", userId);
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
 
@@ -74,7 +70,7 @@ public class UserOrderController {
 
         // if shop already exists, then we don't create new shop entity in database
         if (existingShop != null) {
-            LOGGER.info("shop is already exists");
+            LOGGER.info("shop is already exists: {}", existingShop);
             shop = existingShop;
         } else {
             LOGGER.info("create new shop entity for order");
@@ -88,7 +84,7 @@ public class UserOrderController {
 
         // the same: if address already exists, then don't create new entity in database
         if (existingAddress != null) {
-            LOGGER.info("address is already exists");
+            LOGGER.info("address is already exists: {}", existingAddress);
             address = existingAddress;
         } else {
             LOGGER.info("create new address entity for order");
@@ -106,8 +102,7 @@ public class UserOrderController {
 
         user.getOrders().add(order);
         userService.saveOrUpdate(user);
-        LOGGER.info("new order saved to database");
-
+        LOGGER.info("New order was saved to database");
         return new ResponseEntity<>(orderDto, HttpStatus.CREATED);
     }
 

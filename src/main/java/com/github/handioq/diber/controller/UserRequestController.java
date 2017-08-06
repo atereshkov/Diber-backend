@@ -33,15 +33,9 @@ public class UserRequestController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getRequests(@AuthenticationPrincipal User user,
                                          @PathVariable("user_id") long userId) {
-        LOGGER.info("Start getRequests");
+        LOGGER.info("Start getRequests userId: {}", userId);
         List<Request> requests = requestService.findByCourierId(userId);
-
-        if (requests.isEmpty()) {
-            return new ResponseEntity<>("Empty", HttpStatus.NOT_FOUND);
-        }
-
         List<RequestDto> requestsDtos = Converter.toRequestsDto(requests);
-
         return new ResponseEntity<>(requestsDtos, HttpStatus.OK);
     }
 

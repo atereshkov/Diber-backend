@@ -31,13 +31,13 @@ public class OrderController {
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderController.class);
 
     @Autowired
-    OrderService orderService;
+    private OrderService orderService;
 
     @Autowired
-    RequestService requestService;
+    private RequestService requestService;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody

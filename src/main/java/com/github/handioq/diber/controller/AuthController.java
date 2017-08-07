@@ -27,10 +27,10 @@ public class AuthController {
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
 
     @Autowired
-    AuthService authService;
+    private AuthService authService;
 
     @Autowired
-    RoleService roleService;
+    private RoleService roleService;
 
     @RequestMapping("/register")
     @ResponseBody

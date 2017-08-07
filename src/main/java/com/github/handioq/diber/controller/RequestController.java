@@ -20,7 +20,7 @@ public class RequestController {
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderController.class);
 
     @Autowired
-    RequestService requestService;
+    private RequestService requestService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody

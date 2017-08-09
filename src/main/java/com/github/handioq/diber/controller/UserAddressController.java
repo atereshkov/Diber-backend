@@ -8,7 +8,6 @@ import com.github.handioq.diber.model.entity.User;
 import com.github.handioq.diber.service.AddressService;
 import com.github.handioq.diber.service.UserService;
 import com.github.handioq.diber.utils.Constants;
-import com.github.handioq.diber.utils.Converter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +38,7 @@ public class UserAddressController {
 
         LOGGER.info("Start getAddresses user_id: {}", userId);
         List<Address> addresses = addressService.findByUserId(userId);
-        List<AddressDto> addressesDtos = Converter.toAddressesDto(addresses);
+        List<AddressDto> addressesDtos = AddressDto.toDto(addresses);
         return new ResponseEntity<>(addressesDtos, HttpStatus.OK);
     }
 
@@ -59,7 +58,7 @@ public class UserAddressController {
         Address existingAddress = addressService.findByNameAndUser(addressDto.getName(), user);
 
         if (existingAddress == null) {
-            Address address = Converter.toAddressEntity(addressDto);
+            Address address = Address.toEntity(addressDto);
             address.setUser(user);
             user.getAddresses().add(address);
 

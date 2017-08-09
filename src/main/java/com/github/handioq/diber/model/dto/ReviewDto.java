@@ -1,6 +1,10 @@
 package com.github.handioq.diber.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.handioq.diber.model.entity.Review;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReviewDto {
 
@@ -65,4 +69,20 @@ public class ReviewDto {
                 ", user=" + user +
                 '}';
     }
+
+    public static ReviewDto fromEntity(Review review) {
+        return new ReviewDto(review.getReview(), review.getRating(),
+                UserDto.fromEntity(review.getUser()), UserDto.fromEntity(review.getCourier()));
+    }
+
+    public static List<ReviewDto> toDto(List<Review> reviews) {
+        List<ReviewDto> reviewsDto = new ArrayList<>();
+
+        for (Review review : reviews) {
+            reviewsDto.add(ReviewDto.fromEntity(review));
+        }
+
+        return reviewsDto;
+    }
+
 }

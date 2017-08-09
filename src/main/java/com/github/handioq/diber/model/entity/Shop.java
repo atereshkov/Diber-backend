@@ -1,6 +1,7 @@
 package com.github.handioq.diber.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.github.handioq.diber.model.dto.ShopDto;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -76,4 +77,9 @@ public class Shop extends BaseEntity {
                 ", orders=" + orders +
                 '}';
     }
+
+    public static Shop toEntity(ShopDto shopDto) {
+        return new Shop(shopDto.getName(), shopDto.getAddress());
+    }
+
 }

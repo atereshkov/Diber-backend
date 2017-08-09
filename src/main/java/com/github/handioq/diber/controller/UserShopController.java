@@ -8,7 +8,6 @@ import com.github.handioq.diber.model.entity.User;
 import com.github.handioq.diber.service.ShopService;
 import com.github.handioq.diber.service.UserService;
 import com.github.handioq.diber.utils.Constants;
-import com.github.handioq.diber.utils.Converter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +37,7 @@ public class UserShopController {
                                       @PathVariable("user_id") long userId) {
         LOGGER.info("Start getShops for userId: {}", userId);
         List<Shop> shops = shopService.findByUserId(userId);
-        List<ShopDto> shopsDtos = Converter.toShopsDto(shops);
+        List<ShopDto> shopsDtos = ShopDto.toDto(shops);
         return new ResponseEntity<>(shopsDtos, HttpStatus.OK);
     }
 
@@ -59,7 +58,7 @@ public class UserShopController {
 
         if (existingShop == null) {
             LOGGER.info("shop with name {} is not found, create a new one.", shopDto.getName());
-            Shop shop = Converter.toShopEntity(shopDto);
+            Shop shop = Shop.toEntity(shopDto);
             shop.setUser(user);
             user.getShops().add(shop);
 

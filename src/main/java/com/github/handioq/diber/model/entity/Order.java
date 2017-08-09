@@ -1,5 +1,8 @@
 package com.github.handioq.diber.model.entity;
 
+import com.github.handioq.diber.model.dto.OrderDto;
+import com.github.handioq.diber.utils.DateUtil;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -176,4 +179,11 @@ public class Order extends BaseEntity {
         result = 31 * result + (requests != null ? requests.hashCode() : 0);
         return result;
     }
+
+    public static Order toEntity(OrderDto orderDto) {
+        //Shop shop = toShopEntity(orderDto.getShop());
+        Date date = DateUtil.getFromString(orderDto.getDate(), "yyyy-MM-dd HH:mm:ss");
+        return new Order(date, orderDto.getDescription(), orderDto.getPrice(), orderDto.getStatus(), null, null);
+    }
+
 }

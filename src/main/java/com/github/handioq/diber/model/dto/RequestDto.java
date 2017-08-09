@@ -1,6 +1,10 @@
 package com.github.handioq.diber.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.handioq.diber.model.entity.Request;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RequestDto {
 
@@ -57,4 +61,20 @@ public class RequestDto {
     public void setCourier(UserDto courier) {
         this.courier = courier;
     }
+
+    public static RequestDto fromEntity(Request request) {
+        return new RequestDto(request.getId(), OrderDto.fromEntity(request.getOrder()),
+                UserDto.fromEntity(request.getCourier()), request.getStatus());
+    }
+
+    public static List<RequestDto> toDto(List<Request> requests) {
+        List<RequestDto> requestsDtos = new ArrayList<>();
+
+        for (Request request : requests) {
+            requestsDtos.add(RequestDto.fromEntity(request));
+        }
+
+        return requestsDtos;
+    }
+
 }

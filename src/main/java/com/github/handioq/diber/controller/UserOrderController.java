@@ -10,7 +10,6 @@ import com.github.handioq.diber.service.OrderService;
 import com.github.handioq.diber.service.ShopService;
 import com.github.handioq.diber.service.UserService;
 import com.github.handioq.diber.utils.Constants;
-import com.github.handioq.diber.utils.Converter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +45,7 @@ public class UserOrderController {
                                        @PathVariable("user_id") long userId) {
         LOGGER.info("getOrders for userId: {}", userId);
         List<Order> orders = orderService.findByUserId(userId);
-        List<OrderDto> ordersDtos = Converter.toOrdersDto(orders);
+        List<OrderDto> ordersDtos = OrderDto.toDto(orders);
         return new ResponseEntity<>(ordersDtos, HttpStatus.OK);
     }
 
@@ -65,7 +64,7 @@ public class UserOrderController {
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
 
-        Shop shop = Converter.toShopEntity(orderDto.getShop());
+        Shop shop = Shop.toEntity(orderDto.getShop());
         Shop existingShop = shopService.findByNameAndUser(shop.getName(), user);
 
         // if shop already exists, then we don't create new shop entity in database
@@ -79,7 +78,7 @@ public class UserOrderController {
             user.getShops().add(shop);
         }
 
-        Address address = Converter.toAddressEntity(orderDto.getAddress());
+        Address address = Address.toEntity(orderDto.getAddress());
         Address existingAddress = addressService.findByNameAndUser(address.getName(), user);
 
         // the same: if address already exists, then don't create new entity in database
@@ -93,7 +92,7 @@ public class UserOrderController {
             user.getAddresses().add(address);
         }
 
-        Order order = Converter.toOrderEntity(orderDto);
+        Order order = Order.toEntity(orderDto);
         order.setShop(shop);
         order.setAddress(address);
         order.setUser(user);

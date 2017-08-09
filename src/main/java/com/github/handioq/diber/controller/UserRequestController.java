@@ -5,7 +5,6 @@ import com.github.handioq.diber.model.entity.Request;
 import com.github.handioq.diber.model.entity.User;
 import com.github.handioq.diber.service.RequestService;
 import com.github.handioq.diber.utils.Constants;
-import com.github.handioq.diber.utils.Converter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +34,7 @@ public class UserRequestController {
                                          @PathVariable("user_id") long userId) {
         LOGGER.info("Start getRequests userId: {}", userId);
         List<Request> requests = requestService.findByCourierId(userId);
-        List<RequestDto> requestsDtos = Converter.toRequestsDto(requests);
+        List<RequestDto> requestsDtos = RequestDto.toDto(requests);
         return new ResponseEntity<>(requestsDtos, HttpStatus.OK);
     }
 

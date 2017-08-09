@@ -1,5 +1,10 @@
 package com.github.handioq.diber.model.dto;
 
+import com.github.handioq.diber.model.entity.User;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserDto {
 
     private long id;
@@ -94,4 +99,20 @@ public class UserDto {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
+
+    public static UserDto fromEntity(User user) {
+        return new UserDto(user.getId(), user.getEmail(), user.getUsername(), user.getPassword(),
+                user.isEnabled(), user.getFullname());
+    }
+
+    public static List<UserDto> toDto(List<User> users) {
+        List<UserDto> userDtos = new ArrayList<>();
+
+        for (User user : users) {
+            userDtos.add(UserDto.fromEntity(user));
+        }
+
+        return userDtos;
+    }
+
 }

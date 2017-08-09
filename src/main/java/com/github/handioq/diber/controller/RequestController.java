@@ -33,7 +33,7 @@ public class RequestController {
             return new ResponseEntity<>("Request not found", HttpStatus.NOT_FOUND);
         }
 
-        RequestDto requestDto = Converter.toRequestDto(request);
+        RequestDto requestDto = RequestDto.fromEntity(request);
         return new ResponseEntity<>(requestDto, HttpStatus.OK);
     }
 
@@ -57,7 +57,7 @@ public class RequestController {
         request.setStatus(requestDto.getStatus());
         requestService.saveOrUpdate(request);
         LOGGER.info("request status changed to {}, request saved to database", requestDto.getStatus());
-        return new ResponseEntity<>(Converter.toRequestDto(request), HttpStatus.OK);
+        return new ResponseEntity<>(RequestDto.fromEntity(request), HttpStatus.OK);
     }
 
 }

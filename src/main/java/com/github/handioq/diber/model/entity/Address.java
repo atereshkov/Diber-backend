@@ -2,6 +2,7 @@ package com.github.handioq.diber.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.handioq.diber.model.dto.AddressDto;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -126,4 +127,11 @@ public class Address extends BaseEntity {
     public void setOrders(Set<Order> orders) {
         this.orders = orders;
     }
+
+    public static Address toEntity(AddressDto addressDto) {
+        return new Address(addressDto.getName(), addressDto.getPostalCode(), addressDto.getCountry(),
+                addressDto.getCity(), addressDto.getRegion(), addressDto.getAddress(),
+                addressDto.getPhone());
+    }
+
 }

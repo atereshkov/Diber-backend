@@ -1,10 +1,10 @@
 package com.github.handioq.diber.controller;
 
+import com.github.handioq.diber.model.dto.ReviewDto;
 import com.github.handioq.diber.model.entity.Review;
 import com.github.handioq.diber.model.entity.User;
 import com.github.handioq.diber.service.ReviewService;
 import com.github.handioq.diber.utils.Constants;
-import com.github.handioq.diber.utils.Converter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +35,7 @@ public class UserReviewController {
         LOGGER.info("Start getReviews userId: {}", userId);
         //List<Review> reviews = reviewService.findByUserId(userId); // todo separate this
         List<Review> reviews = reviewService.findByCourierId(userId);
-        return new ResponseEntity<>(Converter.toReviewsDto(reviews), HttpStatus.OK);
+        return new ResponseEntity<>(ReviewDto.toDto(reviews), HttpStatus.OK);
     }
 
 }

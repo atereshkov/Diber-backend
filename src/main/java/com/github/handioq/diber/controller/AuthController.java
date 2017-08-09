@@ -36,7 +36,7 @@ public class AuthController {
     @ResponseBody
     public ResponseEntity<?> register(@RequestBody UserDto userDto) {
         LOGGER.info("Start register user: {}", userDto);
-        User user = Converter.toUserEntity(userDto);
+        User user = User.toEntity(userDto);
 
         List<Role> roles = new ArrayList<>();
 
@@ -52,7 +52,7 @@ public class AuthController {
         user.setRoles(roles);
 
         authService.register(user);
-        return new ResponseEntity<>(Converter.toUserDto(user), HttpStatus.CREATED);
+        return new ResponseEntity<>(UserDto.fromEntity(user), HttpStatus.CREATED);
     }
 
 }

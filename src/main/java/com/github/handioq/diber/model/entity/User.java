@@ -1,6 +1,7 @@
 package com.github.handioq.diber.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.handioq.diber.model.dto.UserDto;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
@@ -188,4 +189,11 @@ public class User extends BaseEntity {
                 ", password='" + password + '\'' +
                 '}';
     }
+
+    public static User toEntity(UserDto userDto) {
+        return new User(userDto.getEmail(), userDto.getUsername(),
+                userDto.getPassword(), userDto.isEnabled(), userDto.getFullname());
+        // todo complete this
+    }
+
 }

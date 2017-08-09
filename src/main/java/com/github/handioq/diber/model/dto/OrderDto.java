@@ -1,6 +1,10 @@
 package com.github.handioq.diber.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.github.handioq.diber.model.entity.Order;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderDto {
@@ -100,4 +104,40 @@ public class OrderDto {
     public void setShop(ShopDto shop) {
         this.shop = shop;
     }
+
+    public static OrderDto fromEntity(Order order) {
+        OrderDto orderDto = new OrderDto();
+
+        if (order.getShop() != null) {
+            orderDto.setShop(ShopDto.fromEntity(order.getShop()));
+        }
+
+        if (order.getAddress() != null) {
+            orderDto.setAddress(AddressDto.fromEntity(order.getAddress()));
+        }
+
+        if (order.getCourier() != null) {
+            orderDto.setCourier(UserDto.fromEntity(order.getCourier()));
+        }
+
+        orderDto.setId(order.getId());
+        orderDto.setDate(order.getDate().toString());
+        orderDto.setDescription(order.getDescription());
+        orderDto.setPrice(order.getPrice());
+        orderDto.setStatus(order.getStatus());
+        orderDto.setCustomer(UserDto.fromEntity(order.getUser()));
+
+        return orderDto;
+    }
+
+    public static List<OrderDto> toDto(List<Order> orders) {
+        List<OrderDto> ordersDtos = new ArrayList<>();
+
+        for (Order order : orders) {
+            ordersDtos.add(OrderDto.fromEntity(order));
+        }
+
+        return ordersDtos;
+    }
+
 }

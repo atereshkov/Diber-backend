@@ -1,5 +1,10 @@
 package com.github.handioq.diber.model.dto;
 
+import com.github.handioq.diber.model.entity.Shop;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class ShopDto {
 
     private long id;
@@ -38,4 +43,19 @@ public class ShopDto {
     public void setAddress(String address) {
         this.address = address;
     }
+
+    public static ShopDto fromEntity(Shop shop) {
+        return new ShopDto(shop.getId(), shop.getName(), shop.getAddress());
+    }
+
+    public static List<ShopDto> toDto(List<Shop> shops) {
+        List<ShopDto> shopDtos = new ArrayList<>();
+
+        for (Shop shop : shops) {
+            shopDtos.add(ShopDto.fromEntity(shop));
+        }
+
+        return shopDtos;
+    }
+
 }

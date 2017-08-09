@@ -1,5 +1,7 @@
 package com.github.handioq.diber.model.entity;
 
+import com.github.handioq.diber.model.dto.RequestDto;
+
 import javax.persistence.*;
 
 @Entity
@@ -60,4 +62,9 @@ public class Request extends BaseEntity {
                 ", courier=" + courier +
                 '}';
     }
+
+    public static Request toEntity(RequestDto requestDto) {
+        return new Request(); // todo implement
+    }
+
 }

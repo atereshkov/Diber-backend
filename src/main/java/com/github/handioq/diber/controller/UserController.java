@@ -1,5 +1,6 @@
 package com.github.handioq.diber.controller;
 
+import com.github.handioq.diber.model.dto.UserDto;
 import com.github.handioq.diber.model.entity.User;
 import com.github.handioq.diber.service.AddressService;
 import com.github.handioq.diber.service.OrderService;
@@ -39,7 +40,7 @@ public class UserController {
             LOGGER.error("User with id {} is not found", id);
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(Converter.toUserDto(user), HttpStatus.OK);
+        return new ResponseEntity<>(UserDto.fromEntity(user), HttpStatus.OK);
     }
 
     @PreAuthorize("@securityServiceImpl.hasAdminPermissions(#userPrincipal)")
@@ -47,14 +48,14 @@ public class UserController {
     public ResponseEntity<?> getUsers(@AuthenticationPrincipal User userPrincipal) {
         LOGGER.info("Start getUsers");
         List<User> users = userService.findAll();
-        return new ResponseEntity<>("TODO: provide users DTO", HttpStatus.OK); //todo usersDto
+        return new ResponseEntity<>(UserDto.toDto(users), HttpStatus.OK); // TODO pagination
     }
 
     @RequestMapping(value = "/info", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<?> getById(@AuthenticationPrincipal User user) {
         LOGGER.info("Start getById with AuthenticationPrincipal: {}", user);
-        return new ResponseEntity<>(Converter.toUserDto(user), HttpStatus.OK);
+        return new ResponseEntity<>(UserDto.fromEntity(user), HttpStatus.OK);
     }
 
     @PreAuthorize("@securityServiceImpl.hasAdminPermissions(#userPrincipal)")

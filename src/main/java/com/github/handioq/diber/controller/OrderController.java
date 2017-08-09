@@ -10,11 +10,9 @@ import com.github.handioq.diber.service.OrderService;
 import com.github.handioq.diber.service.RequestService;
 import com.github.handioq.diber.service.UserService;
 import com.github.handioq.diber.utils.Constants;
-import com.github.handioq.diber.utils.Converter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,14 +48,14 @@ public class OrderController {
             return new ResponseEntity<>("Order not found", HttpStatus.NOT_FOUND);
         }
 
-        OrderDto orderDto = Converter.toOrderDto(order);
+        OrderDto orderDto = OrderDto.fromEntity(order);
         return new ResponseEntity<>(orderDto, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getOrders(Pageable pageable) {
         List<Order> orders = orderService.findAllByPage(pageable);
-        List<OrderDto> ordersDtos = Converter.toOrdersDto(orders);
+        List<OrderDto> ordersDtos = OrderDto.toDto(orders);
         return new ResponseEntity<>(ordersDtos, HttpStatus.OK);
     }
 
@@ -66,7 +64,7 @@ public class OrderController {
     public ResponseEntity<?> getOrderRequests(@PathVariable("id") long id) {
         LOGGER.info("Start getOrderRequests with id: {}", id);
         List<Request> requests = requestService.findByOrderId(id);
-        List<RequestDto> requestsDtos = Converter.toRequestsDto(requests);
+        List<RequestDto> requestsDtos = RequestDto.toDto(requests);
         return new ResponseEntity<>(requestsDtos, HttpStatus.OK);
     }
 
@@ -123,16 +121,16 @@ public class OrderController {
         order.setStatus(orderDto.getStatus());
         orderService.saveOrUpdate(order);
         LOGGER.info("order status changed to " + orderDto.getStatus() + ", order savedOrUpdated successfully");
-        return new ResponseEntity<>(Converter.toOrderDto(order), HttpStatus.OK);
+        return new ResponseEntity<>(OrderDto.fromEntity(order), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<?> addOrder(@RequestBody OrderDto orderDto) {
         LOGGER.info("Start addOrder: {}", orderDto);
-        Order order = Converter.toOrderEntity(orderDto);
+        Order order = Order.toEntity(orderDto);
         orderService.saveOrUpdate(order);
-        return new ResponseEntity<>(Converter.toOrderDto(order), HttpStatus.CREATED);
+        return new ResponseEntity<>(OrderDto.fromEntity(order), HttpStatus.CREATED);
     }
 
     @PreAuthorize("@securityServiceImpl.hasAdminPermissions(#userPrincipal)")

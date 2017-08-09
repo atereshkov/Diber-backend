@@ -6,7 +6,6 @@ import com.github.handioq.diber.model.entity.User;
 import com.github.handioq.diber.service.AuthService;
 import com.github.handioq.diber.service.RoleService;
 import com.github.handioq.diber.utils.Constants;
-import com.github.handioq.diber.utils.Converter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

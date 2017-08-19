@@ -1,6 +1,6 @@
 package com.github.handioq.diber.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.github.handioq.diber.model.base.BaseEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

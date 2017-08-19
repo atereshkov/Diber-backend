@@ -48,7 +48,7 @@ public class OrderController {
             return new ResponseEntity<>("Order not found", HttpStatus.NOT_FOUND);
         }
 
-        OrderDto orderDto = OrderDto.fromEntity(order);
+        OrderDto orderDto = OrderDto.toDto(order);
         return new ResponseEntity<>(orderDto, HttpStatus.OK);
     }
 
@@ -121,7 +121,7 @@ public class OrderController {
         order.setStatus(orderDto.getStatus());
         orderService.saveOrUpdate(order);
         LOGGER.info("order status changed to " + orderDto.getStatus() + ", order savedOrUpdated successfully");
-        return new ResponseEntity<>(OrderDto.fromEntity(order), HttpStatus.OK);
+        return new ResponseEntity<>(OrderDto.toDto(order), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -130,7 +130,7 @@ public class OrderController {
         LOGGER.info("Start addOrder: {}", orderDto);
         Order order = Order.toEntity(orderDto);
         orderService.saveOrUpdate(order);
-        return new ResponseEntity<>(OrderDto.fromEntity(order), HttpStatus.CREATED);
+        return new ResponseEntity<>(OrderDto.toDto(order), HttpStatus.CREATED);
     }
 
     @PreAuthorize("@securityServiceImpl.hasAdminPermissions(#userPrincipal)")

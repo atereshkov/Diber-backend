@@ -1,11 +1,12 @@
 package com.github.handioq.diber.model.dto;
 
+import com.github.handioq.diber.model.base.BaseDto;
 import com.github.handioq.diber.model.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDto {
+public class UserDto extends BaseDto {
 
     private long id;
     private String email;
@@ -100,7 +101,7 @@ public class UserDto {
         this.enabled = enabled;
     }
 
-    public static UserDto fromEntity(User user) {
+    public static UserDto toDto(User user) {
         return new UserDto(user.getId(), user.getEmail(), user.getUsername(), user.getPassword(),
                 user.isEnabled(), user.getFullname());
     }
@@ -109,7 +110,7 @@ public class UserDto {
         List<UserDto> userDtos = new ArrayList<>();
 
         for (User user : users) {
-            userDtos.add(UserDto.fromEntity(user));
+            userDtos.add(UserDto.toDto(user));
         }
 
         return userDtos;

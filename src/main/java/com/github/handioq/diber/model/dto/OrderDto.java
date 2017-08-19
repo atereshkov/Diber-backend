@@ -1,13 +1,14 @@
 package com.github.handioq.diber.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.github.handioq.diber.model.base.BaseDto;
 import com.github.handioq.diber.model.entity.Order;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class OrderDto {
+public class OrderDto extends BaseDto {
 
     private long id;
     private String date;
@@ -105,19 +106,19 @@ public class OrderDto {
         this.shop = shop;
     }
 
-    public static OrderDto fromEntity(Order order) {
+    public static OrderDto toDto(Order order) {
         OrderDto orderDto = new OrderDto();
 
         if (order.getShop() != null) {
-            orderDto.setShop(ShopDto.fromEntity(order.getShop()));
+            orderDto.setShop(ShopDto.toDto(order.getShop()));
         }
 
         if (order.getAddress() != null) {
-            orderDto.setAddress(AddressDto.fromEntity(order.getAddress()));
+            orderDto.setAddress(AddressDto.toDto(order.getAddress()));
         }
 
         if (order.getCourier() != null) {
-            orderDto.setCourier(UserDto.fromEntity(order.getCourier()));
+            orderDto.setCourier(UserDto.toDto(order.getCourier()));
         }
 
         orderDto.setId(order.getId());
@@ -125,7 +126,7 @@ public class OrderDto {
         orderDto.setDescription(order.getDescription());
         orderDto.setPrice(order.getPrice());
         orderDto.setStatus(order.getStatus());
-        orderDto.setCustomer(UserDto.fromEntity(order.getUser()));
+        orderDto.setCustomer(UserDto.toDto(order.getUser()));
 
         return orderDto;
     }
@@ -134,7 +135,7 @@ public class OrderDto {
         List<OrderDto> ordersDtos = new ArrayList<>();
 
         for (Order order : orders) {
-            ordersDtos.add(OrderDto.fromEntity(order));
+            ordersDtos.add(OrderDto.toDto(order));
         }
 
         return ordersDtos;

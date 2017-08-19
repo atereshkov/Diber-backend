@@ -1,8 +1,9 @@
 package com.github.handioq.diber.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.handioq.diber.model.base.BaseDto;
 
-public class ErrorResponseDto {
+public class ErrorResponseDto extends BaseDto {
 
     @JsonProperty("error")
     private String error;

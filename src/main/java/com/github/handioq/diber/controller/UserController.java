@@ -36,7 +36,7 @@ public class UserController {
             LOGGER.error("User with id {} is not found", id);
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(UserDto.fromEntity(user), HttpStatus.OK);
+        return new ResponseEntity<>(UserDto.toDto(user), HttpStatus.OK);
     }
 
     @PreAuthorize("@securityServiceImpl.hasAdminPermissions(#userPrincipal)")
@@ -51,7 +51,7 @@ public class UserController {
     @ResponseBody
     public ResponseEntity<?> getById(@AuthenticationPrincipal User user) {
         LOGGER.info("Start getById with AuthenticationPrincipal: {}", user);
-        return new ResponseEntity<>(UserDto.fromEntity(user), HttpStatus.OK);
+        return new ResponseEntity<>(UserDto.toDto(user), HttpStatus.OK);
     }
 
     @PreAuthorize("@securityServiceImpl.hasAdminPermissions(#userPrincipal)")

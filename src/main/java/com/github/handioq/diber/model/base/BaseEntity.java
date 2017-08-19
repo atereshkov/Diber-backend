@@ -1,4 +1,4 @@
-package com.github.handioq.diber.model.entity;
+package com.github.handioq.diber.model.base;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

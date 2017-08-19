@@ -1,5 +1,6 @@
 package com.github.handioq.diber.model.entity;
 
+import com.github.handioq.diber.model.base.BaseEntity;
 import com.github.handioq.diber.model.dto.OrderDto;
 import com.github.handioq.diber.utils.DateUtil;
 

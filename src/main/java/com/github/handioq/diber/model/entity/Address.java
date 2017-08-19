@@ -2,6 +2,7 @@ package com.github.handioq.diber.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.handioq.diber.model.base.BaseEntity;
 import com.github.handioq.diber.model.dto.AddressDto;
 
 import javax.persistence.*;

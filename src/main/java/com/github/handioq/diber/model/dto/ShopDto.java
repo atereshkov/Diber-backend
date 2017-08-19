@@ -1,11 +1,12 @@
 package com.github.handioq.diber.model.dto;
 
+import com.github.handioq.diber.model.base.BaseDto;
 import com.github.handioq.diber.model.entity.Shop;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShopDto {
+public class ShopDto extends BaseDto {
 
     private long id;
     private String name;
@@ -44,7 +45,7 @@ public class ShopDto {
         this.address = address;
     }
 
-    public static ShopDto fromEntity(Shop shop) {
+    public static ShopDto toDto(Shop shop) {
         return new ShopDto(shop.getId(), shop.getName(), shop.getAddress());
     }
 
@@ -52,7 +53,7 @@ public class ShopDto {
         List<ShopDto> shopDtos = new ArrayList<>();
 
         for (Shop shop : shops) {
-            shopDtos.add(ShopDto.fromEntity(shop));
+            shopDtos.add(ShopDto.toDto(shop));
         }
 
         return shopDtos;

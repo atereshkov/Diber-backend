@@ -1,6 +1,8 @@
 # Diber (backend)
 ## Spring Boot / Spring Data Jpa / Hibernate / MySQL / OAuth2 Application
 
+![](https://img.shields.io/travis/atereshkov/Diber-backend/master.svg) ![](https://img.shields.io/versioneye/d/atereshkov/Diber-backend.svg)
+
 Diber is the delivery service of goods like Uber. Anyone can register as a customer or courier. 
 Customers can make requests for the delivery of goods, and couriers can accept and fulfill these requests.
 

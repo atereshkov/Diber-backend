@@ -1,6 +1,7 @@
 package com.github.handioq.diber.model.dto;
 
 import com.github.handioq.diber.model.base.BaseDto;
+import com.github.handioq.diber.model.entity.Role;
 import com.github.handioq.diber.model.entity.User;
 
 import java.util.ArrayList;
@@ -16,25 +17,19 @@ public class UserDto extends BaseDto {
     private boolean isCustomer;
     private boolean isCourier;
     private String fullname;
+    private List<RoleDto> roles;
 
     public UserDto() {
     }
 
-    public UserDto(long id, String email, String username, String password, boolean enabled) {
-        this.id = id;
-        this.email = email;
-        this.username = username;
-        this.password = password;
-        this.enabled = enabled;
-    }
-
-    public UserDto(long id, String email, String username, String password, boolean enabled, String fullname) {
+    public UserDto(long id, String email, String username, String password, boolean enabled, String fullname, List<RoleDto> roles) {
         this.id = id;
         this.email = email;
         this.username = username;
         this.password = password;
         this.enabled = enabled;
         this.fullname = fullname;
+        this.roles = roles;
     }
 
     public String getFullname() {
@@ -103,7 +98,7 @@ public class UserDto extends BaseDto {
 
     public static UserDto toDto(User user) {
         return new UserDto(user.getId(), user.getEmail(), user.getUsername(), user.getPassword(),
-                user.isEnabled(), user.getFullname());
+                user.isEnabled(), user.getFullname(), RoleDto.toDto(user.getRoles()));
     }
 
     public static List<UserDto> toDto(List<User> users) {

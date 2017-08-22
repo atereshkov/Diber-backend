@@ -1,6 +1,5 @@
 package com.github.handioq.diber.configuration;
 
-import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,9 +18,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
-
-    @Autowired
-    private DataSource dataSource;
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {

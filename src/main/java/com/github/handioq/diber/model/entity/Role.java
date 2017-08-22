@@ -41,4 +41,9 @@ public class Role extends BaseEntity {
     public void setName(String name) {
         this.name = name;
     }
+
+    public static Role toEntity(Role roleDto) {
+        return new Role(roleDto.getName());
+    }
+
 }

@@ -38,7 +38,6 @@ public class Request extends BaseEntity {
         this.status = status;
     }
 
-    //@JsonIgnore
     public Order getOrder() {
         return order;
     }
@@ -47,7 +46,6 @@ public class Request extends BaseEntity {
         this.order = order;
     }
 
-    //@JsonIgnore
     public User getCourier() {
         return courier;
     }

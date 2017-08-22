@@ -96,6 +96,14 @@ public class UserDto extends BaseDto {
         this.enabled = enabled;
     }
 
+    public List<RoleDto> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<RoleDto> roles) {
+        this.roles = roles;
+    }
+
     public static UserDto toDto(User user) {
         return new UserDto(user.getId(), user.getEmail(), user.getUsername(), user.getPassword(),
                 user.isEnabled(), user.getFullname(), RoleDto.toDto(user.getRoles()));

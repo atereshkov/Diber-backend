@@ -13,6 +13,8 @@ import com.github.handioq.diber.utils.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,8 +56,8 @@ public class OrderController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getOrders(Pageable pageable) {
-        List<Order> orders = orderService.findAllByPage(pageable);
-        List<OrderDto> ordersDtos = OrderDto.toDto(orders);
+        Page<Order> orders = orderService.findAllByPage(pageable);
+        Page<OrderDto> ordersDtos = orders.map(OrderDto::toDto);
         return new ResponseEntity<>(ordersDtos, HttpStatus.OK);
     }
 

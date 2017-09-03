@@ -10,7 +10,7 @@ public interface OrderService {
 
     Order getById(long id);
 
-    List<Order> findAllByPage(Pageable pageable);
+    Page<Order> findAllByPage(Pageable pageable);
 
     List<Order> findByUserId(long userId);
 

@@ -24,9 +24,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> findAllByPage(Pageable pageable) {
-        // toDto from pages to list
-        return orderRepository.findAll(pageable).getContent();
+    public Page<Order> findAllByPage(Pageable pageable) {
+        return orderRepository.findAll(pageable);
     }
 
     @Override

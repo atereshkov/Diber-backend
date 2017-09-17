@@ -1,0 +1,24 @@
+package com.github.handioq.diber.controller;
+
+import com.github.handioq.diber.utils.Constants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping(Constants.API_URL + Constants.URL_STATISTICS)
+public class StatisticController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(StatisticController.class);
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<?> getStatistic() {
+        LOGGER.info("Start getStatistics");
+        return new ResponseEntity<>("SHTO?", HttpStatus.I_AM_A_TEAPOT);
+    }
+
+}

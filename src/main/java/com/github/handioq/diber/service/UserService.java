@@ -18,4 +18,6 @@ public interface UserService {
 
     void saveOrUpdate(User user);
 
+    Long count();
+
 }

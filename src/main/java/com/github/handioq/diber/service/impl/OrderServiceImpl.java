@@ -42,4 +42,9 @@ public class OrderServiceImpl implements OrderService {
     public void delete(long orderId) {
         orderRepository.delete(orderId);
     }
+
+    @Override
+    public Long count() {
+        return orderRepository.count();
+    }
 }

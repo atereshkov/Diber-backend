@@ -45,4 +45,9 @@ public class UserServiceImpl implements UserService {
     public void saveOrUpdate(User user) {
         userRepository.save(user);
     }
+
+    @Override
+    public Long count() {
+        return userRepository.count();
+    }
 }

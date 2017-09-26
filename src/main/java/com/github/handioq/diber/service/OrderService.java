@@ -18,4 +18,6 @@ public interface OrderService {
 
     void delete(long orderId);
 
+    Long count();
+
 }

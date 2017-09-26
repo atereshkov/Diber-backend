@@ -25,8 +25,12 @@ public class UserReviewController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserReviewController.class);
 
+    private final ReviewService reviewService;
+
     @Autowired
-    private ReviewService reviewService;
+    public UserReviewController(ReviewService reviewService) {
+        this.reviewService = reviewService;
+    }
 
     @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
     @RequestMapping(method = RequestMethod.GET)

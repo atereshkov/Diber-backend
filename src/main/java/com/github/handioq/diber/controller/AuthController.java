@@ -22,11 +22,14 @@ public class AuthController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
 
-    @Autowired
-    private AuthService authService;
+    private final AuthService authService;
+    private final RoleService roleService;
 
     @Autowired
-    private RoleService roleService;
+    public AuthController(AuthService authService, RoleService roleService) {
+        this.authService = authService;
+        this.roleService = roleService;
+    }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody

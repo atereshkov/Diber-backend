@@ -25,11 +25,14 @@ public class UserShopController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserShopController.class);
 
-    @Autowired
-    private ShopService shopService;
+    private final ShopService shopService;
+    private final UserService userService;
 
     @Autowired
-    private UserService userService;
+    public UserShopController(ShopService shopService, UserService userService) {
+        this.shopService = shopService;
+        this.userService = userService;
+    }
 
     @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
     @RequestMapping(method = RequestMethod.GET)

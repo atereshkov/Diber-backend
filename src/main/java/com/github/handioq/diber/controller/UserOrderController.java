@@ -27,17 +27,18 @@ public class UserOrderController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserOrderController.class);
 
-    @Autowired
-    private OrderService orderService;
+    private final OrderService orderService;
+    private final UserService userService;
+    private final ShopService shopService;
+    private final AddressService addressService;
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
-    private ShopService shopService;
-
-    @Autowired
-    private AddressService addressService;
+    public UserOrderController(OrderService orderService, UserService userService, ShopService shopService, AddressService addressService) {
+        this.orderService = orderService;
+        this.userService = userService;
+        this.shopService = shopService;
+        this.addressService = addressService;
+    }
 
     @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
     @RequestMapping(method = RequestMethod.GET)

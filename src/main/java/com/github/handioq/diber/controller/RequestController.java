@@ -18,8 +18,12 @@ public class RequestController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderController.class);
 
+    private final RequestService requestService;
+
     @Autowired
-    private RequestService requestService;
+    public RequestController(RequestService requestService) {
+        this.requestService = requestService;
+    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody

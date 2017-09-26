@@ -25,8 +25,12 @@ public class UserRequestController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserRequestController.class);
 
+    private final RequestService requestService;
+
     @Autowired
-    private RequestService requestService;
+    public UserRequestController(RequestService requestService) {
+        this.requestService = requestService;
+    }
 
     @PreAuthorize("@securityServiceImpl.hasPermissions(#user, #userId)")
     @RequestMapping(method = RequestMethod.GET)

@@ -30,14 +30,16 @@ public class OrderController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderController.class);
 
-    @Autowired
-    private OrderService orderService;
+    private final OrderService orderService;
+    private final RequestService requestService;
+    private final UserService userService;
 
     @Autowired
-    private RequestService requestService;
-
-    @Autowired
-    private UserService userService;
+    public OrderController(OrderService orderService, RequestService requestService, UserService userService) {
+        this.orderService = orderService;
+        this.requestService = requestService;
+        this.userService = userService;
+    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody

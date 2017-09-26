@@ -25,11 +25,14 @@ public class UserAddressController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserAddressController.class);
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+    private final AddressService addressService;
 
     @Autowired
-    private AddressService addressService;
+    public UserAddressController(UserService userService, AddressService addressService) {
+        this.userService = userService;
+        this.addressService = addressService;
+    }
 
     @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
     @RequestMapping(method = RequestMethod.GET)

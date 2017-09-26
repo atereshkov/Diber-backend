@@ -13,8 +13,13 @@ import java.util.List;
 @Transactional
 public class RequestServiceImpl implements RequestService {
 
-    @Autowired
+    final
     RequestRepository requestRepository;
+
+    @Autowired
+    public RequestServiceImpl(RequestRepository requestRepository) {
+        this.requestRepository = requestRepository;
+    }
 
     @Override
     public List<Request> findByOrderId(long userId) {

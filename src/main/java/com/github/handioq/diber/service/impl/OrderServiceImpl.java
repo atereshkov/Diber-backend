@@ -29,8 +29,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> findByUserId(long userId) {
-        return orderRepository.findByUserId(userId);
+    public Page<Order> findByUserId(long userId, Pageable pageable) {
+        return orderRepository.findByUserId(userId, pageable);
     }
 
     @Override

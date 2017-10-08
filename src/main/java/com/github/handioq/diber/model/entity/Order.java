@@ -32,12 +32,6 @@ public class Order extends BaseEntity {
     @Column(name = "status")
     private String status;
 
-    /*
-    @OneToMany(mappedBy = "order", cascade = {CascadeType.ALL})
-    @JsonManagedReference
-    private Set<Image> images;
-    */
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shop_id")
     private Shop shop;

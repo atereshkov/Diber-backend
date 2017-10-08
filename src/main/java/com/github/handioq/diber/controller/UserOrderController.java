@@ -13,6 +13,8 @@ import com.github.handioq.diber.utils.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -43,10 +45,10 @@ public class UserOrderController {
     @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getOrders(@AuthenticationPrincipal User userPrincipal,
-                                       @PathVariable("user_id") long userId) {
+                                       @PathVariable("user_id") long userId, Pageable pageable) {
         LOGGER.info("getOrders for userId: {}", userId);
-        List<Order> orders = orderService.findByUserId(userId);
-        List<OrderDto> ordersDtos = OrderDto.toDto(orders);
+        Page<Order> orders = orderService.findByUserId(userId, pageable);
+        Page<OrderDto> ordersDtos = orders.map(OrderDto::toDto);
         return new ResponseEntity<>(ordersDtos, HttpStatus.OK);
     }
 

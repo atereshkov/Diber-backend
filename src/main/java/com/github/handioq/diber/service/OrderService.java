@@ -12,7 +12,7 @@ public interface OrderService {
 
     Page<Order> findAllByPage(Pageable pageable);
 
-    List<Order> findByUserId(long userId);
+    Page<Order> findByUserId(long userId, Pageable pageable);
 
     void saveOrUpdate(Order order);
 

@@ -40,7 +40,7 @@ public class Address extends BaseEntity {
     @JsonBackReference
     private User user;
 
-    @OneToMany(mappedBy = "address", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "addressFrom", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Set<Order> orders;
 
     public Address() {

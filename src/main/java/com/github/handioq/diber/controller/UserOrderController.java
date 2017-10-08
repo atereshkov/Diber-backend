@@ -61,6 +61,8 @@ public class UserOrderController {
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
 
+        // TODO refactor
+
         Address addressTo = Address.toEntity(orderDto.getAddressTo());
         Address existingAddressTo = addressService.findByNameAndUser(addressTo.getName(), user);
 

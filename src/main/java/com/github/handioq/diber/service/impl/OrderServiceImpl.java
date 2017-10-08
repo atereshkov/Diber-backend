@@ -15,13 +15,8 @@ import java.util.List;
 @Transactional
 public class OrderServiceImpl implements OrderService {
 
-    private final
-    OrderRepository orderRepository;
-
     @Autowired
-    public OrderServiceImpl(OrderRepository orderRepository) {
-        this.orderRepository = orderRepository;
-    }
+    OrderRepository orderRepository;
 
     @Override
     public Order getById(long id) {

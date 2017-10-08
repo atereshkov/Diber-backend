@@ -11,12 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class AuthServiceImpl implements AuthService {
 
-    private final AuthRepository authRepository;
-
     @Autowired
-    public AuthServiceImpl(AuthRepository authRepository) {
-        this.authRepository = authRepository;
-    }
+    private AuthRepository authRepository;
 
     @Override
     public void register(User user) {

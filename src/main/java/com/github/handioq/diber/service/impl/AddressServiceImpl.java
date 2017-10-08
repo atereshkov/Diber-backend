@@ -14,12 +14,8 @@ import java.util.List;
 @Transactional
 public class AddressServiceImpl implements AddressService {
 
-    private final AddressRepository addressRepository;
-
     @Autowired
-    public AddressServiceImpl(AddressRepository addressRepository) {
-        this.addressRepository = addressRepository;
-    }
+    private AddressRepository addressRepository;
 
     @Override
     public List<Address> findByUserId(long userId) {

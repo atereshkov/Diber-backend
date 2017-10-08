@@ -20,12 +20,8 @@ import java.util.stream.Collectors;
 @Transactional
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final UserService userService;
-
     @Autowired
-    public UserDetailsServiceImpl(UserService userService) {
-        this.userService = userService;
-    }
+    private UserService userService;
 
     @Override
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {

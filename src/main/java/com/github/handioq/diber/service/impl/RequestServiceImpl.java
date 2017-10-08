@@ -13,7 +13,7 @@ import java.util.List;
 @Transactional
 public class RequestServiceImpl implements RequestService {
 
-    private final
+    final
     RequestRepository requestRepository;
 
     @Autowired

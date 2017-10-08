@@ -13,8 +13,13 @@ import java.util.List;
 @Transactional
 public class ReviewServiceImpl implements ReviewService {
 
-    @Autowired
+    private final
     ReviewRepository reviewRepository;
+
+    @Autowired
+    public ReviewServiceImpl(ReviewRepository reviewRepository) {
+        this.reviewRepository = reviewRepository;
+    }
 
     @Override
     public List<Review> findByUserId(long userId) {

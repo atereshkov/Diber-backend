@@ -14,8 +14,13 @@ import java.util.List;
 @Transactional
 public class ShopServiceImpl implements ShopService {
 
-    @Autowired
+    private final
     ShopRepository shopRepository;
+
+    @Autowired
+    public ShopServiceImpl(ShopRepository shopRepository) {
+        this.shopRepository = shopRepository;
+    }
 
     @Override
     public Shop findOne(long id) {

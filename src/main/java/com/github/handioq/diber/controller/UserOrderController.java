@@ -3,11 +3,9 @@ package com.github.handioq.diber.controller;
 import com.github.handioq.diber.model.dto.OrderDto;
 import com.github.handioq.diber.model.entity.Address;
 import com.github.handioq.diber.model.entity.Order;
-import com.github.handioq.diber.model.entity.Shop;
 import com.github.handioq.diber.model.entity.User;
 import com.github.handioq.diber.service.AddressService;
 import com.github.handioq.diber.service.OrderService;
-import com.github.handioq.diber.service.ShopService;
 import com.github.handioq.diber.service.UserService;
 import com.github.handioq.diber.utils.Constants;
 import org.slf4j.Logger;
@@ -21,8 +19,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping(Constants.API_URL + Constants.URL_USER_ORDER)
 public class UserOrderController {
@@ -31,14 +27,12 @@ public class UserOrderController {
 
     private final OrderService orderService;
     private final UserService userService;
-    private final ShopService shopService;
     private final AddressService addressService;
 
     @Autowired
-    public UserOrderController(OrderService orderService, UserService userService, ShopService shopService, AddressService addressService) {
+    public UserOrderController(OrderService orderService, UserService userService, AddressService addressService) {
         this.orderService = orderService;
         this.userService = userService;
-        this.shopService = shopService;
         this.addressService = addressService;
     }
 
@@ -67,37 +61,37 @@ public class UserOrderController {
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
 
-        Shop shop = Shop.toEntity(orderDto.getShop());
-        Shop existingShop = shopService.findByNameAndUser(shop.getName(), user);
+        Address addressTo = Address.toEntity(orderDto.getAddressTo());
+        Address existingAddressTo = addressService.findByNameAndUser(addressTo.getName(), user);
 
-        // if shop already exists, then we don't create new shop entity in database
-        if (existingShop != null) {
-            LOGGER.info("shop is already exists: {}", existingShop);
-            shop = existingShop;
+        // if address already exists, then don't create new entity in database
+        if (existingAddressTo != null) {
+            LOGGER.info("AddressTo from is already exists: {}", existingAddressTo);
+            addressTo = existingAddressTo;
         } else {
-            LOGGER.info("create new shop entity for order");
-            shop.setUser(user);
-            shopService.saveOrUpdate(shop);
-            user.getShops().add(shop);
+            LOGGER.info("Create new AddressTo entity for order");
+            addressTo.setUser(user);
+            addressService.saveOrUpdate(addressTo);
+            user.getAddresses().add(addressTo);
         }
 
-        Address address = Address.toEntity(orderDto.getAddress());
-        Address existingAddress = addressService.findByNameAndUser(address.getName(), user);
+        Address addressFrom = Address.toEntity(orderDto.getAddressFrom());
+        Address existingAddressFrom = addressService.findByNameAndUser(addressFrom.getName(), user);
 
-        // the same: if address already exists, then don't create new entity in database
-        if (existingAddress != null) {
-            LOGGER.info("address is already exists: {}", existingAddress);
-            address = existingAddress;
+        // if address already exists, then don't create new entity in database
+        if (existingAddressFrom != null) {
+            LOGGER.info("AddressFrom is already exists: {}", existingAddressFrom);
+            addressFrom = existingAddressFrom;
         } else {
-            LOGGER.info("create new address entity for order");
-            address.setUser(user);
-            addressService.saveOrUpdate(address);
-            user.getAddresses().add(address);
+            LOGGER.info("Create new AddressFrom entity for order");
+            addressFrom.setUser(user);
+            addressService.saveOrUpdate(addressFrom);
+            user.getAddresses().add(addressFrom);
         }
 
         Order order = Order.toEntity(orderDto);
-        order.setShop(shop);
-        order.setAddress(address);
+        order.setAddressTo(addressTo);
+        order.setAddressFrom(addressFrom);
         order.setUser(user);
         order.setCourier(null); // add order without courier as initial
         orderService.saveOrUpdate(order);

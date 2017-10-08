@@ -33,10 +33,6 @@ public class Order extends BaseEntity {
     private String status;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "shop_id")
-    private Shop shop;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     private User user;
 
@@ -45,30 +41,34 @@ public class Order extends BaseEntity {
     private User courier;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "address_id")
-    private Address address;
+    @JoinColumn(name = "address_from_id")
+    private Address addressFrom;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_to_id")
+    private Address addressTo;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Request> requests;
 
-    public Order(Date date, String description, Double price, String status, Shop shop, Address address) {
+    public Order(Date date, String description, Double price, String status, Address addressFrom, Address addressTo) {
         this.date = date;
         this.description = description;
         this.price = price;
         this.status = status;
-        this.shop = shop;
-        this.address = address;
+        this.addressFrom = addressFrom;
+        this.addressTo = addressTo;
     }
 
     public Order() {
     }
 
-    public Address getAddress() {
-        return address;
+    public Address getAddressFrom() {
+        return addressFrom;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setAddressFrom(Address addressFrom) {
+        this.addressFrom = addressFrom;
     }
 
     public Set<Request> getRequests() {
@@ -103,14 +103,6 @@ public class Order extends BaseEntity {
         this.date = date;
     }
 
-    public Shop getShop() {
-        return shop;
-    }
-
-    public void setShop(Shop shop) {
-        this.shop = shop;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -135,6 +127,14 @@ public class Order extends BaseEntity {
         this.status = status;
     }
 
+    public Address getAddressTo() {
+        return addressTo;
+    }
+
+    public void setAddressTo(Address addressTo) {
+        this.addressTo = addressTo;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -147,10 +147,9 @@ public class Order extends BaseEntity {
         if (description != null ? !description.equals(order.description) : order.description != null) return false;
         if (price != null ? !price.equals(order.price) : order.price != null) return false;
         if (status != null ? !status.equals(order.status) : order.status != null) return false;
-        if (shop != null ? !shop.equals(order.shop) : order.shop != null) return false;
         if (user != null ? !user.equals(order.user) : order.user != null) return false;
         if (courier != null ? !courier.equals(order.courier) : order.courier != null) return false;
-        if (address != null ? !address.equals(order.address) : order.address != null) return false;
+        if (addressFrom != null ? !addressFrom.equals(order.addressFrom) : order.addressFrom != null) return false;
         return requests != null ? requests.equals(order.requests) : order.requests == null;
     }
 
@@ -161,10 +160,9 @@ public class Order extends BaseEntity {
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
-        result = 31 * result + (shop != null ? shop.hashCode() : 0);
         result = 31 * result + (user != null ? user.hashCode() : 0);
         result = 31 * result + (courier != null ? courier.hashCode() : 0);
-        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (addressFrom != null ? addressFrom.hashCode() : 0);
         result = 31 * result + (requests != null ? requests.hashCode() : 0);
         return result;
     }

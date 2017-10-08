@@ -1,18 +1,28 @@
-INSERT INTO  users  (id, username, email, password, enabled, fullname)
+INSERT INTO users (id, username, email, password, enabled, fullname)
 VALUES (
   1,
-  'John',
+  'Customer',
   'user@handioq.ru',
   '$2a$08$u4eRExB5CAPAGD3CX83Ld.n16SfecMsw5xJOK9Jy676PnPynpiifG',
   TRUE,
   'John fullnamevoich'
 );
 
-INSERT INTO  users  (id, username, email, password, enabled, fullname)
+INSERT INTO users (id, username, email, password, enabled, fullname)
 VALUES (
   2,
-  'Andrew',
+  'Admin',
   'admin@handioq.ru',
+  '$2a$08$u4eRExB5CAPAGD3CX83Ld.n16SfecMsw5xJOK9Jy676PnPynpiifG',
+  TRUE,
+  'Andrew Balalakhanov'
+);
+
+INSERT INTO users (id, username, email, password, enabled, fullname)
+VALUES (
+  3,
+  'Courier',
+  'user@diber.com',
   '$2a$08$u4eRExB5CAPAGD3CX83Ld.n16SfecMsw5xJOK9Jy676PnPynpiifG',
   TRUE,
   'Andrew Balalakhanov'
@@ -24,20 +34,23 @@ INSERT INTO roles (id, name) VALUES (3, 'ROLE_ADMIN');
 
 INSERT INTO user_roles (user_id, role_id) VALUES (1, 1);
 INSERT INTO user_roles (user_id, role_id) VALUES (2, 3);
+INSERT INTO user_roles (user_id, role_id) VALUES (3, 2);
 
 
+/*
 INSERT INTO shops (id, address, name)
 VALUES  (1, '20 Suvorova str.', 'Shop name 1');
 
 INSERT INTO shops (id, address, name)
 VALUES  (2, '10 Suvorova str.', 'Shop name 2');
+*/
 
 
-INSERT INTO orders (id, description, shop_id, date, customer_id, courier_id, delivery_price, status)
-VALUES (1, 'Description about order with id 1', 2,'2017-01-20 12:32:02', 1, 2, '20.0', 'New');
+INSERT INTO orders (id, description, address_from_id, address_to_id, date, customer_id, courier_id, delivery_price, status)
+VALUES (1, 'Description about order with id 1', 2, 1, '2017-01-20 12:32:02', 1, 2, '20.0', 'New');
 
-INSERT INTO orders (id, description, shop_id, date, customer_id, courier_id, delivery_price, status)
-VALUES (2, 'Description about order with id 2', 2,'2017-02-12 02:52:05', 1, 2, '100.0', 'New');
+INSERT INTO orders (id, description, address_from_id, address_to_id, date, customer_id, courier_id, delivery_price, status)
+VALUES (2, 'Description about order with id 2', 2, 1, '2017-02-12 02:52:05', 1, 2, '100.0', 'New');
 
 
 INSERT INTO reviews (id, review, rating, user_id)

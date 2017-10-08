@@ -91,7 +91,7 @@ public class UserAddressController {
         // todo add check for order status and if one of the orders has "In progress" status then don't delete address
 
         for (Order order : address.getOrders()) {
-            order.setAddress(null);
+            order.setAddressFrom(null);
         }
 
         addressService.delete(addressId);

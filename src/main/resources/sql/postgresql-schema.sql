@@ -33,11 +33,12 @@ CREATE TABLE "user_roles" (
 
 CREATE TABLE "orders" (
 	"id" serial NOT NULL,
-	"shop_id" integer NOT NULL,
 	"date" DATE NOT NULL,
 	"status" TEXT NOT NULL,
 	"courier_id" integer NOT NULL,
 	"description" VARCHAR(255) NOT NULL,
+	"address_from_id" integer NOT NULL,
+	"address_to_id" integer NOT NULL,
 	"delivery_price" FLOAT NOT NULL,
 	"customer_id" integer NOT NULL,
 	CONSTRAINT orders_pk PRIMARY KEY ("id")
@@ -84,7 +85,7 @@ CREATE TABLE "addresses" (
 	"id" serial NOT NULL,
 	"country" VARCHAR(255) NOT NULL,
 	"city" VARCHAR(255) NOT NULL,
-	"address" VARCHAR(255) NOT NULL,
+	"addressFrom" VARCHAR(255) NOT NULL,
 	"region" VARCHAR(255) NOT NULL,
 	"postal_code" integer NOT NULL,
 	"phone" VARCHAR(255) NOT NULL,
@@ -101,10 +102,10 @@ CREATE TABLE "addresses" (
 ALTER TABLE "user_roles" ADD CONSTRAINT "user_roles_fk0" FOREIGN KEY ("user_id") REFERENCES "users"("id");
 ALTER TABLE "user_roles" ADD CONSTRAINT "user_roles_fk1" FOREIGN KEY ("role_id") REFERENCES "roles"("id");
 
-ALTER TABLE "orders" ADD CONSTRAINT "orders_fk0" FOREIGN KEY ("shop_id") REFERENCES "shops"("id");
 ALTER TABLE "orders" ADD CONSTRAINT "orders_fk1" FOREIGN KEY ("courier_id") REFERENCES "users"("id");
 ALTER TABLE "orders" ADD CONSTRAINT "orders_fk2" FOREIGN KEY ("customer_id") REFERENCES "users"("id");
-
+/* TODO
+ALTER TABLE "orders" ADD CONSTRAINT "orders_fk3" FOREIGN KEY ()*/
 
 ALTER TABLE "reviews" ADD CONSTRAINT "reviews_fk0" FOREIGN KEY ("user_id") REFERENCES "users"("id");
 

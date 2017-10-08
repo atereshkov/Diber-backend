@@ -15,8 +15,8 @@ public class OrderDto extends BaseDto {
     private String description;
     private Double price;
     private String status;
-    private ShopDto shop;
-    private AddressDto address;
+    private AddressDto addressFrom;
+    private AddressDto addressTo;
     private UserDto courier;
     private UserDto customer;
     // todo add array of requestDto
@@ -24,14 +24,14 @@ public class OrderDto extends BaseDto {
     public OrderDto() {
     }
 
-    public OrderDto(long id, String date, String description, Double price, String status, ShopDto shop, AddressDto address) {
+    public OrderDto(long id, String date, String description, Double price, String status, AddressDto addressFrom, AddressDto addressTo) {
         this.id = id;
         this.date = date;
         this.description = description;
         this.price = price;
         this.status = status;
-        this.shop = shop;
-        this.address = address;
+        this.addressFrom = addressFrom;
+        this.addressTo = addressTo;
     }
 
     public long getId() {
@@ -58,12 +58,12 @@ public class OrderDto extends BaseDto {
         this.customer = customer;
     }
 
-    public AddressDto getAddress() {
-        return address;
+    public AddressDto getAddressFrom() {
+        return addressFrom;
     }
 
-    public void setAddress(AddressDto address) {
-        this.address = address;
+    public void setAddressFrom(AddressDto addressFrom) {
+        this.addressFrom = addressFrom;
     }
 
     public String getDate() {
@@ -98,25 +98,23 @@ public class OrderDto extends BaseDto {
         this.status = status;
     }
 
-    public ShopDto getShop() {
-        return shop;
+    public AddressDto getAddressTo() {
+        return addressTo;
     }
 
-    public void setShop(ShopDto shop) {
-        this.shop = shop;
+    public void setAddressTo(AddressDto addressTo) {
+        this.addressTo = addressTo;
     }
 
     public static OrderDto toDto(Order order) {
         OrderDto orderDto = new OrderDto();
 
-        if (order.getShop() != null) {
-            orderDto.setShop(ShopDto.toDto(order.getShop()));
+        if (order.getAddressFrom() != null) {
+            orderDto.setAddressFrom(AddressDto.toDto(order.getAddressFrom()));
         }
-
-        if (order.getAddress() != null) {
-            orderDto.setAddress(AddressDto.toDto(order.getAddress()));
+        if (order.getAddressTo() != null) {
+            orderDto.setAddressTo(AddressDto.toDto(order.getAddressTo()));
         }
-
         if (order.getCourier() != null) {
             orderDto.setCourier(UserDto.toDto(order.getCourier()));
         }

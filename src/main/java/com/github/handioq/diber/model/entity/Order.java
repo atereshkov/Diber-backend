@@ -169,7 +169,8 @@ public class Order extends BaseEntity {
 
     public static Order toEntity(OrderDto orderDto) {
         //Shop shop = toShopEntity(orderDto.getShop());
-        Date date = DateUtil.getFromString(orderDto.getDate(), "yyyy-MM-dd HH:mm:ss");
+        //Date date = DateUtil.getFromString(orderDto.getDate(), "yyyy-MM-dd HH:mm:ss");
+        Date date = new Date(orderDto.getDate());
         return new Order(date, orderDto.getDescription(), orderDto.getPrice(), orderDto.getStatus(), null, null);
     }
 

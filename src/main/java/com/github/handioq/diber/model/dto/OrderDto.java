@@ -11,7 +11,7 @@ import java.util.List;
 public class OrderDto extends BaseDto {
 
     private long id;
-    private String date;
+    private long date;
     private String description;
     private Double price;
     private String status;
@@ -24,7 +24,7 @@ public class OrderDto extends BaseDto {
     public OrderDto() {
     }
 
-    public OrderDto(long id, String date, String description, Double price, String status, AddressDto addressFrom, AddressDto addressTo) {
+    public OrderDto(long id, long date, String description, Double price, String status, AddressDto addressFrom, AddressDto addressTo) {
         this.id = id;
         this.date = date;
         this.description = description;
@@ -66,11 +66,11 @@ public class OrderDto extends BaseDto {
         this.addressFrom = addressFrom;
     }
 
-    public String getDate() {
+    public long getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(long date) {
         this.date = date;
     }
 
@@ -120,7 +120,7 @@ public class OrderDto extends BaseDto {
         }
 
         orderDto.setId(order.getId());
-        orderDto.setDate(order.getDate().toString());
+        orderDto.setDate(order.getDate().getTime() / 1000);
         orderDto.setDescription(order.getDescription());
         orderDto.setPrice(order.getPrice());
         orderDto.setStatus(order.getStatus());

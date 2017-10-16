@@ -33,7 +33,7 @@ CREATE TABLE "user_roles" (
 
 CREATE TABLE "orders" (
 	"id" serial NOT NULL,
-	"date" DATE NOT NULL,
+	"date" timestamptz NOT NULL,
 	"status" TEXT NOT NULL,
 	"courier_id" integer NOT NULL,
 	"description" VARCHAR(255) NOT NULL,

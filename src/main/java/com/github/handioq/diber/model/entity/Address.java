@@ -2,7 +2,7 @@ package com.github.handioq.diber.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.github.handioq.diber.model.base.BaseEntity;
+import com.github.handioq.diber.model.base.AuditableEntity;
 import com.github.handioq.diber.model.dto.AddressDto;
 
 import javax.persistence.*;
@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "addresses")
-public class Address extends BaseEntity {
+public class Address extends AuditableEntity<Long> {
 
     private static final long serialVersionUID = 1L;
 

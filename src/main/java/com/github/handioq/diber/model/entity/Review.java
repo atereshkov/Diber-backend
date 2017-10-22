@@ -1,13 +1,13 @@
 package com.github.handioq.diber.model.entity;
 
-import com.github.handioq.diber.model.base.BaseEntity;
+import com.github.handioq.diber.model.base.AuditableEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "reviews")
-public class Review extends BaseEntity {
+public class Review extends AuditableEntity<Long> {
 
     private static final long serialVersionUID = 1L;
 

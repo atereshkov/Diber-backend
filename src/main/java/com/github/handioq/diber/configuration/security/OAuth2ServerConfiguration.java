@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.handioq.diber.configuration;
+package com.github.handioq.diber.configuration.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

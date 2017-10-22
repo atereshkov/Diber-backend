@@ -1,8 +1,7 @@
 package com.github.handioq.diber.model.entity;
 
-import com.github.handioq.diber.model.base.BaseEntity;
+import com.github.handioq.diber.model.base.AuditableEntity;
 import com.github.handioq.diber.model.dto.OrderDto;
-import com.github.handioq.diber.utils.DateUtil;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,7 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "orders")
-public class Order extends BaseEntity {
+public class Order extends AuditableEntity<Long> {
 
     private static final long serialVersionUID = 1L;
 

@@ -2,12 +2,16 @@ package com.github.handioq.diber.service;
 
 import com.github.handioq.diber.model.entity.Address;
 import com.github.handioq.diber.model.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface AddressService {
 
     List<Address> findByUserId(long userId);
+
+    Page<Address> findAllByPage(Pageable pageable);
 
     void saveOrUpdate(Address address);
 

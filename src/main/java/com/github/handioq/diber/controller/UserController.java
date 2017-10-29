@@ -7,6 +7,8 @@ import com.github.handioq.diber.utils.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -45,10 +47,11 @@ public class UserController {
 
     @PreAuthorize("@securityServiceImpl.hasAdminPermissions(#userPrincipal)")
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> getUsers(@AuthenticationPrincipal User userPrincipal) {
+    public ResponseEntity<?> getUsers(@AuthenticationPrincipal User userPrincipal, Pageable pageable) {
         LOGGER.info("Start getUsers");
-        List<User> users = userService.findAll();
-        return new ResponseEntity<>(UserDto.toDto(users), HttpStatus.OK); // TODO pagination
+        Page<User> users = userService.findAllByPage(pageable);
+        Page<UserDto> ordersDtos = users.map(UserDto::toDto);
+        return new ResponseEntity<>(ordersDtos, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/info", method = RequestMethod.GET)

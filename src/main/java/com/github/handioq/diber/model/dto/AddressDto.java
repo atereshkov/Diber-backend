@@ -16,11 +16,12 @@ public class AddressDto extends BaseDto {
     private String region;
     private String address;
     private String phone;
+    private long userId;
 
     public AddressDto() {
     }
 
-    public AddressDto(long id, String name, int postalCode, String country, String city, String region, String address, String phone) {
+    public AddressDto(long id, String name, int postalCode, String country, String city, String region, String address, String phone, long userId) {
         this.id = id;
         this.name = name;
         this.postalCode = postalCode;
@@ -29,6 +30,7 @@ public class AddressDto extends BaseDto {
         this.region = region;
         this.address = address;
         this.phone = phone;
+        this.userId = userId;
     }
 
     public long getId() {
@@ -107,6 +109,6 @@ public class AddressDto extends BaseDto {
 
     public static AddressDto toDto(Address address) {
         return new AddressDto(address.getId(), address.getName(), address.getPostalCode(), address.getCountry(),
-                address.getCity(), address.getRegion(), address.getAddress(), address.getPhone());
+                address.getCity(), address.getRegion(), address.getAddress(), address.getPhone(), address.getUser().getId());
     }
 }

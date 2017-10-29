@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(Constants.API_URL + Constants.URL_REQUESTS)
 public class RequestController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(OrderController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RequestController.class);
 
     private final RequestService requestService;
 

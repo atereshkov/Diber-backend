@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(Constants.API_URL + Constants.URL_ADDRESSES)
 public class AddressController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(OrderController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AddressController.class);
 
     private final AddressService addressService;
 

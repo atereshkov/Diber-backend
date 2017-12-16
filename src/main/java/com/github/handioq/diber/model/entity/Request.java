@@ -25,9 +25,10 @@ public class Request extends BaseEntity {
     public Request() {
     }
 
-    public Request(Order order, User courier) {
+    public Request(Order order, User courier, String status) {
         this.order = order;
         this.courier = courier;
+        this.status = status;
     }
 
     public String getStatus() {

@@ -97,7 +97,7 @@ public class OrderController {
             return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
         }
 
-        Request request = new Request(order, courier);
+        Request request = new Request(order, courier, "Not reviewed");
 
         order.getRequests().add(request);
         orderService.saveOrUpdate(order);

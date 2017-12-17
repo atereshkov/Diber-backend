@@ -23,6 +23,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping(Constants.API_URL + Constants.URL_ORDERS)
@@ -93,8 +94,20 @@ public class OrderController {
         Request existingRequest = requestService.findByOrderIdAndCourierId(id, requestDto.getCourier().getId());
 
         if (existingRequest != null) {
-            ErrorResponseDto error = new ErrorResponseDto("Already exists", "Request with this order id and courier id already exists.");
-            return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+            switch (existingRequest.getStatus()) {
+                case "Not reviewed": {
+                    ErrorResponseDto error = new ErrorResponseDto("Already exists", "The request already exists");
+                    return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+                }
+                case "Canceled by courier":
+                    existingRequest.setStatus("Not reviewed");
+                    requestService.saveOrUpdate(existingRequest);
+                    return new ResponseEntity<>(requestDto, HttpStatus.OK);
+                case "Canceled by customer": {
+                    ErrorResponseDto error = new ErrorResponseDto("Request rejected", "The request was rejected earlier by the customer");
+                    return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+                }
+            }
         }
 
         Request request = new Request(order, courier, "Not reviewed");

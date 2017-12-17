@@ -21,14 +21,18 @@ public class RequestDto extends BaseDto {
     @JsonProperty("courier")
     private UserDto courier;
 
+    @JsonProperty("creation_date")
+    private long date;
+
     public RequestDto() {
     }
 
-    public RequestDto(long id, OrderDto order, UserDto courier, String status) {
+    public RequestDto(long id, OrderDto order, UserDto courier, String status, long date) {
         this.id = id;
         this.order = order;
         this.courier = courier;
         this.status = status;
+        this.date = date;
     }
 
     public String getStatus() {
@@ -63,9 +67,18 @@ public class RequestDto extends BaseDto {
         this.courier = courier;
     }
 
+    public long getDate() {
+        return date;
+    }
+
+    public void setDate(long date) {
+        this.date = date;
+    }
+
     public static RequestDto toDto(Request request) {
+        long date = request.getCreatedDate().getTime() / 1000;
         return new RequestDto(request.getId(), OrderDto.toDto(request.getOrder()),
-                UserDto.toDto(request.getCourier()), request.getStatus());
+                UserDto.toDto(request.getCourier()), request.getStatus(), date);
     }
 
     public static List<RequestDto> toDto(List<Request> requests) {

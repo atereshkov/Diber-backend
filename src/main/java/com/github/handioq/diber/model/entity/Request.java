@@ -1,5 +1,6 @@
 package com.github.handioq.diber.model.entity;
 
+import com.github.handioq.diber.model.base.AuditableEntity;
 import com.github.handioq.diber.model.base.BaseEntity;
 import com.github.handioq.diber.model.dto.RequestDto;
 
@@ -7,7 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "requests")
-public class Request extends BaseEntity {
+public class Request extends AuditableEntity<Long> {
 
     private static final long serialVersionUID = 1L;
 

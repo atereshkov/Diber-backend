@@ -40,6 +40,22 @@ public class RequestController {
         return new ResponseEntity<>(requestDto, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/order/{order_id}/user/{user_id}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<?> getRequestByOrderAndUser(@PathVariable("order_id") long orderId,
+                                                      @PathVariable("user_id") long userId) {
+        LOGGER.info("Start getRequestByOrderAndUser");
+        Request request = requestService.findByOrderIdAndCourierId(orderId, userId);
+
+        if (request == null) {
+            LOGGER.error("Request {} is not found");
+            return new ResponseEntity<>("Request not found", HttpStatus.NOT_FOUND);
+        }
+
+        RequestDto requestDto = RequestDto.toDto(request);
+        return new ResponseEntity<>(requestDto, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/{id}/status", method = RequestMethod.PUT)
     @ResponseBody
     public ResponseEntity<?> changeStatus(@PathVariable("id") long id, @RequestBody RequestDto requestDto) {

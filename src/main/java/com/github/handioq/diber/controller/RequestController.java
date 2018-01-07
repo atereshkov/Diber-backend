@@ -2,8 +2,12 @@ package com.github.handioq.diber.controller;
 
 import com.github.handioq.diber.model.dto.ErrorResponseDto;
 import com.github.handioq.diber.model.dto.RequestDto;
+import com.github.handioq.diber.model.entity.Order;
 import com.github.handioq.diber.model.entity.Request;
+import com.github.handioq.diber.model.entity.User;
+import com.github.handioq.diber.service.OrderService;
 import com.github.handioq.diber.service.RequestService;
+import com.github.handioq.diber.service.UserService;
 import com.github.handioq.diber.utils.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
+
 @RestController
 @RequestMapping(Constants.API_URL + Constants.URL_REQUESTS)
 public class RequestController {
@@ -19,10 +25,14 @@ public class RequestController {
     private static final Logger LOGGER = LoggerFactory.getLogger(RequestController.class);
 
     private final RequestService requestService;
+    private final OrderService orderService;
+    private final UserService userService;
 
     @Autowired
-    public RequestController(RequestService requestService) {
+    public RequestController(RequestService requestService, OrderService orderService, UserService userService) {
         this.requestService = requestService;
+        this.orderService = orderService;
+        this.userService = userService;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -76,6 +86,16 @@ public class RequestController {
         request.setStatus(requestDto.getStatus());
         requestService.saveOrUpdate(request);
         LOGGER.info("request status changed to {}, request saved to database", requestDto.getStatus());
+
+        if (requestDto.getStatus().equalsIgnoreCase("Accepted")) {
+            // find the corresponding order and set the request courier
+            Order order = orderService.getById(request.getOrder().getId());
+            User courier = userService.findOne(request.getCourier().getId());
+            order.setStatus("Accepted"); // accepted by the customer and ready for performing
+            order.setCourier(courier);
+            orderService.saveOrUpdate(order);
+        }
+
         return new ResponseEntity<>(RequestDto.toDto(request), HttpStatus.OK);
     }
 

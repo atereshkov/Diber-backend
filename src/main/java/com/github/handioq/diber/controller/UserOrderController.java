@@ -4,6 +4,7 @@ import com.github.handioq.diber.model.dto.OrderDto;
 import com.github.handioq.diber.model.entity.Address;
 import com.github.handioq.diber.model.entity.Order;
 import com.github.handioq.diber.model.entity.User;
+import com.github.handioq.diber.repository.specification.OrderSpecificationsBuilder;
 import com.github.handioq.diber.service.AddressService;
 import com.github.handioq.diber.service.OrderService;
 import com.github.handioq.diber.service.UserService;
@@ -13,11 +14,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping(Constants.API_URL + Constants.URL_USER_ORDER)
@@ -39,9 +44,20 @@ public class UserOrderController {
     @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getOrders(@AuthenticationPrincipal User userPrincipal,
-                                       @PathVariable("user_id") long userId, Pageable pageable) {
+                                       @PathVariable("user_id") long userId, Pageable pageable,
+                                       @RequestParam(value = "search") String search) {
         LOGGER.info("getOrders for userId: {}", userId);
-        Page<Order> orders = orderService.findByUserId(userId, pageable);
+
+        OrderSpecificationsBuilder builder = new OrderSpecificationsBuilder();
+        Pattern pattern = Pattern.compile("(\\w+?)(:|<|>)(\\w+?),");
+        Matcher matcher = pattern.matcher(search + ",");
+        while (matcher.find()) {
+            builder.with(matcher.group(1), matcher.group(2), matcher.group(3));
+        }
+
+        Specification<Order> spec = builder.build();
+
+        Page<Order> orders = orderService.findByUserId(userId, pageable, spec);
         Page<OrderDto> ordersDtos = orders.map(OrderDto::toDto);
         return new ResponseEntity<>(ordersDtos, HttpStatus.OK);
     }

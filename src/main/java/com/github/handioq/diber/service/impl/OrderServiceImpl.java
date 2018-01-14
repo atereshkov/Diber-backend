@@ -6,6 +6,7 @@ import com.github.handioq.diber.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,8 +30,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Page<Order> findByUserId(long userId, Pageable pageable) {
-        return orderRepository.findByUserId(userId, pageable);
+    public Page<Order> findByUserId(long userId, Pageable pageable, Specification<Order> spec) {
+        return orderRepository.findByUserId(userId, pageable, spec);
     }
 
     @Override

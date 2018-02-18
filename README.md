@@ -1,5 +1,5 @@
 # Diber (backend)
-## Spring Boot / Spring Data Jpa / Hibernate / MySQL / OAuth2 Application
+## Spring Boot / Spring Data Jpa / Hibernate / PostgreSQL / OAuth2 Application
 
 ![](https://img.shields.io/travis/atereshkov/Diber-backend/master.svg) ![](https://img.shields.io/versioneye/d/atereshkov/Diber-backend.svg)
 
@@ -53,6 +53,8 @@ mvn clean package spring-boot:run
 You can find more information about Spring Security and OAuth2 integration by [following this link](https://github.com/handioq/spring-boot-security-oauth2/).
 
 ## REST API (coming soon)
+
+Our REST API uses [Spring Data Specifications](http://www.baeldung.com/rest-api-search-language-spring-data-specifications) that provide flexible query language and allows you to filter down to exactly the resources you need.
 
 <b>Auth</b>
 

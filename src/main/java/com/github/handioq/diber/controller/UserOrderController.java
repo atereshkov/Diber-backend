@@ -45,22 +45,9 @@ public class UserOrderController {
     @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getOrders(@AuthenticationPrincipal User userPrincipal,
-                                       @PathVariable("user_id") long userId, Pageable pageable,
-                                       @RequestParam(value = "search") String search) {
+                                       @PathVariable("user_id") long userId, Pageable pageable) {
         LOGGER.info("getOrders for userId: {}", userId);
-
-        OrderSpecificationsBuilder builder = new OrderSpecificationsBuilder();
-        Pattern pattern = Pattern.compile("(\\w+?)(:|<|>)(\\w+?),");
-        Matcher matcher = pattern.matcher(search + ",");
-        while (matcher.find()) {
-            builder.with(matcher.group(1), matcher.group(2), matcher.group(3));
-        }
-
-        Specification<Order> spec = builder.build();
-
-        // TODO extract to OrderController
-        //Page<Order> orders = orderService.findByUserId(userId, pageable, spec);
-        Page<Order> orders = orderService.findAll(spec, pageable);
+        Page<Order> orders = orderService.findByUserId(userId, pageable);
         Page<OrderDto> ordersDtos = orders.map(OrderDto::toDto);
         return new ResponseEntity<>(ordersDtos, HttpStatus.OK);
     }

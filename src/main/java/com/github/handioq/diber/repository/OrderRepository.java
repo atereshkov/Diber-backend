@@ -14,7 +14,7 @@ import java.util.List;
 public interface OrderRepository extends JpaRepository<Order, Long>,
         JpaSpecificationExecutor<Order> {
 
-    Page<Order> findByUserId(long id, Pageable pageable, Specification<Order> spec);
+    Page<Order> findByUserId(long id, Pageable pageable);
 
     Page<Order> findAll(Specification<Order> spec, Pageable pageable);
 

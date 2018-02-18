@@ -6,6 +6,7 @@ import com.github.handioq.diber.model.dto.RequestDto;
 import com.github.handioq.diber.model.entity.Order;
 import com.github.handioq.diber.model.entity.Request;
 import com.github.handioq.diber.model.entity.User;
+import com.github.handioq.diber.repository.specification.OrderSpecificationsBuilder;
 import com.github.handioq.diber.service.OrderService;
 import com.github.handioq.diber.service.RequestService;
 import com.github.handioq.diber.service.UserService;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,6 +26,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping(Constants.API_URL + Constants.URL_ORDERS)
@@ -58,8 +62,18 @@ public class OrderController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> getOrders(Pageable pageable) {
-        Page<Order> orders = orderService.findAllByPage(pageable);
+    public ResponseEntity<?> getOrders(@RequestParam(value = "search") String search,
+                                       Pageable pageable) {
+        OrderSpecificationsBuilder builder = new OrderSpecificationsBuilder();
+        Pattern pattern = Pattern.compile("(\\w+?)(:|<|>)(\\w+?),");
+        Matcher matcher = pattern.matcher(search + ",");
+        while (matcher.find()) {
+            builder.with(matcher.group(1), matcher.group(2), matcher.group(3));
+        }
+
+        Specification<Order> spec = builder.build();
+
+        Page<Order> orders = orderService.findAll(spec, pageable);
         Page<OrderDto> ordersDtos = orders.map(OrderDto::toDto);
         return new ResponseEntity<>(ordersDtos, HttpStatus.OK);
     }

@@ -17,7 +17,7 @@ public interface OrderService {
 
     Page<Order> findAll(Specification<Order> spec, Pageable pageable);
 
-    Page<Order> findByUserId(long userId, Pageable pageable, Specification<Order> spec);
+    Page<Order> findByUserId(long userId, Pageable pageable);
 
     void saveOrUpdate(Order order);
 

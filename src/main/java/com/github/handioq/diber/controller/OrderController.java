@@ -62,7 +62,7 @@ public class OrderController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> getOrders(@RequestParam(value = "search") String search,
+    public ResponseEntity<?> getOrders(@RequestParam(value = "search", required = false) String search,
                                        Pageable pageable) {
         OrderSpecificationsBuilder builder = new OrderSpecificationsBuilder();
         Pattern pattern = Pattern.compile("(\\w+?)(:|<|>)(\\w+?),");

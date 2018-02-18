@@ -40,6 +40,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public Page<Order> findAll(Pageable pageable, Specification<Order> spec) {
+        return orderRepository.findAll(pageable, spec);
+    }
+
+    @Override
     public void saveOrUpdate(Order order) {
         orderRepository.save(order);
     }

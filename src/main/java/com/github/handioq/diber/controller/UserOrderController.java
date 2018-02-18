@@ -59,9 +59,9 @@ public class UserOrderController {
         Specification<Order> spec = builder.build();
 
         //Page<Order> orders = orderService.findByUserId(userId, pageable, spec);
-        List<Order> orders = orderService.findAll(spec);
-        //Page<OrderDto> ordersDtos = orders.map(OrderDto::toDto);
-        return new ResponseEntity<>(OrderDto.toDto(orders), HttpStatus.OK);
+        Page<Order> orders = orderService.findAll(pageable, spec);
+        Page<OrderDto> ordersDtos = orders.map(OrderDto::toDto);
+        return new ResponseEntity<>(ordersDtos, HttpStatus.OK);
     }
 
     @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")

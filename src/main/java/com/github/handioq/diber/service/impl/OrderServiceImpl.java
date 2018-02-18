@@ -40,8 +40,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Page<Order> findAll(Pageable pageable, Specification<Order> spec) {
-        return orderRepository.findAll(pageable, spec);
+    public Page<Order> findAllByPage(Pageable pageable, Specification<Order> spec) {
+        return orderRepository.findAllByPage(pageable, spec);
     }
 
     @Override

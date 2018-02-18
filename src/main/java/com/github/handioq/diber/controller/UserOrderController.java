@@ -60,7 +60,7 @@ public class UserOrderController {
 
         // TODO extract to OrderController
         //Page<Order> orders = orderService.findByUserId(userId, pageable, spec);
-        Page<Order> orders = orderService.findAll(pageable, spec);
+        Page<Order> orders = orderService.findAllByPage(pageable, spec);
         Page<OrderDto> ordersDtos = orders.map(OrderDto::toDto);
         return new ResponseEntity<>(ordersDtos, HttpStatus.OK);
     }

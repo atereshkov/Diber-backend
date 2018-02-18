@@ -35,6 +35,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<Order> findAll(Specification<Order> spec) {
+        return orderRepository.findAll(spec);
+    }
+
+    @Override
     public void saveOrUpdate(Order order) {
         orderRepository.save(order);
     }

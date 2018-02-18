@@ -21,6 +21,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -57,9 +58,10 @@ public class UserOrderController {
 
         Specification<Order> spec = builder.build();
 
-        Page<Order> orders = orderService.findByUserId(userId, pageable, spec);
-        Page<OrderDto> ordersDtos = orders.map(OrderDto::toDto);
-        return new ResponseEntity<>(ordersDtos, HttpStatus.OK);
+        //Page<Order> orders = orderService.findByUserId(userId, pageable, spec);
+        List<Order> orders = orderService.findAll(spec);
+        //Page<OrderDto> ordersDtos = orders.map(OrderDto::toDto);
+        return new ResponseEntity<>(OrderDto.toDto(orders), HttpStatus.OK);
     }
 
     @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")

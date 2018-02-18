@@ -58,6 +58,7 @@ public class UserOrderController {
 
         Specification<Order> spec = builder.build();
 
+        // TODO extract to OrderController
         //Page<Order> orders = orderService.findByUserId(userId, pageable, spec);
         Page<Order> orders = orderService.findAll(pageable, spec);
         Page<OrderDto> ordersDtos = orders.map(OrderDto::toDto);

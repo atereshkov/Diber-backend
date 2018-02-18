@@ -15,7 +15,7 @@ public interface OrderService {
 
     List<Order> findAll(Specification<Order> spec);
 
-    Page<Order> findAllByPage(Pageable pageable, Specification<Order> spec);
+    Page<Order> findAll(Specification<Order> spec, Pageable pageable);
 
     Page<Order> findByUserId(long userId, Pageable pageable, Specification<Order> spec);
 

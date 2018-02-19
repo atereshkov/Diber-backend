@@ -23,7 +23,7 @@ public class OrderSpecification implements Specification<Order> {
 
         if (criteria.getOperation().equalsIgnoreCase(">")) {
             return builder.greaterThanOrEqualTo(
-                    root.get(criteria.getKey()), criteria.getValue().toString());
+                    root.get(criteria.getKey()).get("addressFrom").get("id"), criteria.getValue().toString());
         }
         else if (criteria.getOperation().equalsIgnoreCase("<")) {
             return builder.lessThanOrEqualTo(

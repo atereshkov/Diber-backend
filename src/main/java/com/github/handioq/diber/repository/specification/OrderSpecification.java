@@ -1,5 +1,6 @@
 package com.github.handioq.diber.repository.specification;
 
+import com.github.handioq.diber.model.entity.Order;
 import com.github.handioq.diber.model.entity.User;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -8,7 +9,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-public class OrderSpecification implements Specification<User> {
+public class OrderSpecification implements Specification<Order> {
 
     private SearchCriteria criteria;
 
@@ -18,7 +19,7 @@ public class OrderSpecification implements Specification<User> {
 
     @Override
     public Predicate toPredicate
-            (Root<User> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+            (Root<Order> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
 
         if (criteria.getOperation().equalsIgnoreCase(">")) {
             return builder.greaterThanOrEqualTo(

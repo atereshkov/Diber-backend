@@ -80,12 +80,12 @@ public class OrderController {
             for (String query : searchQueries) {
                 LOGGER.info("Search for {}", query);
                 if (query.contains(".")) {
-                    Matcher matcher = patternComplex.matcher(query + ",");
+                    Matcher matcher = patternComplex.matcher(query);
                     //while (matcher.find()) {
                         builder.with(matcher.group(1), matcher.group(2), matcher.group(3), matcher.group(4));
                     //}
                 } else {
-                    Matcher matcher = patternSimple.matcher(query + ",");
+                    Matcher matcher = patternSimple.matcher(query);
                     //while (matcher.find()) {
                         builder.with(matcher.group(1), matcher.group(2), matcher.group(3));
                     //}

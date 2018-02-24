@@ -39,6 +39,15 @@ public class OrderSpecification implements Specification<Order> {
                         root.get(criteria.getKey()).get(criteria.getSubKey()), criteria.getValue().toString());
             }
         }
+        else if (criteria.getOperation().equalsIgnoreCase("!")) {
+            if (criteria.getSubKey() == null) {
+                return builder.notEqual(
+                        root.get(criteria.getKey()), criteria.getValue().toString());
+            } else {
+                return builder.notEqual(
+                        root.get(criteria.getKey()).get(criteria.getSubKey()), criteria.getValue().toString());
+            }
+        }
         else if (criteria.getOperation().equalsIgnoreCase(":")) {
             if (root.get(criteria.getKey()).getJavaType() == String.class) {
                 if (criteria.getSubKey() == null) {

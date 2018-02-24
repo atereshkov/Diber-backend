@@ -66,7 +66,7 @@ public class OrderController {
                                        Pageable pageable) {
         // TODO: 24.02.2018 Refactor and optimize this shit
 
-        if (search.isEmpty()) {
+        if (search == null) {
             Page<Order> orders = orderService.findAllByPage(pageable);
             Page<OrderDto> ordersDtos = orders.map(OrderDto::toDto);
             return new ResponseEntity<>(ordersDtos, HttpStatus.OK);

@@ -72,19 +72,21 @@ public class OrderController {
             return new ResponseEntity<>(ordersDtos, HttpStatus.OK);
         } else {
             OrderSpecificationsBuilder builder = new OrderSpecificationsBuilder();
-            Pattern patternSimple = Pattern.compile("(\\w+?)(:|<|>|!)([\\w ]+),");
-            Pattern patternComplex = Pattern.compile("(\\w+?)[.]?(\\w+?)(:|<|>|!)([\\w ]+),");
+            Pattern patternSimple = Pattern.compile("(\\w+?)(:|<|>|!)([\\w ]+)");
+            Pattern patternComplex = Pattern.compile("(\\w+?)[.]?(\\w+?)(:|<|>|!)([\\w ]+)");
 
             String[] searchQueries = search.split(",");
 
             for (String query : searchQueries) {
                 LOGGER.info("Search for {}", query);
                 if (query.contains(".")) {
+                    LOGGER.info("Query !contains .");
                     Matcher matcher = patternComplex.matcher(query);
                     //while (matcher.find()) {
                         builder.with(matcher.group(1), matcher.group(2), matcher.group(3), matcher.group(4));
                     //}
                 } else {
+                    LOGGER.info("Query contains .");
                     Matcher matcher = patternSimple.matcher(query);
                     //while (matcher.find()) {
                         builder.with(matcher.group(1), matcher.group(2), matcher.group(3));

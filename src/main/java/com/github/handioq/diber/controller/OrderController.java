@@ -64,6 +64,8 @@ public class OrderController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getOrders(@RequestParam(value = "search", required = false) String search,
                                        Pageable pageable) {
+        // TODO: 24.02.2018 Refactor and optimize this shit
+
         OrderSpecificationsBuilder builder = new OrderSpecificationsBuilder();
         Pattern patternSimple = Pattern.compile("(\\w+?)(:|<|>)([\\w ]+),");
         Pattern patternComplex = Pattern.compile("(\\w+?)[.]?(\\w+?)(:|<|>)([\\w ]+),");
@@ -81,9 +83,15 @@ public class OrderController {
 
         Specification<Order> spec = builder.build();
 
-        Page<Order> orders = orderService.findAll(spec, pageable);
-        Page<OrderDto> ordersDtos = orders.map(OrderDto::toDto);
-        return new ResponseEntity<>(ordersDtos, HttpStatus.OK);
+        if (search.isEmpty()) {
+            Page<Order> orders = orderService.findAllByPage(pageable);
+            Page<OrderDto> ordersDtos = orders.map(OrderDto::toDto);
+            return new ResponseEntity<>(ordersDtos, HttpStatus.OK);
+        } else {
+            Page<Order> orders = orderService.findAll(spec, pageable);
+            Page<OrderDto> ordersDtos = orders.map(OrderDto::toDto);
+            return new ResponseEntity<>(ordersDtos, HttpStatus.OK);
+        }
     }
 
     @RequestMapping(value = "/{id}/requests", method = RequestMethod.GET)

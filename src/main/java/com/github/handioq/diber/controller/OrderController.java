@@ -65,10 +65,18 @@ public class OrderController {
     public ResponseEntity<?> getOrders(@RequestParam(value = "search", required = false) String search,
                                        Pageable pageable) {
         OrderSpecificationsBuilder builder = new OrderSpecificationsBuilder();
-        Pattern pattern = Pattern.compile("(\\w+?)(:|<|>)(\\w+?),");
-        Matcher matcher = pattern.matcher(search + ",");
-        while (matcher.find()) {
-            builder.with(matcher.group(1), matcher.group(2), matcher.group(3));
+        Pattern patternSimple = Pattern.compile("(\\w+?)(:|<|>)(\\w+?),");
+        Pattern patternComplex = Pattern.compile("(\\w+?)[.]?(\\w+?)(:|<|>)(\\w+?),");
+        if (search.contains(".")) {
+            Matcher matcher = patternComplex.matcher(search + ",");
+            while (matcher.find()) {
+                builder.with(matcher.group(1), matcher.group(2), matcher.group(3), matcher.group(4));
+            }
+        } else {
+            Matcher matcher = patternSimple.matcher(search + ",");
+            while (matcher.find()) {
+                builder.with(matcher.group(1), matcher.group(2), matcher.group(3));
+            }
         }
 
         Specification<Order> spec = builder.build();

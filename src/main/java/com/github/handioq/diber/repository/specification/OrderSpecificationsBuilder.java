@@ -15,6 +15,12 @@ public class OrderSpecificationsBuilder {
         params = new ArrayList<>();
     }
 
+    public OrderSpecificationsBuilder with(String key, String subKey,
+                                           String operation, Object value) {
+        params.add(new SearchCriteria(key, subKey, operation, value));
+        return this;
+    }
+
     public OrderSpecificationsBuilder with(String key, String operation, Object value) {
         params.add(new SearchCriteria(key, operation, value));
         return this;

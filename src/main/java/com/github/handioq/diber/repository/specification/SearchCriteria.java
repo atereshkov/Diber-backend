@@ -3,11 +3,19 @@ package com.github.handioq.diber.repository.specification;
 public class SearchCriteria {
 
     private String key;
+    private String subKey;
     private String operation;
     private Object value;
 
     public SearchCriteria(String key, String operation, Object value) {
         this.key = key;
+        this.operation = operation;
+        this.value = value;
+    }
+
+    public SearchCriteria(String key, String subKey, String operation, Object value) {
+        this.key = key;
+        this.subKey = subKey;
         this.operation = operation;
         this.value = value;
     }
@@ -18,6 +26,14 @@ public class SearchCriteria {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public String getSubKey() {
+        return subKey;
+    }
+
+    public void setSubKey(String subKey) {
+        this.subKey = subKey;
     }
 
     public String getOperation() {

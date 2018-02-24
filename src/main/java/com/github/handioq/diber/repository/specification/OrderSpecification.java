@@ -1,7 +1,6 @@
 package com.github.handioq.diber.repository.specification;
 
 import com.github.handioq.diber.model.entity.Order;
-import com.github.handioq.diber.model.entity.User;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -20,10 +19,18 @@ public class OrderSpecification implements Specification<Order> {
     @Override
     public Predicate toPredicate
             (Root<Order> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+        // TODO parse ... ".id" all after . as new .get parameter
+        // root.get(criteria.getKey()).get("id").get(...)
+        // addressFrom.id>35 (addressFrom will be first key, then id will the second
 
         if (criteria.getOperation().equalsIgnoreCase(">")) {
-            return builder.greaterThanOrEqualTo(
-                    root.get(criteria.getKey()), criteria.getValue().toString());
+            if (criteria.getSubKey().isEmpty()) {
+                return builder.greaterThanOrEqualTo(
+                        root.get(criteria.getKey()), criteria.getValue().toString());
+            } else {
+                return builder.greaterThanOrEqualTo(
+                        root.get(criteria.getKey()).get(criteria.getSubKey()), criteria.getValue().toString());
+            }
         }
         else if (criteria.getOperation().equalsIgnoreCase("<")) {
             return builder.lessThanOrEqualTo(

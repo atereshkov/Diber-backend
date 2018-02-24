@@ -65,8 +65,8 @@ public class OrderController {
     public ResponseEntity<?> getOrders(@RequestParam(value = "search", required = false) String search,
                                        Pageable pageable) {
         OrderSpecificationsBuilder builder = new OrderSpecificationsBuilder();
-        Pattern patternSimple = Pattern.compile("(\\w+?)(:|<|>)(\\w+?),");
-        Pattern patternComplex = Pattern.compile("(\\w+?)[.]?(\\w+?)(:|<|>)(\\w+?),");
+        Pattern patternSimple = Pattern.compile("(\\w+?)(:|<|>)([\\w ]+),");
+        Pattern patternComplex = Pattern.compile("(\\w+?)[.]?(\\w+?)(:|<|>)([\\w ]+),");
         if (search.contains(".")) {
             Matcher matcher = patternComplex.matcher(search + ",");
             while (matcher.find()) {

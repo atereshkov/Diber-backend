@@ -19,9 +19,7 @@ public class OrderSpecification implements Specification<Order> {
     @Override
     public Predicate toPredicate
             (Root<Order> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
-        // TODO parse ... ".id" all after . as new .get parameter
-        // root.get(criteria.getKey()).get("id").get(...)
-        // addressFrom.id>35 (addressFrom will be first key, then id will the second
+        // TODO 24.02.2018: Please refactor me!
 
         if (criteria.getOperation().equalsIgnoreCase(">")) {
             if (criteria.getSubKey() == null) {
@@ -33,15 +31,29 @@ public class OrderSpecification implements Specification<Order> {
             }
         }
         else if (criteria.getOperation().equalsIgnoreCase("<")) {
-            return builder.lessThanOrEqualTo(
-                    root.get(criteria.getKey()), criteria.getValue().toString());
+            if (criteria.getSubKey() == null) {
+                return builder.lessThanOrEqualTo(
+                        root.get(criteria.getKey()), criteria.getValue().toString());
+            } else {
+                return builder.greaterThanOrEqualTo(
+                        root.get(criteria.getKey()).get(criteria.getSubKey()), criteria.getValue().toString());
+            }
         }
         else if (criteria.getOperation().equalsIgnoreCase(":")) {
             if (root.get(criteria.getKey()).getJavaType() == String.class) {
-                return builder.like(
-                        root.get(criteria.getKey()), "%" + criteria.getValue() + "%");
+                if (criteria.getSubKey() == null) {
+                    return builder.like(
+                            root.get(criteria.getKey()), "%" + criteria.getValue() + "%");
+                } else {
+                    return builder.like(
+                            root.get(criteria.getKey()).get(criteria.getSubKey()), "%" + criteria.getValue() + "%");
+                }
             } else {
-                return builder.equal(root.get(criteria.getKey()), criteria.getValue());
+                if (criteria.getSubKey() == null) {
+                    return builder.equal(root.get(criteria.getKey()), criteria.getValue());
+                } else {
+                    return builder.equal(root.get(criteria.getKey()).get(criteria.getSubKey()), criteria.getValue());
+                }
             }
         }
         return null;

@@ -66,28 +66,27 @@ public class OrderController {
                                        Pageable pageable) {
         // TODO: 24.02.2018 Refactor and optimize this shit
 
-        OrderSpecificationsBuilder builder = new OrderSpecificationsBuilder();
-        Pattern patternSimple = Pattern.compile("(\\w+?)(:|<|>)([\\w ]+),");
-        Pattern patternComplex = Pattern.compile("(\\w+?)[.]?(\\w+?)(:|<|>)([\\w ]+),");
-        if (search.contains(".")) {
-            Matcher matcher = patternComplex.matcher(search + ",");
-            while (matcher.find()) {
-                builder.with(matcher.group(1), matcher.group(2), matcher.group(3), matcher.group(4));
-            }
-        } else {
-            Matcher matcher = patternSimple.matcher(search + ",");
-            while (matcher.find()) {
-                builder.with(matcher.group(1), matcher.group(2), matcher.group(3));
-            }
-        }
-
-        Specification<Order> spec = builder.build();
-
         if (search.isEmpty()) {
             Page<Order> orders = orderService.findAllByPage(pageable);
             Page<OrderDto> ordersDtos = orders.map(OrderDto::toDto);
             return new ResponseEntity<>(ordersDtos, HttpStatus.OK);
         } else {
+            OrderSpecificationsBuilder builder = new OrderSpecificationsBuilder();
+            Pattern patternSimple = Pattern.compile("(\\w+?)(:|<|>)([\\w ]+),");
+            Pattern patternComplex = Pattern.compile("(\\w+?)[.]?(\\w+?)(:|<|>)([\\w ]+),");
+            if (search.contains(".")) {
+                Matcher matcher = patternComplex.matcher(search + ",");
+                while (matcher.find()) {
+                    builder.with(matcher.group(1), matcher.group(2), matcher.group(3), matcher.group(4));
+                }
+            } else {
+                Matcher matcher = patternSimple.matcher(search + ",");
+                while (matcher.find()) {
+                    builder.with(matcher.group(1), matcher.group(2), matcher.group(3));
+                }
+            }
+
+            Specification<Order> spec = builder.build();
             Page<Order> orders = orderService.findAll(spec, pageable);
             Page<OrderDto> ordersDtos = orders.map(OrderDto::toDto);
             return new ResponseEntity<>(ordersDtos, HttpStatus.OK);

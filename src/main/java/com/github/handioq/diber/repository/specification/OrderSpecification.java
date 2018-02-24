@@ -24,7 +24,7 @@ public class OrderSpecification implements Specification<Order> {
         // addressFrom.id>35 (addressFrom will be first key, then id will the second
 
         if (criteria.getOperation().equalsIgnoreCase(">")) {
-            if (criteria.getSubKey().isEmpty()) {
+            if (criteria.getSubKey() == null) {
                 return builder.greaterThanOrEqualTo(
                         root.get(criteria.getKey()), criteria.getValue().toString());
             } else {

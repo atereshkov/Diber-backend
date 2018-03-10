@@ -35,6 +35,12 @@ public class Address extends AuditableEntity<Long> {
     @Column(name = "phone")
     private String phone;
 
+    @Column(name = "longitude")
+    private double longitude;
+
+    @Column(name = "latitude")
+    private double latitude;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @JsonBackReference
@@ -54,6 +60,19 @@ public class Address extends AuditableEntity<Long> {
         this.region = region;
         this.address = address;
         this.phone = phone;
+    }
+
+    public Address(String name, int postalCode, String country, String city,
+                   String region, String address, String phone, double longitude, double latitude) {
+        this.name = name;
+        this.postalCode = postalCode;
+        this.country = country;
+        this.city = city;
+        this.region = region;
+        this.address = address;
+        this.phone = phone;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public String getName() {
@@ -120,6 +139,22 @@ public class Address extends AuditableEntity<Long> {
         this.user = user;
     }
 
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
     @JsonIgnore
     public Set<Order> getOrders() {
         return orders;
@@ -132,7 +167,7 @@ public class Address extends AuditableEntity<Long> {
     public static Address toEntity(AddressDto addressDto) {
         return new Address(addressDto.getName(), addressDto.getPostalCode(), addressDto.getCountry(),
                 addressDto.getCity(), addressDto.getRegion(), addressDto.getAddress(),
-                addressDto.getPhone());
+                addressDto.getPhone(), addressDto.getLongitude(), addressDto.getLatitude());
     }
 
 }

@@ -17,8 +17,25 @@ public class AddressDto extends BaseDto {
     private String address;
     private String phone;
     private long userId;
+    private double longitude;
+    private double latitude;
 
     public AddressDto() {
+    }
+
+    public AddressDto(long id, String name, int postalCode, String country, String city, String region,
+                      String address, String phone, long userId, double longitude, double latitude) {
+        this.id = id;
+        this.name = name;
+        this.postalCode = postalCode;
+        this.country = country;
+        this.city = city;
+        this.region = region;
+        this.address = address;
+        this.phone = phone;
+        this.userId = userId;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public AddressDto(long id, String name, int postalCode, String country, String city, String region, String address, String phone, long userId) {
@@ -105,6 +122,22 @@ public class AddressDto extends BaseDto {
         this.phone = phone;
     }
 
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
     public static List<AddressDto> toDto(List<Address> entityItems) {
         List<AddressDto> addressDtos = new ArrayList<>();
 
@@ -117,6 +150,7 @@ public class AddressDto extends BaseDto {
 
     public static AddressDto toDto(Address address) {
         return new AddressDto(address.getId(), address.getName(), address.getPostalCode(), address.getCountry(),
-                address.getCity(), address.getRegion(), address.getAddress(), address.getPhone(), address.getUser().getId());
+                address.getCity(), address.getRegion(), address.getAddress(), address.getPhone(), address.getUser().getId(),
+                address.getLongitude(), address.getLatitude());
     }
 }

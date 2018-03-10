@@ -4,7 +4,6 @@ import com.github.handioq.diber.model.dto.OrderDto;
 import com.github.handioq.diber.model.entity.Address;
 import com.github.handioq.diber.model.entity.Order;
 import com.github.handioq.diber.model.entity.User;
-import com.github.handioq.diber.repository.specification.OrderSpecificationsBuilder;
 import com.github.handioq.diber.service.AddressService;
 import com.github.handioq.diber.service.OrderService;
 import com.github.handioq.diber.service.UserService;
@@ -14,16 +13,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping(Constants.API_URL + Constants.URL_USER_ORDER)

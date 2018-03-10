@@ -32,7 +32,7 @@ public class UserReviewController {
         this.reviewService = reviewService;
     }
 
-    @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
+    //@PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getReviews(@AuthenticationPrincipal User userPrincipal,
                                         @PathVariable("user_id") long userId) {

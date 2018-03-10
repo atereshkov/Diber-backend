@@ -1,7 +1,6 @@
 package com.github.handioq.diber.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.github.handioq.diber.model.base.AuditableEntity;
 import com.github.handioq.diber.model.base.BaseEntity;
 import com.github.handioq.diber.model.dto.UserDto;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,7 +12,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User extends AuditableEntity<Long> {
+public class User extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 

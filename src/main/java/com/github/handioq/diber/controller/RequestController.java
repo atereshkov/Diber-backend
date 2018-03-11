@@ -94,6 +94,12 @@ public class RequestController {
             order.setStatus("Accepted"); // accepted by the customer and ready for performing
             order.setCourier(courier);
             orderService.saveOrUpdate(order);
+        } else if (requestDto.getStatus().equalsIgnoreCase("Canceled by courier")
+                || requestDto.getStatus().equalsIgnoreCase("Canceled by customer"))  {
+            Order order = orderService.getById(request.getOrder().getId());
+            order.setStatus("New"); // request was canceled by customer so set "New" status
+            order.setCourier(null);
+            orderService.saveOrUpdate(order);
         }
 
         return new ResponseEntity<>(RequestDto.toDto(request), HttpStatus.OK);

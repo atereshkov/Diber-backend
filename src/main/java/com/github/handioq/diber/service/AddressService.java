@@ -13,6 +13,8 @@ public interface AddressService {
 
     Page<Address> findAllByPage(Pageable pageable);
 
+    Page<Address> findByUserId(long userId, Pageable pageable);
+
     void saveOrUpdate(Address address);
 
     Address findByName(String name);

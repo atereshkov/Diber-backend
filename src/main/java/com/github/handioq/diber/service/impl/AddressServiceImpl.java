@@ -50,6 +50,11 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
+    public Page<Address> findByUserId(long userId, Pageable pageable) {
+        return addressRepository.findByUserId(userId, pageable);
+    }
+
+    @Override
     public void delete(long addressId) {
         addressRepository.delete(addressId);
     }

@@ -11,6 +11,8 @@ import com.github.handioq.diber.utils.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -37,11 +39,11 @@ public class UserAddressController {
     @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getAddresses(@AuthenticationPrincipal User userPrincipal,
-                                          @PathVariable("user_id") long userId) {
+                                          @PathVariable("user_id") long userId, Pageable pageable) {
 
         LOGGER.info("Start getAddresses user_id: {}", userId);
-        List<Address> addresses = addressService.findByUserId(userId);
-        List<AddressDto> addressesDtos = AddressDto.toDto(addresses);
+        Page<Address> addresses = addressService.findByUserId(userId, pageable);
+        Page<AddressDto> addressesDtos = addresses.map(AddressDto::toDto);
         return new ResponseEntity<>(addressesDtos, HttpStatus.OK);
     }
 

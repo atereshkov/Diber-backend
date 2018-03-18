@@ -25,4 +25,6 @@ public interface AddressService {
 
     void delete(long addressId);
 
+    Long count();
+
 }

@@ -55,6 +55,11 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
+    public Long count() {
+        return addressRepository.count();
+    }
+
+    @Override
     public void delete(long addressId) {
         addressRepository.delete(addressId);
     }

@@ -1,6 +1,7 @@
 package com.github.handioq.diber.controller;
 
 import com.github.handioq.diber.model.dto.StatisticsDto;
+import com.github.handioq.diber.service.AddressService;
 import com.github.handioq.diber.service.OrderService;
 import com.github.handioq.diber.service.UserService;
 import com.github.handioq.diber.utils.Constants;
@@ -21,11 +22,13 @@ public class StatisticController {
 
     private final UserService userService;
     private final OrderService orderService;
+    private final AddressService addressService;
 
     @Autowired
-    public StatisticController(UserService userService, OrderService orderService) {
+    public StatisticController(UserService userService, OrderService orderService, AddressService addressService) {
         this.userService = userService;
         this.orderService = orderService;
+        this.addressService = addressService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -33,7 +36,8 @@ public class StatisticController {
         LOGGER.info("Start getStatistics");
         Long usersCount = userService.count();
         Long ordersCount = orderService.count();
-        StatisticsDto statisticsDto = new StatisticsDto(usersCount, ordersCount);
+        Long addressesCount = addressService.count();
+        StatisticsDto statisticsDto = new StatisticsDto(usersCount, ordersCount, addressesCount);
         return new ResponseEntity<>(statisticsDto, HttpStatus.OK);
     }
 

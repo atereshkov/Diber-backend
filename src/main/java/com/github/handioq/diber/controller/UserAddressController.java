@@ -80,7 +80,8 @@ public class UserAddressController {
     @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseBody
-    public ResponseEntity<?> editAddress(@PathVariable("id") long id,
+    public ResponseEntity<?> editAddress(@AuthenticationPrincipal User userPrincipal,
+                                         @PathVariable("id") long id,
                                          @PathVariable("user_id") long userId,
                                          @RequestBody AddressDto addressDto) {
         Address address = addressService.findOne(id);

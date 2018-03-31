@@ -77,6 +77,7 @@ public class UserAddressController {
         }
     }
 
+    @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseBody
     public ResponseEntity<?> editAddress(@PathVariable("id") long id,

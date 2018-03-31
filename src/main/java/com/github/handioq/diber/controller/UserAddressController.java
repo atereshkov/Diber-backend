@@ -77,6 +77,32 @@ public class UserAddressController {
         }
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @ResponseBody
+    public ResponseEntity<?> editAddress(@PathVariable("id") long id,
+                                         @PathVariable("user_id") long userId,
+                                         @RequestBody AddressDto addressDto) {
+        Address address = addressService.findOne(id);
+
+        if (address == null) {
+            ErrorResponseDto error = new ErrorResponseDto("Not found", "Order not found");
+            return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        }
+
+        address.setCity(addressDto.getCity());
+        address.setCountry(addressDto.getCountry());
+        address.setAddress(addressDto.getAddress());
+        address.setName(addressDto.getName());
+        address.setPhone(addressDto.getPhone());
+        address.setRegion(addressDto.getRegion());
+        address.setPostalCode(addressDto.getPostalCode());
+        //address.setLatitude(addressDto.getLatitude());
+        //address.setLongitude(addressDto.getLongitude());
+
+        addressService.saveOrUpdate(address);
+        return new ResponseEntity<>(AddressDto.toDto(address), HttpStatus.OK);
+    }
+
     @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
     @RequestMapping(value = "/{address_id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteAddress(@AuthenticationPrincipal User userPrincipal,

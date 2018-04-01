@@ -174,6 +174,27 @@ public class OrderController {
         return new ResponseEntity<>(OrderDto.toDto(order), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @ResponseBody
+    public ResponseEntity<?> editOrder(@PathVariable("id") long id, @RequestBody OrderDto orderDto) {
+        LOGGER.info("Start edit order with id: {}", id);
+        Order order = orderService.getById(id);
+
+        if (order == null) {
+            ErrorResponseDto error = new ErrorResponseDto("Not found", "Order not found");
+            return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        }
+
+        order.setPrice(order.getPrice());
+        order.setDescription(order.getDescription());
+        order.setAddressTo(order.getAddressTo());
+        order.setAddressFrom(order.getAddressFrom());
+        order.setStatus(orderDto.getStatus());
+        orderService.saveOrUpdate(order);
+        LOGGER.info("Order updated successfully");
+        return new ResponseEntity<>(OrderDto.toDto(order), HttpStatus.OK);
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<?> addOrder(@RequestBody OrderDto orderDto) {

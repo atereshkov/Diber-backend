@@ -20,4 +20,6 @@ public interface OrderRepository extends JpaRepository<Order, Long>,
 
     List<Order> findAll(Specification<Order> spec);
 
+    Long countByUserId(long userId);
+
 }

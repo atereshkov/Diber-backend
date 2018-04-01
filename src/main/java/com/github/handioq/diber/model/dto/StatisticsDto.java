@@ -17,6 +17,11 @@ public class StatisticsDto extends BaseDto {
     public StatisticsDto() {
     }
 
+    public StatisticsDto(long ordersCount, long addressesCount) {
+        this.ordersCount = ordersCount;
+        this.addressesCount = addressesCount;
+    }
+
     public StatisticsDto(long usersCount, long ordersCount, long addressesCount) {
         this.usersCount = usersCount;
         this.ordersCount = ordersCount;

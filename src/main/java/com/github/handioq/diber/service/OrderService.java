@@ -25,4 +25,6 @@ public interface OrderService {
 
     Long count();
 
+    Long countByUserId(long userId);
+
 }

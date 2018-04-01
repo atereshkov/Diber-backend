@@ -58,4 +58,9 @@ public class OrderServiceImpl implements OrderService {
     public Long count() {
         return orderRepository.count();
     }
+
+    @Override
+    public Long countByUserId(long userId) {
+        return orderRepository.countByUserId(userId);
+    }
 }

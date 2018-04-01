@@ -63,4 +63,9 @@ public class AddressServiceImpl implements AddressService {
     public void delete(long addressId) {
         addressRepository.delete(addressId);
     }
+
+    @Override
+    public Long countByUserId(long userId) {
+        return addressRepository.countByUserId(userId);
+    }
 }

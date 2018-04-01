@@ -27,4 +27,6 @@ public interface AddressService {
 
     Long count();
 
+    Long countByUserId(long userId);
+
 }

@@ -1,6 +1,7 @@
 package com.github.handioq.diber.controller;
 
 import com.github.handioq.diber.model.dto.StatisticsDto;
+import com.github.handioq.diber.model.entity.User;
 import com.github.handioq.diber.service.AddressService;
 import com.github.handioq.diber.service.OrderService;
 import com.github.handioq.diber.service.UserService;
@@ -10,6 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,6 +42,17 @@ public class StatisticController {
         Long ordersCount = orderService.count();
         Long addressesCount = addressService.count();
         StatisticsDto statisticsDto = new StatisticsDto(usersCount, ordersCount, addressesCount);
+        return new ResponseEntity<>(statisticsDto, HttpStatus.OK);
+    }
+
+    @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #user_id)")
+    @RequestMapping(value = "/{user_id}", method = RequestMethod.GET)
+    public ResponseEntity<?> getStatistic(@AuthenticationPrincipal User userPrincipal,
+                                          @PathVariable("user_id") long userId) {
+
+        Long ordersCount = orderService.countByUserId(userId);
+        Long addressesCount = addressService.countByUserId(userId);
+        StatisticsDto statisticsDto = new StatisticsDto(ordersCount, addressesCount);
         return new ResponseEntity<>(statisticsDto, HttpStatus.OK);
     }
 

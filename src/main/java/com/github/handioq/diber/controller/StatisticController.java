@@ -45,7 +45,7 @@ public class StatisticController {
         return new ResponseEntity<>(statisticsDto, HttpStatus.OK);
     }
 
-    @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #user_id)")
+    @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
     @RequestMapping(value = "/{user_id}", method = RequestMethod.GET)
     public ResponseEntity<?> getStatistic(@AuthenticationPrincipal User userPrincipal,
                                           @PathVariable("user_id") long userId) {

@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 
+@Entity
 @Table(name = "tickets")
 public class Ticket extends AuditableEntity<Long> {
 

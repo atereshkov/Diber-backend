@@ -57,6 +57,9 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Message> messages;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Ticket> tickets;
+
     public User() {
     }
 
@@ -86,6 +89,14 @@ public class User extends BaseEntity {
         this.password = new BCryptPasswordEncoder().encode(password);
         this.enabled = enabled;
         this.fullname = fullname;
+    }
+
+    public Set<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(Set<Ticket> tickets) {
+        this.tickets = tickets;
     }
 
     public Set<Address> getAddresses() {

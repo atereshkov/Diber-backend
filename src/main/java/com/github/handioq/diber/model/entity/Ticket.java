@@ -19,12 +19,24 @@ public class Ticket extends AuditableEntity<Long> {
     @Column(name = "status")
     private String status;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @OneToMany(mappedBy = "ticket", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Message> messages;
 
     public Ticket(String title, String status) {
         this.title = title;
         this.status = status;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getTitle() {

@@ -8,6 +8,7 @@ public class Constants {
     public static final String URL_ORDERS = "/orders";
     public static final String URL_ADDRESSES = "/addresses";
     public static final String URL_REQUESTS = "/requests";
+    public static final String URL_TICKETS = "/tickets";
     public static final String URL_STATISTICS = "/statistics";
     public static final String URL_USER_REQUEST = URL_USERS + "/{user_id}/requests";
     public static final String URL_USER_ADDRESS = URL_USERS + "/{user_id}/addresses";

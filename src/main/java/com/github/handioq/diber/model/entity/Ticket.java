@@ -1,6 +1,7 @@
 package com.github.handioq.diber.model.entity;
 
 import com.github.handioq.diber.model.base.AuditableEntity;
+import com.github.handioq.diber.model.dto.TicketDto;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -63,4 +64,9 @@ public class Ticket extends AuditableEntity<Long> {
     public void setMessages(Set<Message> messages) {
         this.messages = messages;
     }
+
+    public static Ticket toEntity(TicketDto ticketDto) {
+        return new Ticket(ticketDto.getTitle(), ticketDto.getStatus());
+    }
+
 }

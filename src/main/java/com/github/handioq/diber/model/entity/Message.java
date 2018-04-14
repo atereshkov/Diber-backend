@@ -23,6 +23,9 @@ public class Message extends AuditableEntity<Long> {
     @JoinColumn(name = "user_id")
     private User user;
 
+    public Message() {
+    }
+
     public Message(String msg) {
         this.msg = msg;
     }

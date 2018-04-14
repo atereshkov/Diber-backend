@@ -28,6 +28,9 @@ public class Ticket extends AuditableEntity<Long> {
     @OneToMany(mappedBy = "ticket", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Message> messages;
 
+    public Ticket() {
+    }
+
     public Ticket(String title, String status) {
         this.title = title;
         this.status = status;

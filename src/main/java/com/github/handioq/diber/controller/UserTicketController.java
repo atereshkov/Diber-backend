@@ -18,7 +18,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(Constants.API_URL + Constants.URL_TICKETS)
+@RequestMapping(Constants.API_URL + Constants.URL_USER_TICKETS)
 public class UserTicketController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserTicketController.class);

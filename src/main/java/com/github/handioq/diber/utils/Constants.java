@@ -14,5 +14,6 @@ public class Constants {
     public static final String URL_USER_ADDRESS = URL_USERS + "/{user_id}/addresses";
     public static final String URL_USER_ORDER = URL_USERS + "/{user_id}/orders";
     public static final String URL_USER_REVIEW = URL_USERS + "/{user_id}/reviews";
+    public static final String URL_USER_TICKETS = URL_USERS + "/{user_id}/tickets";
 
 }

@@ -55,7 +55,7 @@ public class UserTicketController {
         user.getTickets().add(ticket);
         userService.saveOrUpdate(user);
 
-        return new ResponseEntity<>(ticketDto, HttpStatus.CREATED);
+        return new ResponseEntity<>(TicketDto.toDto(ticket), HttpStatus.CREATED);
     }
 
 

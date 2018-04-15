@@ -34,7 +34,7 @@ public class TicketController {
         this.messageService = messageService;
     }
 
-    @RequestMapping(value = "/{id}/messages", method = RequestMethod.GET)
+    @RequestMapping(value = "/{ticket_id}/messages", method = RequestMethod.GET)
     public ResponseEntity<?> getTicketMessages(@AuthenticationPrincipal User userPrincipal,
                                                @PathVariable("ticket_id") long ticketId) {
         List<Message> messages = messageService.findAllByTicketId(ticketId);

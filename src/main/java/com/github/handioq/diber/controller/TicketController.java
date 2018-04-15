@@ -37,7 +37,7 @@ public class TicketController {
     @RequestMapping(value = "/{ticket_id}/messages", method = RequestMethod.GET)
     public ResponseEntity<?> getTicketMessages(@AuthenticationPrincipal User userPrincipal,
                                                @PathVariable("ticket_id") long ticketId) {
-        List<Message> messages = messageService.findAllByTicketId(ticketId);
+        List<Message> messages = messageService.findByTicketId(ticketId);
         List<MessageDto> messagesDtos = MessageDto.toDto(messages);
         return new ResponseEntity<>(messagesDtos, HttpStatus.OK);
     }

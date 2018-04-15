@@ -17,7 +17,7 @@ public class MessageServiceImpl implements MessageService {
     MessageRepository messageRepository;
 
     @Override
-    public List<Message> findAllByTicketId(long ticketId) {
-        return messageRepository.findAllByTicketId(ticketId);
+    public List<Message> findByTicketId(long ticketId) {
+        return messageRepository.findByTicketId(ticketId);
     }
 }

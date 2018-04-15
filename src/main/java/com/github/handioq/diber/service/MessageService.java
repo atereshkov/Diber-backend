@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface MessageService {
 
-    List<Message> findAllByTicketId(long ticketId);
+    List<Message> findByTicketId(long ticketId);
 
 }

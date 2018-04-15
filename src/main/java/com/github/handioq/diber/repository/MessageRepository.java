@@ -13,10 +13,10 @@ import java.util.List;
 @Transactional
 public interface MessageRepository extends JpaRepository<Message, Long> {
 
-    List<Message> findByUserId(long id);
+    List<Message> findAllByUserId(long id);
 
-    List<Message> findByTicketId(long id);
+    List<Message> findAllByTicketId(long id);
 
-    Page<Message> findByUserId(long id, Pageable pageable);
+    Page<Message> findAllByUserId(long id, Pageable pageable);
 
 }

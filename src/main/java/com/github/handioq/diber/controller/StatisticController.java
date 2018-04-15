@@ -4,6 +4,7 @@ import com.github.handioq.diber.model.dto.StatisticsDto;
 import com.github.handioq.diber.model.entity.User;
 import com.github.handioq.diber.service.AddressService;
 import com.github.handioq.diber.service.OrderService;
+import com.github.handioq.diber.service.TicketService;
 import com.github.handioq.diber.service.UserService;
 import com.github.handioq.diber.utils.Constants;
 import org.slf4j.Logger;
@@ -27,12 +28,15 @@ public class StatisticController {
     private final UserService userService;
     private final OrderService orderService;
     private final AddressService addressService;
+    private final TicketService ticketService;
 
     @Autowired
-    public StatisticController(UserService userService, OrderService orderService, AddressService addressService) {
+    public StatisticController(UserService userService, OrderService orderService,
+                               AddressService addressService, TicketService ticketService) {
         this.userService = userService;
         this.orderService = orderService;
         this.addressService = addressService;
+        this.ticketService = ticketService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -41,7 +45,7 @@ public class StatisticController {
         Long usersCount = userService.count();
         Long ordersCount = orderService.count();
         Long addressesCount = addressService.count();
-        StatisticsDto statisticsDto = new StatisticsDto(usersCount, ordersCount, addressesCount);
+        StatisticsDto statisticsDto = new StatisticsDto(usersCount, ordersCount, addressesCount, 0);
         return new ResponseEntity<>(statisticsDto, HttpStatus.OK);
     }
 
@@ -49,10 +53,10 @@ public class StatisticController {
     @RequestMapping(value = "/{user_id}", method = RequestMethod.GET)
     public ResponseEntity<?> getStatistic(@AuthenticationPrincipal User userPrincipal,
                                           @PathVariable("user_id") long userId) {
-
         Long ordersCount = orderService.countByUserId(userId);
         Long addressesCount = addressService.countByUserId(userId);
-        StatisticsDto statisticsDto = new StatisticsDto(ordersCount, addressesCount);
+        Long ticketsCount = ticketService.countByUserId(userId);
+        StatisticsDto statisticsDto = new StatisticsDto(0, ordersCount, addressesCount, ticketsCount);
         return new ResponseEntity<>(statisticsDto, HttpStatus.OK);
     }
 

@@ -14,18 +14,25 @@ public class StatisticsDto extends BaseDto {
     @JsonProperty("addresses_count")
     private long addressesCount;
 
+    @JsonProperty("tickets_count")
+    private long ticketsCounts;
+
     public StatisticsDto() {
     }
 
-    public StatisticsDto(long ordersCount, long addressesCount) {
-        this.ordersCount = ordersCount;
-        this.addressesCount = addressesCount;
-    }
-
-    public StatisticsDto(long usersCount, long ordersCount, long addressesCount) {
+    public StatisticsDto(long usersCount, long ordersCount, long addressesCount, long ticketsCounts) {
         this.usersCount = usersCount;
         this.ordersCount = ordersCount;
         this.addressesCount = addressesCount;
+        this.ticketsCounts = ticketsCounts;
+    }
+
+    public long getTicketsCounts() {
+        return ticketsCounts;
+    }
+
+    public void setTicketsCounts(long ticketsCounts) {
+        this.ticketsCounts = ticketsCounts;
     }
 
     public long getUsersCount() {

@@ -16,4 +16,6 @@ public interface TicketService {
 
     Page<Ticket> findByUserId(long userId, Pageable pageable);
 
+    Long countByUserId(long userId);
+
 }

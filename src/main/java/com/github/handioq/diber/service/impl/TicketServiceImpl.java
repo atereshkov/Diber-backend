@@ -37,4 +37,9 @@ public class TicketServiceImpl implements TicketService {
     public Page<Ticket> findByUserId(long userId, Pageable pageable) {
         return ticketRepository.findByUserId(userId, pageable);
     }
+
+    @Override
+    public Long countByUserId(long userId) {
+        return ticketRepository.countByUserId(userId);
+    }
 }

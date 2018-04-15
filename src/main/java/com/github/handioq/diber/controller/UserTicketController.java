@@ -42,6 +42,20 @@ public class UserTicketController {
     }
 
     @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
+    @RequestMapping(value = "/{ticket_id}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<?> getTicketById(@AuthenticationPrincipal User userPrincipal,
+                                           @PathVariable("ticket_id") long ticketId,
+                                           @PathVariable("user_id") long userId) {
+        Ticket ticket = ticketService.getById(ticketId);
+
+        if (ticket == null) {
+            return new ResponseEntity<>("Ticket not found", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(TicketDto.toDto(ticket), HttpStatus.OK);
+    }
+
+    @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<?> addTicket(@AuthenticationPrincipal User userPrincipal,

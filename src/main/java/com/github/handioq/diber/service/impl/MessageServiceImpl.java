@@ -4,9 +4,13 @@ import com.github.handioq.diber.model.entity.Message;
 import com.github.handioq.diber.repository.MessageRepository;
 import com.github.handioq.diber.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Service
+@Transactional
 public class MessageServiceImpl implements MessageService {
 
     @Autowired

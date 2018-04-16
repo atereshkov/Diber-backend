@@ -48,4 +48,8 @@ public class TicketServiceImpl implements TicketService {
         return ticketRepository.count();
     }
 
+    @Override
+    public Page<Ticket> findAllByPage(Pageable pageable) {
+        return ticketRepository.findAll(pageable);
+    }
 }

@@ -12,6 +12,8 @@ public interface TicketService {
 
     List<Ticket> findByUserId(long userId);
 
+    Page<Ticket> findAllByPage(Pageable pageable);
+
     void saveOrUpdate(Ticket ticket);
 
     Page<Ticket> findByUserId(long userId, Pageable pageable);

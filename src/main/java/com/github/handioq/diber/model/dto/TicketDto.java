@@ -26,15 +26,27 @@ public class TicketDto extends BaseDto {
     @JsonProperty("updated_date")
     private long updated_date;
 
+    @JsonProperty("user")
+    private UserDto user;
+
     public TicketDto() {
     }
 
-    public TicketDto(long id, String status, String title, long created_date, long updated_date) {
+    public TicketDto(long id, String status, String title, long created_date, long updated_date, UserDto user) {
         this.id = id;
         this.status = status;
         this.title = title;
         this.created_date = created_date;
         this.updated_date = updated_date;
+        this.user = user;
+    }
+
+    public UserDto getUser() {
+        return user;
+    }
+
+    public void setUser(UserDto user) {
+        this.user = user;
     }
 
     public long getCreated_date() {
@@ -80,7 +92,8 @@ public class TicketDto extends BaseDto {
     public static TicketDto toDto(Ticket ticket) {
         return new TicketDto(ticket.getId(), ticket.getStatus(), ticket.getTitle(),
                 ticket.getCreatedDate().getTime() / 1000,
-                ticket.getLastModifiedDate().getTime() / 1000);
+                ticket.getLastModifiedDate().getTime() / 1000,
+                UserDto.toDto(ticket.getUser()));
     }
 
     public static List<TicketDto> toDto(List<Ticket> tickets) {

@@ -88,11 +88,11 @@ public class UserTicketController {
         Ticket ticket = ticketService.getById(ticketId);
 
         Message message = Message.toEntity(messageDto);
-        ticket.getMessages().add(message);
         message.setTicket(ticket);
         message.setUser(user);
-        user.getTickets().add(ticket);
+        ticket.getMessages().add(message);
         user.getMessages().add(message);
+        user.getTickets().add(ticket);
         userService.saveOrUpdate(user);
 
         return new ResponseEntity<>(MessageDto.toDto(message), HttpStatus.CREATED);

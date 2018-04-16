@@ -23,14 +23,26 @@ public class MessageDto extends BaseDto {
     @JsonProperty("updated_date")
     private long updated_date;
 
+    @JsonProperty("user")
+    private UserDto user;
+
     public MessageDto() {
     }
 
-    public MessageDto(long id, String msg, long created_date, long updated_date) {
+    public MessageDto(long id, String msg, long created_date, long updated_date, UserDto user) {
         this.id = id;
         this.msg = msg;
         this.created_date = created_date;
         this.updated_date = updated_date;
+        this.user = user;
+    }
+
+    public UserDto getUser() {
+        return user;
+    }
+
+    public void setUser(UserDto user) {
+        this.user = user;
     }
 
     public long getId() {
@@ -68,7 +80,8 @@ public class MessageDto extends BaseDto {
     public static MessageDto toDto(Message message) {
         return new MessageDto(message.getId(), message.getMsg(),
                 message.getCreatedDate().getTime() / 1000,
-                message.getLastModifiedDate().getTime() / 1000);
+                message.getLastModifiedDate().getTime() / 1000,
+                UserDto.toDto(message.getUser()));
     }
 
     public static List<MessageDto> toDto(List<Message> messages) {

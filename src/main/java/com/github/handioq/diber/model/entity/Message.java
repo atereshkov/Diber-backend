@@ -1,6 +1,7 @@
 package com.github.handioq.diber.model.entity;
 
 import com.github.handioq.diber.model.base.AuditableEntity;
+import com.github.handioq.diber.model.dto.MessageDto;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -53,4 +54,9 @@ public class Message extends AuditableEntity<Long> {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public static Message toEntity(MessageDto messageDto) {
+        return new Message(messageDto.getMsg());
+    }
+
 }

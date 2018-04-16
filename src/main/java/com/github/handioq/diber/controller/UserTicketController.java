@@ -1,8 +1,11 @@
 package com.github.handioq.diber.controller;
 
+import com.github.handioq.diber.model.dto.MessageDto;
 import com.github.handioq.diber.model.dto.TicketDto;
+import com.github.handioq.diber.model.entity.Message;
 import com.github.handioq.diber.model.entity.Ticket;
 import com.github.handioq.diber.model.entity.User;
+import com.github.handioq.diber.service.MessageService;
 import com.github.handioq.diber.service.TicketService;
 import com.github.handioq.diber.service.UserService;
 import com.github.handioq.diber.utils.Constants;
@@ -24,12 +27,14 @@ public class UserTicketController {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserTicketController.class);
 
     private final TicketService ticketService;
+    private final MessageService messageService;
     private final UserService userService;
 
     @Autowired
-    public UserTicketController(TicketService ticketService, UserService userService) {
+    public UserTicketController(TicketService ticketService, UserService userService, MessageService messageService) {
         this.ticketService = ticketService;
         this.userService = userService;
+        this.messageService = messageService;
     }
 
     @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
@@ -72,5 +77,25 @@ public class UserTicketController {
         return new ResponseEntity<>(TicketDto.toDto(ticket), HttpStatus.CREATED);
     }
 
+    @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
+    @RequestMapping(value = "/{ticket_id}/messages", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<?> addMessage(@AuthenticationPrincipal User userPrincipal,
+                                        @RequestBody MessageDto messageDto,
+                                        @PathVariable("ticket_id") long ticketId,
+                                        @PathVariable("user_id") long userId) {
+        User user = userService.findOne(userPrincipal.getId());
+        Ticket ticket = ticketService.getById(ticketId);
+
+        Message message = Message.toEntity(messageDto);
+        ticket.getMessages().add(message);
+        message.setTicket(ticket);
+        message.setUser(user);
+        user.getTickets().add(ticket);
+        user.getMessages().add(message);
+        userService.saveOrUpdate(user);
+
+        return new ResponseEntity<>(MessageDto.toDto(message), HttpStatus.CREATED);
+    }
 
 }

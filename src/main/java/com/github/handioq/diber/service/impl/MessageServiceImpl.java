@@ -20,4 +20,14 @@ public class MessageServiceImpl implements MessageService {
     public List<Message> findByTicketId(long ticketId) {
         return messageRepository.findByTicketId(ticketId);
     }
+
+    @Override
+    public Message getById(long messageId) {
+        return messageRepository.findOne(messageId);
+    }
+
+    @Override
+    public void saveOrUpdate(Message message) {
+        messageRepository.save(message);
+    }
 }

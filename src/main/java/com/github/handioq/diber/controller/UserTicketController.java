@@ -49,7 +49,7 @@ public class UserTicketController {
     }
 
     @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
-    @RequestMapping(value = "/all}", method = RequestMethod.GET)
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ResponseEntity<?> getTickets(@AuthenticationPrincipal User userPrincipal,
                                         @PathVariable("user_id") long userId) {
         List<Ticket> tickets = ticketService.findByUserId(userId);

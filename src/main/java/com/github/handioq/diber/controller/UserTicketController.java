@@ -20,6 +20,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(Constants.API_URL + Constants.URL_USER_TICKETS)
 public class UserTicketController {
@@ -43,6 +45,15 @@ public class UserTicketController {
                                         @PathVariable("user_id") long userId, Pageable pageable) {
         Page<Ticket> tickets = ticketService.findByUserId(userId, pageable);
         Page<TicketDto> ticketsDtos = tickets.map(TicketDto::toDto);
+        return new ResponseEntity<>(ticketsDtos, HttpStatus.OK);
+    }
+
+    @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<?> getTickets(@AuthenticationPrincipal User userPrincipal,
+                                        @PathVariable("user_id") long userId) {
+        List<Ticket> tickets = ticketService.findByUserId(userId);
+        List<TicketDto> ticketsDtos = TicketDto.toDto(tickets);
         return new ResponseEntity<>(ticketsDtos, HttpStatus.OK);
     }
 

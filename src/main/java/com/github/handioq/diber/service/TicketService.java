@@ -18,4 +18,6 @@ public interface TicketService {
 
     Long countByUserId(long userId);
 
+    Long count();
+
 }

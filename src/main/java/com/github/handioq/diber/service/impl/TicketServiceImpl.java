@@ -42,4 +42,10 @@ public class TicketServiceImpl implements TicketService {
     public Long countByUserId(long userId) {
         return ticketRepository.countByUserId(userId);
     }
+
+    @Override
+    public Long count() {
+        return ticketRepository.count();
+    }
+
 }

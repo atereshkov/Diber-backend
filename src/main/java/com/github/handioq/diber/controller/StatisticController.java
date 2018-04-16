@@ -45,7 +45,8 @@ public class StatisticController {
         Long usersCount = userService.count();
         Long ordersCount = orderService.count();
         Long addressesCount = addressService.count();
-        StatisticsDto statisticsDto = new StatisticsDto(usersCount, ordersCount, addressesCount, 0);
+        Long ticketsCount = ticketService.count();
+        StatisticsDto statisticsDto = new StatisticsDto(usersCount, ordersCount, addressesCount, ticketsCount);
         return new ResponseEntity<>(statisticsDto, HttpStatus.OK);
     }
 

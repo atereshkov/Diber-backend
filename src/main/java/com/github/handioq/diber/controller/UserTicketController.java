@@ -103,7 +103,7 @@ public class UserTicketController {
         message.setTicket(ticket);
         message.setUser(user);
         ticket.getMessages().add(message);
-        ticket.setCreatedDate(new Date());
+        ticket.setLastModifiedDate(new Date());
         user.getMessages().add(message);
         user.getTickets().add(ticket);
         userService.saveOrUpdate(user);

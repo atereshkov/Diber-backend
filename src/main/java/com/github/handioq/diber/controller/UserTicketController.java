@@ -20,6 +20,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -102,10 +103,9 @@ public class UserTicketController {
         message.setTicket(ticket);
         message.setUser(user);
         ticket.getMessages().add(message);
+        ticket.setCreatedDate(new Date());
         user.getMessages().add(message);
         user.getTickets().add(ticket);
-
-        ticketService.saveOrUpdate(ticket);
         userService.saveOrUpdate(user);
 
         return new ResponseEntity<>(TicketDto.toDto(ticket), HttpStatus.CREATED);

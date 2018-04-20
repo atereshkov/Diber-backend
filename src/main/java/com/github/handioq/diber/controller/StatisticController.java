@@ -1,5 +1,6 @@
 package com.github.handioq.diber.controller;
 
+import com.github.handioq.diber.model.dto.ClientStatisticsDto;
 import com.github.handioq.diber.model.dto.StatisticsDto;
 import com.github.handioq.diber.model.entity.User;
 import com.github.handioq.diber.service.AddressService;
@@ -57,7 +58,9 @@ public class StatisticController {
         Long ordersCount = orderService.countByUserId(userId);
         Long addressesCount = addressService.countByUserId(userId);
         Long ticketsCount = ticketService.countByUserId(userId);
-        StatisticsDto statisticsDto = new StatisticsDto(0, ordersCount, addressesCount, ticketsCount);
+        String status = "In progress";
+        Long activeOrdersCount = orderService.countByUserIdAndStatus(userId, status);
+        ClientStatisticsDto statisticsDto = new ClientStatisticsDto(activeOrdersCount, ordersCount, addressesCount, ticketsCount);
         return new ResponseEntity<>(statisticsDto, HttpStatus.OK);
     }
 

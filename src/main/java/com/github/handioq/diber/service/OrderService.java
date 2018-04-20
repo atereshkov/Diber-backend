@@ -27,4 +27,6 @@ public interface OrderService {
 
     Long countByUserId(long userId);
 
+    Long countByUserIdAndStatus(long userId, String status);
+
 }

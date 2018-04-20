@@ -63,4 +63,9 @@ public class OrderServiceImpl implements OrderService {
     public Long countByUserId(long userId) {
         return orderRepository.countByUserId(userId);
     }
+
+    @Override
+    public Long countByUserIdAndStatus(long userId, String status) {
+        return orderRepository.countByUserIdAndStatus(userId, status);
+    }
 }

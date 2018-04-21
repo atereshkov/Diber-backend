@@ -80,8 +80,8 @@ public class UserTicketController {
                                        @PathVariable("user_id") long userId) {
         User user = userService.findOne(userPrincipal.getId());
 
+        ticketDto.setStatus("New");
         Ticket ticket = Ticket.toEntity(ticketDto);
-        ticket.setStatus("New");
         ticket.setUser(user);
         user.getTickets().add(ticket);
         userService.saveOrUpdate(user);

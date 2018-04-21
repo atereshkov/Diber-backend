@@ -86,8 +86,8 @@ public class UserTicketController {
         user.getTickets().add(ticket);
         userService.saveOrUpdate(user);
 
-        // TODO return DTO
-        return new ResponseEntity<>("Ticket created", HttpStatus.CREATED);
+        // TODO return DTO of the newly created ticket
+        return new ResponseEntity<>(ticketDto, HttpStatus.CREATED);
     }
 
     @PreAuthorize("@securityServiceImpl.hasPermissions(#userPrincipal, #userId)")

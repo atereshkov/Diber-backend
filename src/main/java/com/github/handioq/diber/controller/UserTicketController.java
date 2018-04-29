@@ -1,5 +1,6 @@
 package com.github.handioq.diber.controller;
 
+import com.github.handioq.diber.model.dto.ErrorResponseDto;
 import com.github.handioq.diber.model.dto.MessageDto;
 import com.github.handioq.diber.model.dto.TicketDto;
 import com.github.handioq.diber.model.entity.Message;
@@ -97,6 +98,12 @@ public class UserTicketController {
                                         @RequestBody MessageDto messageDto,
                                         @PathVariable("ticket_id") long ticketId,
                                         @PathVariable("user_id") long userId) {
+
+        if (messageDto.getMsg().isEmpty()) {
+            ErrorResponseDto error = new ErrorResponseDto("Empty", "Message is empty");
+            return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        }
+
         User user = userService.findOne(userPrincipal.getId());
         Ticket ticket = ticketService.getById(ticketId);
 

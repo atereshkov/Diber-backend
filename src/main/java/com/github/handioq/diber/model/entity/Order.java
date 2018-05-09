@@ -31,6 +31,12 @@ public class Order extends AuditableEntity<Long> {
     @Column(name = "status")
     private String status;
 
+    @Column(name = "current_longitude")
+    private double longitude;
+
+    @Column(name = "current_latitude")
+    private double latitude;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     private User user;
@@ -49,6 +55,19 @@ public class Order extends AuditableEntity<Long> {
 
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Request> requests;
+
+    public Order(Date date, String description, Double price, String status, double longitude, double latitude, User user, User courier, Address addressFrom, Address addressTo) {
+        this.date = date;
+        this.description = description;
+        this.price = price;
+        this.status = status;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.user = user;
+        this.courier = courier;
+        this.addressFrom = addressFrom;
+        this.addressTo = addressTo;
+    }
 
     public Order(Date date, String description, Double price, String status, Address addressFrom, Address addressTo) {
         this.date = date;
@@ -132,6 +151,22 @@ public class Order extends AuditableEntity<Long> {
 
     public void setAddressTo(Address addressTo) {
         this.addressTo = addressTo;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 
     @Override

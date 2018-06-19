@@ -49,6 +49,7 @@ public class AuthController {
         }
 
         user.setRoles(roles);
+        user.setEnabled(true); // enable user by default (TODO email-logic)
 
         authService.register(user);
         return new ResponseEntity<>(UserDto.toDto(user), HttpStatus.CREATED);

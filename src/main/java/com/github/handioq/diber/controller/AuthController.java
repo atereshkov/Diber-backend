@@ -48,6 +48,11 @@ public class AuthController {
             roles.add(roleService.findRole(2));
         }
 
+        if (!userDto.isCourier() && !userDto.isCustomer()) {
+            roles.add(roleService.findRole(1));
+            roles.add(roleService.findRole(2));
+        }
+
         user.setRoles(roles);
         user.setEnabled(true); // enable user by default (TODO email-logic)
 
